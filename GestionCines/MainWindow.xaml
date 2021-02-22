@@ -1,0 +1,127 @@
+﻿<Window
+    x:Class="AsistenciaTecnica.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+    Title="DeCine"
+    Width="1000"
+    Height="700"
+    MinWidth="1000"
+    MinHeight="700"
+    Icon="Imagenes/configuration.ico"
+    Left="50"
+    Top="20"
+    mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.Salas" Executed="CommandBinding_Executed_Salas" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Salir"
+            Command="local:CustomCommands.Salir"
+            Executed="CommandBinding_Executed_Salir" />
+        <CommandBinding Command="local:CustomCommands.Utilidades" Executed="CommandBinding_Executed_Utilidades" />
+        <CommandBinding Command="local:CustomCommands.Cargo" Executed="CommandBinding_Executed_Cargo" />
+        <CommandBinding Command="local:CustomCommands.Departamento" Executed="CommandBinding_Executed_Departamento" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <!--  TextBlock StatusBar  -->
+        <Style x:Key="statusBar" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+        <!--  Run StatusBar datos variables  -->
+        <Style x:Key="runVariableStatusBar" TargetType="Run">
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+        <!--  Run StatusBar datos fijos  -->
+        <Style x:Key="runFijosStatusBar" TargetType="Run">
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Archivos">
+                <MenuItem Header="_Maestros...">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/mantenimiento.ico" />
+                    </MenuItem.Icon>
+                    <MenuItem Command="local:CustomCommands.Departamento" Header="_Departamentos">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/departamento.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Provincias">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/provincia.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="P_erfiles">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/perfil.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="P_uesto">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/puesto.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Emplea_do">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/empleado.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Usua_rio">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/usuario.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="local:CustomCommands.Cargo" Header="Car_go">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/cargo.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Command="local:CustomCommands.Salas" Header="S_alas">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/sala.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+
+                <MenuItem Command="local:CustomCommands.Utilidades" Header="_Utilidades">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/config.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+                <MenuItem Command="local:CustomCommands.Salir" Header="_Salir">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/exit.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Command="local:CustomCommands.Ayuda" Header="_Ayuda" />
+            <MenuItem Command="local:CustomCommands.Salir" Header="_Salir" />
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Style="{StaticResource statusBar}">
+                    <Run Style="{StaticResource runFijosStatusBar}" Text="Login " />
+                    <Run Style="{StaticResource runVariableStatusBar}" Text="{Binding Source={x:Static properties:Settings.Default}, Path=login}" />
+                    <Run Style="{StaticResource runFijosStatusBar}" Text=" Nombre" />
+                    <Run Style="{StaticResource runVariableStatusBar}" Text="{Binding Source={x:Static properties:Settings.Default}, Path=nombreUsuario}" /></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+        <Image
+            Margin="5,0,5,0"
+            Source="Imagenes/soporte.jpg"
+            Stretch="UniformToFill" />
+    </DockPanel>
+</Window>

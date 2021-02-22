@@ -1,0 +1,102 @@
+﻿using System.Windows.Input;
+
+namespace AsistenciaTecnica
+{
+    public static class CustomCommands
+    {
+        public static readonly RoutedUICommand Ayuda = new RoutedUICommand
+            ("Ayuda",
+             "Ayuda",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.F1,ModifierKeys.Control)
+            }
+            );
+        public static readonly RoutedUICommand Salir = new RoutedUICommand
+            ("Salir",
+            "Salir",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.F4,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand Salas = new RoutedUICommand
+            ("Salas",
+            "Salas",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.S,ModifierKeys.Control)
+            }
+            );
+        public static readonly RoutedUICommand Utilidades = new RoutedUICommand
+            ("Utilidades",
+            "Utilidades",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                        new KeyGesture(Key.U,ModifierKeys.Control)
+            }
+            );
+        public static readonly RoutedUICommand Editar = new RoutedUICommand
+            ("Editar",
+            "Editar",
+            typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Insertar = new RoutedUICommand
+            ("Insertar",
+             "Insertar",
+             typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Borrar = new RoutedUICommand
+          ("Borrar",
+           "Borrar",
+           typeof(CustomCommands)
+          );
+        public static readonly RoutedUICommand GuardarCambios = new RoutedUICommand
+            ("GuardarCambios",
+            "GuardarCambios",
+            typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Cancelar = new RoutedUICommand
+            ("Cancelar",
+            "Cancelar",
+            typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Aceptar = new RoutedUICommand
+            ("Aceptar",
+            "Aceptar",
+            typeof(CustomCommands)
+            );
+     
+        public static readonly RoutedUICommand Filtrar = new RoutedUICommand
+            ("Filtrar",
+            "Filtrar",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.S,ModifierKeys.Control)
+            }
+            );
+        public static readonly RoutedUICommand Cargo = new RoutedUICommand
+            ("Cargo",
+            "Cargo",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+               new KeyGesture(Key.G,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand Departamento = new RoutedUICommand
+            ("Departamento",
+            "Departamento",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+               new KeyGesture(Key.D,ModifierKeys.Alt)
+            }
+    );
+    }
+}
