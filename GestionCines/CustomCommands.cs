@@ -97,6 +97,33 @@ namespace AsistenciaTecnica
             {
                new KeyGesture(Key.D,ModifierKeys.Alt)
             }
-    );
-    }
+            );
+        public static readonly RoutedUICommand Perfil = new RoutedUICommand
+            ("Perfil",
+            "Perfil",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+               new KeyGesture(Key.E,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand Provincia = new RoutedUICommand
+            ("Provincia",
+            "Provincia",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.P,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand Empleado = new RoutedUICommand
+            ("Empleado",
+            "Empleado",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.D,ModifierKeys.Alt)
+            }
+            );
+            }
 }

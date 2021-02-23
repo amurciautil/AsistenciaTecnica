@@ -1,0 +1,71 @@
+﻿using System.Windows;
+using System.Windows.Input;
+
+namespace AsistenciaTecnica
+{
+    /// <summary>
+    /// Lógica de interacción para Perfiles.xaml
+    /// </summary>
+    public partial class Perfiles : Window
+    {
+        private readonly PerfilesVM _vm;
+        public Perfiles()
+        {
+            _vm = new PerfilesVM();
+            InitializeComponent();
+            DataContext = _vm;
+        }
+        private void CommandBinding_Executed_EditarPerfil(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.EditarPerfil();
+        }
+
+        private void CommandBinding_CanExecute_EditarPerfil(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HayPerfilSeleccionada();
+        }
+
+        private void CommandBinding_Executed_AñadirPerfil(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.AñadirPerfil();
+        }
+
+        private void CommandBinding_CanExecute_GuardarCambiosPerfil(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.FormularioOk();
+        }
+
+        private void CommandBinding_Executed_GuardarCambiosPerfil(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.GuardarCambios();
+        }
+
+        private void CommandBinding_Executed_Cancelar(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Cancelar();
+        }
+
+        private void CommandBinding_CanExecute_Cancelar(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HayDatos();
+        }
+        private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    string borrado = _vm.BorrarPerfil();
+                    MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+
+        }
+        private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HayPerfilSeleccionada();
+        }
+    }
+}

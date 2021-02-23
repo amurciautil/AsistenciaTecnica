@@ -2,7 +2,7 @@
 
 namespace AsistenciaTecnica
 {
-    class Cargo : INotifyPropertyChanged
+    public class Cargo : INotifyPropertyChanged
     {
         public int IDCARGO { get; set; }
         public string NOMBRE { get; set; }

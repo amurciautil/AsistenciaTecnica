@@ -1,14 +1,15 @@
-﻿<Application x:Class="AsistenciaTecnica.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:AsistenciaTecnica"
-             xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="AsistenciaTecnica.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,55 +22,37 @@
             </ResourceDictionary.MergedDictionaries>
             <!--  DataGrid  -->
             <Style TargetType="DataGrid">
-                <Setter Property="FontSize"
-                        Value="15" />
+                <Setter Property="FontSize" Value="15" />
             </Style>
             <!--  Botones  -->
-            <Style BasedOn="{StaticResource MaterialDesignRaisedDarkButton}"
-                   TargetType="Button">
-                <Setter Property="Width"
-                        Value="100" />
-                <Setter Property="Margin"
-                        Value="10,0,10,0" />
+            <Style BasedOn="{StaticResource MaterialDesignRaisedDarkButton}" TargetType="Button">
+                <Setter Property="Width" Value="100" />
+                <Setter Property="Margin" Value="10,0,10,0" />
             </Style>
             <!--  TextBox y TextBlock  -->
-            <Style TargetType="TextBox"
-                   BasedOn="{StaticResource MaterialDesignTextBox}">
-                <Setter Property="Margin"
-                        Value="0,0,0,10" />
-                <Setter Property="FontSize"
-                        Value="{Binding Source={x:Static properties:Settings.Default},Path=fuenteTextBox}" />
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
             </Style>
             <Style TargetType="TextBlock">
-                <Setter Property="Margin"
-                        Value="0,0,0,5" />
-                <Setter Property="FontSize"
-                        Value="{Binding Source={x:Static properties:Settings.Default},Path=fuenteTextBlock}" />
+                <Setter Property="Margin" Value="0,0,0,5" />
+                <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBlock}" />
             </Style>
             <!--  StackPanel de edicion  -->
-            <Style x:Key="StackPanelEdicion"
-                   TargetType="StackPanel">
-                <Setter Property="Margin"
-                        Value="10" />
-                <Setter Property="Orientation"
-                        Value="Vertical" />
+            <Style x:Key="StackPanelEdicion" TargetType="StackPanel">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Orientation" Value="Vertical" />
             </Style>
             <!--  StackPanel botones Bottom  -->
-            <Style x:Key="StackPanelBottom"
-                   TargetType="StackPanel">
-                <Setter Property="Margin"
-                        Value="0,0,0,10" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Center" />
-                <Setter Property="Orientation"
-                        Value="Horizontal" />
+            <Style x:Key="StackPanelBottom" TargetType="StackPanel">
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Orientation" Value="Horizontal" />
             </Style>
             <!--  ComboBox  -->
             <Style TargetType="ComboBox">
-                <Setter Property="Margin"
-                        Value="0,0,0,10" />
-                <Setter Property="FontSize"
-                        Value="15" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="FontSize" Value="15" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

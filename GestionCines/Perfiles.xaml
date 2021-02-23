@@ -1,33 +1,33 @@
 ﻿<Window
-    x:Class="AsistenciaTecnica.Departamentos"
+    x:Class="AsistenciaTecnica.Perfiles"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AsistenciaTecnica"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="Departamento"
-    Width="800"
-    Height="450"
-    MinWidth="800"
-    MinHeight="450"
+    Title="Perfiles"
+    Width="1000"
+    Height="500"
+    MinWidth="1000"
+    MinHeight="500"
     Background="#74DDF8"
     ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding
-            CanExecute="CommandBinding_CanExecute_Editar"
+            CanExecute="CommandBinding_CanExecute_EditarPerfil"
             Command="local:CustomCommands.Editar"
-            Executed="CommandBinding_Executed_Editar" />
-        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_AñadirDepartamento" />
+            Executed="CommandBinding_Executed_EditarPerfil" />
+        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_AñadirPerfil" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Borrar"
             Command="local:CustomCommands.Borrar"
             Executed="CommandBinding_Executed_Borrar" />
         <CommandBinding
-            CanExecute="CommandBinding_CanExecute_GuardarCambiosDepartamento"
+            CanExecute="CommandBinding_CanExecute_GuardarCambiosPerfil"
             Command="local:CustomCommands.GuardarCambios"
-            Executed="CommandBinding_Executed_GuardarCambiosDepartamento" />
+            Executed="CommandBinding_Executed_GuardarCambiosPerfil" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
@@ -36,14 +36,14 @@
     <Window.Resources>
         <!--  Estilo para el modo  -->
         <Style x:Key="textoModo" TargetType="TextBlock">
-            <Setter Property="Text" Value="Añadir nuevo departamento" />
+            <Setter Property="Text" Value="Añadir nuevo perfil" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,15" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=ACCION}" Value="{x:Static local:Modo.Actualizar}">
-                    <Setter Property="Text" Value="Editar el departamento seleccionado" />
+                    <Setter Property="Text" Value="Editar el perfil seleccionado" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -68,12 +68,11 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Borrar" ToolTip="Modificar datos">Borrar</Button>
+                <Button Command="local:CustomCommands.Borrar" ToolTip="Borrar datos">Borrar</Button>
                 <Button Command="local:CustomCommands.Editar" ToolTip="Modificar datos">Editar</Button>
                 <Button Command="local:CustomCommands.Insertar" ToolTip="Insertar nuevo registro">Añadir</Button>
             </StackPanel>
             <DataGrid
-                x:Name="departamentoDataGrid"
                 Margin="10,10,0,10"
                 AlternatingRowBackground="LightBlue"
                 AlternationCount="2"
@@ -82,23 +81,26 @@
                 CanUserDeleteRows="False"
                 ColumnWidth="*"
                 IsReadOnly="True"
-                ItemsSource="{Binding Path=DEPARTAMENTOS}"
-                SelectedItem="{Binding Path=DEPARTAMENTOSELECCIONADO}">
+                ItemsSource="{Binding Path=PERFILES}"
+                SelectedItem="{Binding Path=SELECCIONADA}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=IDDEPARTAMENTO}" Header="ID" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Path=IDPERFIL}"
+                        Header="ID" />
                     <DataGridTextColumn Binding="{Binding Path=NOMBRE}" Header="Nombre" />
+                    <DataGridTextColumn Binding="{Binding Path=DESCRIPCIONAMPLIADA}" Header="Descripción ampliada" />
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
         <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
             <TextBlock Style="{StaticResource textoModo}" />
             <TextBlock Text="Id" />
-            <TextBox
-                x:Name="idDepartamentoTextBox"
-                IsReadOnly="True"
-                Text="{Binding Path=DEPARTAMENTOFORMULARIO.IDDEPARTAMENTO, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Nombre" />
-            <TextBox x:Name="numeroDepartamentoTextBox" Text="{Binding Path=DEPARTAMENTOFORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Style="{StaticResource campoClave}" Text="{Binding Path=FORMULARIO.IDPERFIL, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Nombre del perfil" />
+            <TextBox Text="{Binding Path=FORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Descripción ampliada" />
+            <TextBox Text="{Binding Path=FORMULARIO.DESCRIPCIONAMPLIADA, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     Command="local:CustomCommands.Cancelar"

@@ -134,6 +134,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EmpleadoDetalle.xaml.cs">
+      <DependentUpon>EmpleadoDetalle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Empleados.xaml.cs">
+      <DependentUpon>Empleados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EmpleadosVM.cs" />
+    <Compile Include="Provincias.xaml.cs">
+      <DependentUpon>Provincias.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProvinciasVM.cs" />
+    <Compile Include="Provincia.cs" />
+    <Compile Include="PerfilesVM.cs" />
+    <Compile Include="Perfil.cs" />
     <Compile Include="Cargo.cs" />
     <Compile Include="Cargos.xaml.cs" />
     <Compile Include="CargosVM.cs" />
@@ -146,6 +160,9 @@
     </Compile>
     <Compile Include="LoginVM.cs" />
     <Compile Include="MisExcepciones.cs" />
+    <Compile Include="Perfiles.xaml.cs">
+      <DependentUpon>Perfiles.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sala.cs" />
     <Compile Include="Salas.xaml.cs">
       <DependentUpon>Salas.xaml</DependentUpon>
@@ -163,6 +180,14 @@
     <Page Include="Departamentos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EmpleadoDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Empleados.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +207,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Perfiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Provincias.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Salas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

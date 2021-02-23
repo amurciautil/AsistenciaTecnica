@@ -57,8 +57,6 @@ namespace AsistenciaTecnica
         {
             _vm.Salas(this);
         }
-
-
         private void CommandBinding_Executed_Cargo(object sender, ExecutedRoutedEventArgs e)
         {
             _vm.Cargo(this);
@@ -67,6 +65,17 @@ namespace AsistenciaTecnica
         {
             _vm.Departamentos(this);
         }
-
+        private void CommandBinding_Executed_Perfil(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Perfil(this);
+        }
+        private void CommandBinding_Executed_Provincia(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Provincia(this);
+        }
+        private void CommandBinding_Executed_Empleado(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Empleado(this);
+        }
     }
 }

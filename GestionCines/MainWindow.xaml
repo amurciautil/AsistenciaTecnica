@@ -7,7 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="DeCine"
+    Title="Asistencia Técnia"
     Width="1000"
     Height="700"
     MinWidth="1000"
@@ -26,6 +26,10 @@
         <CommandBinding Command="local:CustomCommands.Utilidades" Executed="CommandBinding_Executed_Utilidades" />
         <CommandBinding Command="local:CustomCommands.Cargo" Executed="CommandBinding_Executed_Cargo" />
         <CommandBinding Command="local:CustomCommands.Departamento" Executed="CommandBinding_Executed_Departamento" />
+        <CommandBinding Command="local:CustomCommands.Perfil" Executed="CommandBinding_Executed_Perfil" />
+        <CommandBinding Command="local:CustomCommands.Provincia" Executed="CommandBinding_Executed_Provincia" />
+        <CommandBinding Command="local:CustomCommands.Empleado"
+                        Executed="CommandBinding_Executed_Empleado" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  TextBlock StatusBar  -->
@@ -55,22 +59,18 @@
                             <Image Source="Imagenes/departamento.ico" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Provincias">
+                    <MenuItem Command="local:CustomCommands.Provincia" Header="_Provincias">
                         <MenuItem.Icon>
                             <Image Source="Imagenes/provincia.ico" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="P_erfiles">
+                    <MenuItem Command="local:CustomCommands.Perfil" Header="P_erfiles">
                         <MenuItem.Icon>
                             <Image Source="Imagenes/perfil.ico" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="P_uesto">
-                        <MenuItem.Icon>
-                            <Image Source="Imagenes/puesto.ico" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Emplea_do">
+                    <MenuItem Command="local:CustomCommands.Empleado"
+                              Header="Emplea_do">
                         <MenuItem.Icon>
                             <Image Source="Imagenes/empleado.ico" />
                         </MenuItem.Icon>
@@ -91,7 +91,6 @@
                         <Image Source="Imagenes/sala.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
-
 
                 <MenuItem Command="local:CustomCommands.Utilidades" Header="_Utilidades">
                     <MenuItem.Icon>

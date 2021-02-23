@@ -66,6 +66,24 @@ namespace AsistenciaTecnica
             departamentos.Owner = mainWindow;
             departamentos.Show();
         }
+        public void Perfil(MainWindow mainWindow)
+        {
+            Perfiles perfiles = new Perfiles();
+            perfiles.Owner = mainWindow;
+            perfiles.Show();
+        }
+        public void Provincia(MainWindow mainWindow)
+        {
+            Provincias provincias = new Provincias();
+            provincias.Owner = mainWindow;
+            provincias.Show();
+        }
+        public void Empleado(MainWindow mainWindow)
+        {
+            Empleados empleados = new Empleados();
+            empleados.Owner = mainWindow;
+            empleados.Show();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -11,15 +11,16 @@ namespace AsistenciaTecnica
         private readonly SqlConnection conexion;
         public SqlCommand comando;
 
-        public ServicioBaseDatos() { 
+        public ServicioBaseDatos()
+        {
             try
             {
                 conexion = new SqlConnection(@"Server=(local);Database=dbasistencia;Trusted_Connection=Yes;MultipleActiveResultSets=True");
-                
+
             }
             catch (Exception ex)
             {
-                throw new MisExcepciones(ex.Message+"\nNo se ha podido establecer conexión con la base de datos");
+                throw new MisExcepciones(ex.Message + "\nNo se ha podido establecer conexión con la base de datos");
             }
         }
         public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles, bool insertarFilaVacia)
@@ -45,7 +46,7 @@ namespace AsistenciaTecnica
             {
                 while (lector.Read())
                 {
-                    salas.Add(new Sala(lector.GetInt32(0), lector.GetString(1), 
+                    salas.Add(new Sala(lector.GetInt32(0), lector.GetString(1),
                                        lector.GetInt32(2), lector.GetBoolean(3)));
                 }
             }
@@ -115,7 +116,7 @@ namespace AsistenciaTecnica
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "select " + campo + " from peliculas " +
-                      "GROUP BY "+ campo +
+                      "GROUP BY " + campo +
                       " ORDER BY " + campo;
             SqlDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
@@ -128,6 +129,27 @@ namespace AsistenciaTecnica
             lector.Close();
             conexion.Close();
             return datos;
+        }
+
+        public bool ExisteProvincia(Provincia formulario)
+        {
+            bool existe = false;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT idProvincia FROM provincias WHERE idProvincia = @idProvincia";
+            comando.Parameters.Add("@idProvincia", SqlDbType.NVarChar);
+            comando.Parameters["@idProvincia"].Value = formulario.IDPROVINCIA;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read() && !existe)
+                {
+                    existe = true;
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return existe;
         }
         public int BuscarUsuario(string login, string password)
         {
@@ -254,6 +276,16 @@ namespace AsistenciaTecnica
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+        public void BorrarDepartamento(Departamento departamentoFormulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM departamentos WHERE idDepartamento = @idDepartamento";
+            comando.Parameters.Add("@idDepartamento", SqlDbType.Int);
+            comando.Parameters["@idDepartamento"].Value = departamentoFormulario.IDDEPARTAMENTO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
         public void InsertarCargo(Cargo cargoFormulario)
         {
             conexion.Open();
@@ -287,15 +319,166 @@ namespace AsistenciaTecnica
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        public void BorrarDepartamento(Departamento departamentoFormulario)
+
+        public void InsertarPerfil(Perfil formulario)
         {
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "DELETE FROM departamentos WHERE idDepartamento = @idDepartamento";
-            comando.Parameters.Add("@idDepartamento", SqlDbType.Int);
-            comando.Parameters["@idDepartamento"].Value = departamentoFormulario.IDDEPARTAMENTO;
+            comando.CommandText = "INSERT INTO perfiles VALUES(@nombre,@descripcionAmpliada)";
+            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.Parameters.Add("@descripcionAmpliada", SqlDbType.NVarChar);
+            comando.Parameters["@descripcionAmpliada"].Value = formulario.NOMBRE;
             comando.ExecuteNonQuery();
             conexion.Close();
+        }
+        public void ActualizarPerfil(Perfil formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE perfiles SET nombre = @nombre, descripcionAmpliada = @descripcionAmpliada" +
+                                  " WHERE idPerfil = @idPerfil";
+            comando.Parameters.Add("@idPerfil", SqlDbType.Int);
+            comando.Parameters["@idPerfil"].Value = formulario.IDPERFIL;
+            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.Parameters.Add("@descripcionAmpliada", SqlDbType.NVarChar);
+            comando.Parameters["@descripcionAmpliada"].Value = formulario.DESCRIPCIONAMPLIADA;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void BorrarPerfil(Perfil formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM perfiles WHERE idPerfil = @idPerfil";
+            comando.Parameters.Add("@idPerfil", SqlDbType.Int);
+            comando.Parameters["@idPerfil"].Value = formulario.IDPERFIL;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public ObservableCollection<Perfil> ObtenerPerfiles(bool insertarFilaVacia)
+        {
+            ObservableCollection<Perfil> perfiles = new ObservableCollection<Perfil>();
+            if (insertarFilaVacia)
+            {
+                perfiles.Add(new Perfil());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from perfiles";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    perfiles.Add(new Perfil(lector.GetInt32(0), lector.GetString(1), lector.GetString(2)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return perfiles;
+        }
+        public void InsertarProvincia(Provincia formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO provincias VALUES(@idProvincia,@nombre)";
+            comando.Parameters.Add("@idProvincia", SqlDbType.NVarChar);
+            comando.Parameters["@idProvincia"].Value = formulario.IDPROVINCIA;
+            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarProvincia(Provincia formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE provincias SET nombre = @nombre" +
+                                  " WHERE idProvincia = @idProvincia";
+            comando.Parameters.Add("@idProvincia", SqlDbType.Int);
+            comando.Parameters["@idProvincia"].Value = formulario.IDPROVINCIA;
+            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void BorrarProvincia(Provincia formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM provincias WHERE idProvincia = @idProvincia";
+            comando.Parameters.Add("@idProvincia", SqlDbType.Int);
+            comando.Parameters["@idProvincia"].Value = formulario.IDPROVINCIA;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public ObservableCollection<Provincia> ObtenerProvincias(bool insertarFilaVacia)
+        {
+            ObservableCollection<Provincia> provincias = new ObservableCollection<Provincia>();
+            if (insertarFilaVacia)
+            {
+                provincias.Add(new Provincia());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from provincias";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    provincias.Add(new Provincia(lector.GetString(0), lector.GetString(1)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return provincias;
+        }
+
+        public ObservableCollection<Empleado> ObtenerEmpleados(bool insertarFilaVacia)
+        {
+            ObservableCollection<Empleado> empleados = new ObservableCollection<Empleado>();
+            if (insertarFilaVacia)
+            {
+                empleados.Add(new Empleado());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT idEmpleado,em.nombre,apellidos,telefono,direccion,poblacion," +
+                "codigoPostal," +
+                "provincia,pr.nombre," +
+                "mail," +
+                "cargo,ca.nombre," +
+                "departamento,de.nombre,imagen " +
+                "from empleados em JOIN departamentos de " +
+                 " ON em.departamento = de.idDepartamento" +
+                " JOIN provincias pr " +
+                 " ON em.provincia = pr.idProvincia" +
+                " JOIN cargos ca" +
+                " ON em.cargo = ca.idCargo";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    string imagen;
+                    if (lector.IsDBNull(14))
+                        imagen = "";
+                    else
+                        imagen = lector.GetString(14);
+                    empleados.Add(new Empleado(lector.GetInt32(0), lector.GetString(1), lector.GetString(2),
+                        lector.GetString(3), lector.GetString(4), lector.GetString(5), lector.GetString(6),
+                        new Provincia(lector.GetString(7), lector.GetString(8)),
+                        lector.GetString(9),
+                        new Cargo(lector.GetInt32(10), lector.GetString(11)),
+                        new Departamento(lector.GetInt32(12), lector.GetString(13)), imagen));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return empleados;
         }
     }
 }
