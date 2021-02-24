@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
@@ -30,8 +31,9 @@
                 <Setter Property="Margin" Value="10,0,10,0" />
             </Style>
             <!--  TextBox y TextBlock  -->
-            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="TextBox">
-                <Setter Property="Margin" Value="0,0,0,10" />
+            <Style BasedOn="{StaticResource MaterialDesignTextBoxBase}" TargetType="TextBox">
+                <Setter Property="Margin" Value="0,0,5,10" />
+                <Setter Property="Background" Value="#C1E7EB" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
             </Style>
             <Style TargetType="TextBlock">
@@ -49,10 +51,11 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="Orientation" Value="Horizontal" />
             </Style>
-            <!--  ComboBox  -->
-            <Style TargetType="ComboBox">
-                <Setter Property="Margin" Value="0,0,0,10" />
-                <Setter Property="FontSize" Value="15" />
+            <!--  Combobox  -->
+            <Style BasedOn="{StaticResource MaterialDesignDataGridComboBox}" TargetType="ComboBox">
+                <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
+                <Setter Property="Background" Value="#C1E7EB" />
+                <Setter Property="Margin" Value="0,5,5,5" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

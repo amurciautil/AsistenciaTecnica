@@ -28,7 +28,13 @@ namespace AsistenciaTecnica
         public Empleado()
         {
         }
-
+        public Empleado(int idEmpleado, string nombre, string apellidos)
+        {
+            IDEMPLEADO = idEmpleado;
+            NOMBRE = nombre;
+            APELLIDOS = apellidos;
+            NOMBREYAPELLIDOS = ObtenerNombreCompleto();
+        }
         public Empleado(int idEmpleado, string nombre, string apellidos, string telefono, 
                         string direccion, string poblacion, string codigoPostal, 
                         Provincia provincia, string mail, Cargo cargo, Departamento departamento,

@@ -1,65 +1,60 @@
-﻿<Window x:Class="AsistenciaTecnica.Empleados"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AsistenciaTecnica"
-        mc:Ignorable="d"
-        Title="Empleados"
-        Height="600"
-        Width="1100"
-        MinHeight="600"
-        MinWidth="1100"
-        Background="#74DDF8"
-        ShowInTaskbar="False">
+﻿<Window
+    x:Class="AsistenciaTecnica.Empleados"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Empleados"
+    Width="1100"
+    Height="600"
+    MinWidth="1100"
+    MinHeight="600"
+    Background="#74DDF8"
+    ShowInTaskbar="False"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Insertar"
-                        Executed="CommandBinding_Executed_AñadirEmpleado" />
-        <CommandBinding Command="local:CustomCommands.Editar"
-                        Executed="CommandBinding_Executed_EditarEmpleado" />
-    </Window.CommandBindings> 
+        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_AñadirEmpleado" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_EditarEmpleado"
+            Command="local:CustomCommands.Editar"
+            Executed="CommandBinding_Executed_EditarEmpleado" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_EditarEmpleado"
+            Command="local:CustomCommands.Borrar"
+            Executed="CommandBinding_Executed_Borrar" />
+    </Window.CommandBindings>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom"
-                    Style="{StaticResource StackPanelBottom}">
-            <Button 
-                    ToolTip="Borrar datos">Borrar</Button>
-            <Button Command="local:CustomCommands.Editar"
-                    ToolTip="Modificar datos">Editar</Button>
-            <Button Command="local:CustomCommands.Insertar"
-                    ToolTip="Insertar nuevo registro">Añadir</Button>
+        <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
+            <Button Command="local:CustomCommands.Borrar" ToolTip="Borrar datos">Borrar</Button>
+            <Button Command="local:CustomCommands.Editar" ToolTip="Modificar datos">Editar</Button>
+            <Button Command="local:CustomCommands.Insertar" ToolTip="Insertar nuevo registro">Añadir</Button>
         </StackPanel>
-        <DataGrid Margin="10"
-                  AlternatingRowBackground="LightBlue"
-                  AlternationCount="2"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  ColumnWidth="*"
-                  IsReadOnly="True"
-                  ItemsSource="{Binding Path=EMPLEADOS}"
-                  SelectedItem="{Binding Path=SELECCIONADA}">
+        <DataGrid
+            Margin="10"
+            AlternatingRowBackground="LightBlue"
+            AlternationCount="2"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            ColumnWidth="*"
+            IsReadOnly="True"
+            ItemsSource="{Binding Path=EMPLEADOS}"
+            SelectedItem="{Binding Path=SELECCIONADA}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=IDEMPLEADO}"
-                                    Header="ID"
-                                    Width="80" />
-                <DataGridTextColumn Binding="{Binding Path=NOMBREYAPELLIDOS}"
-                                    Header="Nombre" />
-                <DataGridTextColumn Binding="{Binding Path=DIRECCION}"
-                                    Header="Dirección" />
-                <DataGridTextColumn Binding="{Binding Path=POBLACION}"
-                                    Header="Población" />
-                <DataGridTextColumn Binding="{Binding Path=NOMBREPROVINCIA}"
-                                    Header="Provincia" />
-                <DataGridTextColumn Binding="{Binding Path=CODIGOPOSTAL}"
-                                    Header="C.Postal" />
-                <DataGridTextColumn Binding="{Binding Path=TELEFONO}"
-                                    Header="Teléfono" />
-                <DataGridTextColumn Binding="{Binding Path=MAIL}"
-                                    Header="eMail" />
-                <DataGridTextColumn Binding="{Binding Path=NOMBREDEPARTAMENTO}"
-                                    Header="Departamento" />
-                <DataGridTextColumn Binding="{Binding Path=NOMBRECARGO}"
-                                    Header="Cargo" />
+                <DataGridTextColumn
+                    Width="80"
+                    Binding="{Binding Path=IDEMPLEADO}"
+                    Header="ID" />
+                <DataGridTextColumn Binding="{Binding Path=NOMBREYAPELLIDOS}" Header="Nombre" />
+                <DataGridTextColumn Binding="{Binding Path=DIRECCION}" Header="Dirección" />
+                <DataGridTextColumn Binding="{Binding Path=POBLACION}" Header="Población" />
+                <DataGridTextColumn Binding="{Binding Path=NOMBREPROVINCIA}" Header="Provincia" />
+                <DataGridTextColumn Binding="{Binding Path=CODIGOPOSTAL}" Header="C.Postal" />
+                <DataGridTextColumn Binding="{Binding Path=TELEFONO}" Header="Teléfono" />
+                <DataGridTextColumn Binding="{Binding Path=MAIL}" Header="eMail" />
+                <DataGridTextColumn Binding="{Binding Path=NOMBREDEPARTAMENTO}" Header="Departamento" />
+                <DataGridTextColumn Binding="{Binding Path=NOMBRECARGO}" Header="Cargo" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

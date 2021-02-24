@@ -13,9 +13,6 @@ namespace AsistenciaTecnica
         public MainWindowVM()
         {
             bbdd = new ServicioBaseDatos();
-     
-
-
         }
 
         public void Ayuda()
@@ -49,7 +46,7 @@ namespace AsistenciaTecnica
         }
         public void GuardarPropiedadesDeSistema(Usuario usuario)
         {
-            Empleado empleado = bbdd.BuscarEmpleado(usuario.EMPLEADO);
+            Empleado empleado = bbdd.BuscarEmpleado(usuario.EMPLEADO.IDEMPLEADO);
             Properties.Settings.Default.login = usuario.LOGIN;
             Properties.Settings.Default.nombreUsuario = empleado.ObtenerNombreCompleto();
             Properties.Settings.Default.Save();
@@ -83,6 +80,23 @@ namespace AsistenciaTecnica
             Empleados empleados = new Empleados();
             empleados.Owner = mainWindow;
             empleados.Show();
+        }
+        public void Usuario(MainWindow mainWindow)
+        {
+            Usuarios usuarios = new Usuarios();
+            usuarios.Owner = mainWindow;
+            usuarios.Show();
+        }
+        public bool CambioPassword(MainWindow mainWindow)
+        {
+            bool hayCambio = false;
+            CambioPasswd cambioPasswd = new CambioPasswd(Properties.Settings.Default.login);
+            cambioPasswd.Owner = mainWindow;
+            cambioPasswd.Login = Properties.Settings.Default.login;
+            cambioPasswd.HayCambio = false;
+            if (cambioPasswd.ShowDialog() == true)
+                hayCambio = cambioPasswd.HayCambio;
+            return hayCambio;
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -11,7 +11,7 @@ namespace AsistenciaTecnica
     {
         private readonly LoginVM _vm;
         public Usuario USUARIO { get; set; }
-        public string LoginUsuario  { get; set; }
+        public string LoginUsuario { get; set; }
         public string PasswordUsuario { get; set; }
         public Login()
         {
@@ -31,6 +31,7 @@ namespace AsistenciaTecnica
             // Para fase de pruebas
             //_vm.BuscarUsuario("amurcia", "damfp2019");
             _vm.BuscarUsuario(LoginUsuario, PasswordUsuario);
+            
             USUARIO = _vm.USUARIOSELECCIONADO;
             if (USUARIO.LOGIN != null)
                 DialogResult = true;

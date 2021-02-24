@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AsistenciaTecnica
 {
@@ -21,17 +16,30 @@ namespace AsistenciaTecnica
             EMPLEADOS = bbdd.ObtenerEmpleados(false);
             FORMULARIO = new Empleado();
         }
+        public bool HaySelecionada()
+        {
+            return SELECCIONADA != null;
+        }
         public void AñadirEmpleado(Empleados empleadosWindow)
         {
             EmpleadoDetalle empleadoDetalle = new EmpleadoDetalle(new Empleado());
             empleadoDetalle.Owner = empleadosWindow;
-            empleadoDetalle.Show();
+            if (empleadoDetalle.ShowDialog() == true)
+                EMPLEADOS = empleadoDetalle.EMPLEADOS;         
         }
         public void EditarEmpleado(Empleados empleadosWindow)
         {
             EmpleadoDetalle empleadoDetalle = new EmpleadoDetalle(SELECCIONADA);
             empleadoDetalle.Owner = empleadosWindow;
-            empleadoDetalle.Show();
+            if (empleadoDetalle.ShowDialog() == true)
+                EMPLEADOS = empleadoDetalle.EMPLEADOS;
+        }
+        public string BorrarEmpleado()
+        {
+            string mensajeBorre = SELECCIONADA.IDEMPLEADO + " " + SELECCIONADA.NOMBREYAPELLIDOS;
+            bbdd.BorrarEmpleado(SELECCIONADA);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false);
+            return mensajeBorre;
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

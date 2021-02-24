@@ -70,7 +70,7 @@ namespace AsistenciaTecnica
             "Aceptar",
             typeof(CustomCommands)
             );
-     
+
         public static readonly RoutedUICommand Filtrar = new RoutedUICommand
             ("Filtrar",
             "Filtrar",
@@ -122,8 +122,36 @@ namespace AsistenciaTecnica
             typeof(CustomCommands),
             new InputGestureCollection()
             {
-                new KeyGesture(Key.D,ModifierKeys.Alt)
+                new KeyGesture(Key.M,ModifierKeys.Alt)
             }
             );
-            }
+        public static readonly RoutedUICommand Usuario = new RoutedUICommand
+           ("Usuario",
+           "Usuario",
+           typeof(CustomCommands),
+           new InputGestureCollection()
+           {
+                 new KeyGesture(Key.R,ModifierKeys.Alt)
+           }
+           );
+        public static readonly RoutedUICommand Password = new RoutedUICommand
+           ("Password",
+           "Password",
+           typeof(CustomCommands),
+           new InputGestureCollection()
+           {
+               new KeyGesture(Key.W,ModifierKeys.Alt)
+           }
+           );
+        public static readonly RoutedUICommand CambioUsuario = new RoutedUICommand
+           ("CambioUsuario",
+           "CambioUsuario",
+           typeof(CustomCommands),
+           new InputGestureCollection()
+           {
+              new KeyGesture(Key.T,ModifierKeys.Alt)
+           }
+           );
+    }
+
 }

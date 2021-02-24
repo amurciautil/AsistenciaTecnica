@@ -82,5 +82,23 @@ namespace AsistenciaTecnica.Properties {
                 this["fuenteTextBlock"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public int maxLengthPasswd {
+            get {
+                return ((int)(this["maxLengthPasswd"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int minLengthPasswd {
+            get {
+                return ((int)(this["minLengthPasswd"]));
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,22 +21,38 @@ namespace AsistenciaTecnica
     /// </summary>
     partial class EmpleadoDetalle : Window
     {
-        public Empleado FORMULARIO { get; set; }
-        public Empleado SELECCIONADA { get; set; }
+        private readonly EmpleadoDetalleVM _vm;
+        public ObservableCollection<Empleado> EMPLEADOS { get; set; }
         public EmpleadoDetalle(Empleado empleado)
         {
-            if (empleado.IDEMPLEADO == 0)
-            {
-                FORMULARIO = empleado;
-                SELECCIONADA = new Empleado();
-            }
-            else
-            {
-                FORMULARIO = new Empleado(empleado);
-                SELECCIONADA = empleado;
-            }
+            _vm = new EmpleadoDetalleVM(empleado);
             InitializeComponent();
-            DataContext = this;
+            DataContext = _vm;
         }
+
+        private void CommandBinding_Executed_CuardarCambios(object sender, ExecutedRoutedEventArgs e)
+        {
+            EMPLEADOS =_vm.GuardarCambios();
+            DialogResult = true;
+        }
+
+        private void CommandBinding_CanExecute_GuardarCambios(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.FormularioOK();
+        }
+        private void CommandBinding_Executed_Cancelar(object sender, ExecutedRoutedEventArgs e)
+        {           
+            this.Close();
+            MessageBoxResult result = MessageBox.Show("¿Esta seguro desea salir y volver a lista de empleados?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
     }
 }

@@ -1,0 +1,160 @@
+﻿<Window x:Class="AsistenciaTecnica.Usuarios"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AsistenciaTecnica"
+        xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+        mc:Ignorable="d"
+        Title="Usuarios" Height="500" Width="1000"
+        MinHeight="500"
+        MinWidth="1000"
+        Background="#74DDF8"
+        ShowInTaskbar="False">
+    <Window.CommandBindings>
+        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
+                        Command="local:CustomCommands.Editar"
+                        Executed="CommandBinding_Executed_Editar" />
+        <CommandBinding Command="local:CustomCommands.Insertar"
+                        Executed="CommandBinding_Executed_Añadir" />
+        <CommandBinding CanExecute="CommandBinding_CanExecute_Borrar"
+                        Command="local:CustomCommands.Borrar"
+                        Executed="CommandBinding_Executed_Borrar" />
+        <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"
+                        Command="local:CustomCommands.GuardarCambios"
+                        Executed="CommandBinding_Executed_GuardarCambios" />
+        <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
+                        Command="local:CustomCommands.Cancelar"
+                        Executed="CommandBinding_Executed_Cancelar" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <!--  Estilo para el modo  -->
+        <Style x:Key="textoModo"
+               TargetType="TextBlock">
+            <Setter Property="Text"
+                    Value="Añadir nuevo usuario" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+            <Setter Property="Margin"
+                    Value="0,0,0,15" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}"
+                             Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="Text"
+                            Value="Editar el usuario seleccionado" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--  Deshabilitar el campo de clave  -->
+        <Style x:Key="campoClave"
+               BasedOn="{StaticResource MaterialDesignTextBox}"
+               TargetType="TextBox">
+            <Setter Property="Margin"
+                    Value="0,0,0,10" />
+            <Setter Property="FontSize"
+                    Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}"
+                             Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--  Deshabilitar input en contraseña  -->
+        <Style x:Key="campoContraseña"
+               TargetType="PasswordBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}"
+                             Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--  CheckBox  -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin"
+                    Value="0,5,0,10" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Bottom"
+                        Style="{StaticResource StackPanelBottom}">
+                <Button Command="local:CustomCommands.Borrar"
+                        Content="Borrar"
+                        ToolTip="Eliminar registro seleccionado" />
+                <Button Command="local:CustomCommands.Editar"
+                        Content="Editar"
+                        ToolTip="Modificar registro seleccionado" />
+                <Button Command="local:CustomCommands.Insertar"
+                        Content="Añadir"
+                        ToolTip="Insertar un nuevo registro" />
+            </StackPanel>
+            <DataGrid x:Name="sesionesDataGrid"
+                      Margin="10,10,0,10"
+                      AlternatingRowBackground="LightBlue"
+                      AlternationCount="2"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      ColumnWidth="*"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding USUARIOS}"
+                      SelectedItem="{Binding SELECCIONADA}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=LOGIN}"
+                                        Header="Login"
+                                        MinWidth="150" />
+                    <DataGridTextColumn Binding="{Binding Path=NOMBREEMPLEADO}"
+                                        Header="Nombre"
+                                        MinWidth="300" />
+                    <DataGridTextColumn Binding="{Binding Path=NOMBREPERFIL}"
+                                        Header="Perfil"
+                                        MinWidth="150" />
+                    <DataGridCheckBoxColumn Binding="{Binding Path=ACTIVO}"
+                                            Header="Activo" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        <StackPanel Grid.Column="1"
+                    Style="{StaticResource StackPanelEdicion}">
+            <TextBlock Style="{StaticResource textoModo}" />
+            <TextBlock Text="Login" />
+            <TextBox Style="{StaticResource campoClave}"
+                     Text="{Binding Path=FORMULARIO.LOGIN, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Password" />
+            <PasswordBox x:Name="passwordPasswordBox"
+                         MaxLength="{Binding Source={x:Static properties:Settings.Default},Path=maxLengthPasswd}"
+                         Style="{StaticResource campoContraseña}" />
+            <TextBlock Text="Perfil" />
+            <ComboBox ItemsSource="{Binding PERFILESNOMBRE}"
+                      SelectedItem="{Binding Path=FORMULARIO.NOMBREPERFIL, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Empleado" />
+            <ComboBox ItemsSource="{Binding EMPLEADOSNOMBRE}"
+                      SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox Content="Usuario activo"
+                      IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button Command="local:CustomCommands.Cancelar"
+                        Content="Cancelar"
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios" />
+                <Button Command="local:CustomCommands.GuardarCambios"
+                        Content="Guardar"
+                        IsDefault="True"
+                        ToolTip="Guardar cambios" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

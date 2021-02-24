@@ -5,35 +5,84 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AsistenciaTecnica"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="EmpleadoDetalle"
+    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+    Title="Datos Empleado"
     Width="900"
-    Height="500"
+    Height="520"
+    MinWidth="900"
+    MinHeight="520"
     Background="#74DDF8"
+    ShowInTaskbar="False"
     mc:Ignorable="d">
-    <Grid>
+    <Window.CommandBindings>
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_GuardarCambios"
+            Command="local:CustomCommands.GuardarCambios"
+            Executed="CommandBinding_Executed_CuardarCambios" />
+        <CommandBinding Command="local:CustomCommands.Cancelar" Executed="CommandBinding_Executed_Cancelar" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <!--  Estilo para el modo  -->
+        <Style x:Key="textoModo" TargetType="Run">
+            <Setter Property="Text" Value="Añadir empleado" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}" Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="Text" Value="Editar empleado" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
+            <RowDefinition Height="245" />
             <RowDefinition />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" />
+            <Image
+                Grid.Column="0"
+                Width="135"
+                Height="150"
+                Source="{Binding Path=FORMULARIO.IMAGEN, UpdateSourceTrigger=PropertyChanged}"
+                Stretch="Fill" />
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Nombre" />
-                <TextBlock Grid.Row="1" Text="Apellidos" />
-                <TextBlock Grid.Row="2" Text="eMail" />
-                <TextBlock Grid.Row="3" Text="Telefono" />
+                <TextBlock Grid.Row="0" />
+                <TextBlock
+                    Grid.Row="1"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="Nombre" />
+                <TextBlock
+                    Grid.Row="2"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="Apellidos" />
+                <TextBlock
+                    Grid.Row="3"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="eMail" />
+                <TextBlock
+                    Grid.Row="4"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="Telefono" />
+                <TextBlock
+                    Grid.Row="5"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="Imagen" />
             </Grid>
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
@@ -41,21 +90,28 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Text="{Binding Path=FORMULARIO.NOMBRE}" />
-                <TextBox Grid.Row="1"
-                         Text="{Binding Path=FORMULARIO.APELLIDOS}" />
-                <TextBox Grid.Row="2"
-                         Text="{Binding Path=FORMULARIO.MAIL}" />
-                <TextBox Grid.Row="3"
-                         Text="{Binding Path=FORMULARIO.TELEFONO}" />
+                <StackPanel Grid.Row="0">
+                    <TextBlock>
+                        <Run Style="{StaticResource textoModo}" />
+                        <Run Text="    " />
+                        <Run FontWeight="Bold" Text="Id: " />
+                        <Run FontWeight="Bold" Text="{Binding Path=FORMULARIO.IDEMPLEADO}" /></TextBlock>
+                </StackPanel>
+                <TextBox Grid.Row="1" Text="{Binding Path=FORMULARIO.NOMBRE}" />
+                <TextBox Grid.Row="2" Text="{Binding Path=FORMULARIO.APELLIDOS}" />
+                <TextBox Grid.Row="3" Text="{Binding Path=FORMULARIO.MAIL}" />
+                <TextBox Grid.Row="4" Text="{Binding Path=FORMULARIO.TELEFONO}" />
+                <TextBox Grid.Row="5" Text="{Binding Path=FORMULARIO.IMAGEN}" />
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="110" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="110" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -67,51 +123,60 @@
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Direccion" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Poblacion" />
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Cod.Postal" />
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Provincia" />
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.NOMBREPROVINCIA}" />
+                Text="{Binding Path=FORMULARIO.DIRECCION}" />
             <TextBox
                 Grid.Row="1"
                 Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.CODIGOPOSTAL}" />
+                Text="{Binding Path=FORMULARIO.POBLACION}" />
             <TextBox
                 Grid.Row="2"
                 Grid.Column="1"
-                Text="{Binding Path=FORMULARIO.MAIL}" />
-            <TextBox
+                Text="{Binding Path=FORMULARIO.CODIGOPOSTAL}" />
+            <ComboBox
                 Grid.Row="3"
                 Grid.Column="1"
-                Text="{Binding Path=FORMULARIO.TELEFONO}" />
+                ItemsSource="{Binding PROVINCIASNOMBRE}"
+                SelectedItem="{Binding Path=FORMULARIO.NOMBREPROVINCIA, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Departamento" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
+                Style="{StaticResource MaterialDesignBody1TextBlock}"
                 Text="Cargo" />
-            <TextBox
+            <ComboBox
                 Grid.Row="0"
                 Grid.Column="3"
-                Text="{Binding Path=FORMULARIO.NOMBRECARGO}" />
-            <TextBox
+                ItemsSource="{Binding DEPARTAMENTOSNOMBRE}"
+                SelectedItem="{Binding Path=FORMULARIO.NOMBREDEPARTAMENTO, UpdateSourceTrigger=PropertyChanged}" />
+            <ComboBox
                 Grid.Row="1"
                 Grid.Column="3"
-                Text="Cargo" />
+                ItemsSource="{Binding CARGOSNOMBRE}"
+                SelectedItem="{Binding Path=FORMULARIO.NOMBRECARGO, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
         <StackPanel
             Grid.Row="2"

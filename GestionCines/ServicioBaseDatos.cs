@@ -2,6 +2,7 @@
 using System.Data;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace AsistenciaTecnica
 {
@@ -10,7 +11,6 @@ namespace AsistenciaTecnica
         const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqlConnection conexion;
         public SqlCommand comando;
-
         public ServicioBaseDatos()
         {
             try
@@ -157,7 +157,7 @@ namespace AsistenciaTecnica
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "select count(*) from usuarios where login = @login " +
-                                  "and password = HASHBYTES('SHA2_512', @password)";
+                            "and password = HASHBYTES('SHA2_512', '" + password + "')";
             comando.Parameters.Add("@login", SqlDbType.NVarChar);
             comando.Parameters["@login"].Value = login;
             comando.Parameters.Add("@password", SqlDbType.VarChar);
@@ -172,7 +172,17 @@ namespace AsistenciaTecnica
             Usuario usuario = new Usuario();
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "select * from usuarios where login = @login";
+            comando.CommandText = "select " +
+                "login," +
+                "perfil," +
+                "empleado," +
+                "activo," +
+                "em.nombre," +
+                "em.apellidos, " +
+                "pe.descripcion from usuarios us" +
+                " JOIN empleados em ON us.empleado = em.idEmpleado" +
+                " JOIN perfiles pe ON us.perfil = pe.idPerfil" +
+                " where login = @login";
             comando.Parameters.Add("@login", SqlDbType.VarChar);
             comando.Parameters["@login"].Value = login;
             SqlDataReader lector = comando.ExecuteReader();
@@ -181,7 +191,10 @@ namespace AsistenciaTecnica
                 while (lector.Read())
                 {
                     usuario.LOGIN = lector.GetString(0);
-                    usuario.EMPLEADO = lector.GetInt32(2);
+                    usuario.IDEMPLEADO = lector.GetInt32(2);
+                    usuario.PERFIL = new Perfil(lector.GetInt32(1), lector.GetString(6));
+                    usuario.EMPLEADO = new Empleado(lector.GetInt32(2), lector.GetString(4), lector.GetString(5));
+                    usuario.ACTIVO = lector.GetBoolean(3);
                 }
             }
             conexion.Close();
@@ -209,28 +222,7 @@ namespace AsistenciaTecnica
             return empleado;
         }
 
-        public ObservableCollection<Cargo> ObtenerCargos(bool insertarFilaVacia)
-        {
-            ObservableCollection<Cargo> cargos = new ObservableCollection<Cargo>();
-            if (insertarFilaVacia)
-            {
-                cargos.Add(new Cargo());
-            }
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT * from cargos";
-            SqlDataReader lector = comando.ExecuteReader();
-            if (lector.HasRows)
-            {
-                while (lector.Read())
-                {
-                    cargos.Add(new Cargo(lector.GetInt32(0), lector.GetString(1)));
-                }
-            }
-            lector.Close();
-            conexion.Close();
-            return cargos;
-        }
+
         public ObservableCollection<Departamento> ObtenerDepartamentos(bool insertarFilaVacia)
         {
             ObservableCollection<Departamento> departamentos = new ObservableCollection<Departamento>();
@@ -286,6 +278,28 @@ namespace AsistenciaTecnica
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+        public ObservableCollection<Cargo> ObtenerCargos(bool insertarFilaVacia)
+        {
+            ObservableCollection<Cargo> cargos = new ObservableCollection<Cargo>();
+            if (insertarFilaVacia)
+            {
+                cargos.Add(new Cargo());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from cargos";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    cargos.Add(new Cargo(lector.GetInt32(0), lector.GetString(1)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return cargos;
+        }
         public void InsertarCargo(Cargo cargoFormulario)
         {
             conexion.Open();
@@ -324,9 +338,9 @@ namespace AsistenciaTecnica
         {
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "INSERT INTO perfiles VALUES(@nombre,@descripcionAmpliada)";
-            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
-            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.CommandText = "INSERT INTO perfiles VALUES(@descripcion,@descripcionAmpliada)";
+            comando.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+            comando.Parameters["@descripcion"].Value = formulario.NOMBRE;
             comando.Parameters.Add("@descripcionAmpliada", SqlDbType.NVarChar);
             comando.Parameters["@descripcionAmpliada"].Value = formulario.NOMBRE;
             comando.ExecuteNonQuery();
@@ -336,12 +350,12 @@ namespace AsistenciaTecnica
         {
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "UPDATE perfiles SET nombre = @nombre, descripcionAmpliada = @descripcionAmpliada" +
+            comando.CommandText = "UPDATE perfiles SET descripcion = @descripcion, descripcionAmpliada = @descripcionAmpliada" +
                                   " WHERE idPerfil = @idPerfil";
             comando.Parameters.Add("@idPerfil", SqlDbType.Int);
             comando.Parameters["@idPerfil"].Value = formulario.IDPERFIL;
-            comando.Parameters.Add("@nombre", SqlDbType.NVarChar);
-            comando.Parameters["@nombre"].Value = formulario.NOMBRE;
+            comando.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+            comando.Parameters["@descripcion"].Value = formulario.NOMBRE;
             comando.Parameters.Add("@descripcionAmpliada", SqlDbType.NVarChar);
             comando.Parameters["@descripcionAmpliada"].Value = formulario.DESCRIPCIONAMPLIADA;
             comando.ExecuteNonQuery();
@@ -479,6 +493,278 @@ namespace AsistenciaTecnica
             lector.Close();
             conexion.Close();
             return empleados;
+        }
+        public void BorrarEmpleado(Empleado seleccionado)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM empleados WHERE idEmpleado = @idEmpleado";
+            comando.Parameters.Add("@idEmpleado", SqlDbType.Int);
+            comando.Parameters["@idEmpleado"].Value = seleccionado.IDEMPLEADO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void InsertarEmpleado(Empleado formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO empleados " +
+                    "VALUES(@nombre,@apellidos,@telefono,@direccion,@poblacion," +
+                           "@codigoPostal,@provincia,@mail,@cargo,@departamento," +
+                           "@imagen)";
+            comando = PreparaDatosEmpleado(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarEmpleado(Empleado formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE empleados SET " +
+                "nombre = @nombre," +
+                "apellidos = @apellidos," +
+                "telefono = @telefono," +
+                "direccion = @direccion," +
+                "poblacion = @poblacion," +
+                "codigoPostal = @codigoPostal," +
+                "provincia = @provincia," +
+                "mail = @mail," +
+                "cargo = @cargo," +
+                "departamento = @departamento," +
+                "imagen = @imagen" +
+                " WHERE idEmpleado = @idEmpleado";
+            comando = PreparaDatosEmpleado(comando, formulario);
+            comando.Parameters.Add("@idEmpleado", SqlDbType.Int);
+            comando.Parameters["@idEmpleado"].Value = formulario.IDEMPLEADO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public SqlCommand PreparaDatosEmpleado(SqlCommand com, Empleado formulario)
+        {
+            SqlCommand cmd = com;
+            // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
+            string apellidos, telefono, direccion, poblacion, codigoPostal, mail, imagen;
+            if (formulario.APELLIDOS == null)
+                apellidos = "";
+            else
+                apellidos = formulario.APELLIDOS;
+            if (formulario.TELEFONO == null)
+                telefono = "";
+            else
+                telefono = formulario.TELEFONO;
+            if (formulario.DIRECCION == null)
+                direccion = "";
+            else
+                direccion = formulario.DIRECCION;
+            if (formulario.POBLACION == null)
+                poblacion = "";
+            else
+                poblacion = formulario.POBLACION;
+            if (formulario.CODIGOPOSTAL == null)
+                codigoPostal = "";
+            else
+                codigoPostal = formulario.CODIGOPOSTAL;
+            if (formulario.MAIL == null)
+                mail = "";
+            else
+                mail = formulario.MAIL;
+            if (formulario.IMAGEN == null)
+                imagen = "";
+            else
+                imagen = formulario.IMAGEN;
+            cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            cmd.Parameters["@nombre"].Value = formulario.NOMBRE;
+            cmd.Parameters.Add("@apellidos", SqlDbType.NVarChar);
+            cmd.Parameters["@apellidos"].Value = apellidos;
+            cmd.Parameters.Add("@telefono", SqlDbType.NVarChar);
+            cmd.Parameters["@telefono"].Value = telefono;
+            cmd.Parameters.Add("@direccion", SqlDbType.NVarChar);
+            cmd.Parameters["@direccion"].Value = direccion;
+            cmd.Parameters.Add("@poblacion", SqlDbType.NVarChar);
+            cmd.Parameters["@poblacion"].Value = poblacion;
+            cmd.Parameters.Add("@codigoPostal", SqlDbType.NVarChar);
+            cmd.Parameters["@codigoPostal"].Value = codigoPostal;
+            cmd.Parameters.Add("@provincia", SqlDbType.NVarChar);
+            cmd.Parameters["@provincia"].Value = ObtenerClavesPrimarias("idProvincia", "provincias", "nombre",
+                                                                        formulario.NOMBREPROVINCIA,
+                                                                        "S", false);
+            cmd.Parameters.Add("@mail", SqlDbType.NVarChar);
+            cmd.Parameters["@mail"].Value = mail;
+            cmd.Parameters.Add("@cargo", SqlDbType.NVarChar);
+            cmd.Parameters["@cargo"].Value = ObtenerClavesPrimarias("idCargo", "cargos", "nombre",
+                                                                        formulario.NOMBRECARGO,
+                                                                        "I", false);
+            cmd.Parameters.Add("@departamento", SqlDbType.NVarChar);
+            cmd.Parameters["@departamento"].Value = ObtenerClavesPrimarias("idDepartamento", "departamentos", "nombre",
+                                                                        formulario.NOMBREDEPARTAMENTO,
+                                                                        "I", false);
+            cmd.Parameters.Add("@imagen", SqlDbType.NVarChar);
+            cmd.Parameters["@imagen"].Value = imagen;
+            return cmd;
+        }
+        // Método para obtener la clave primaria dado el valor seleccionado en un combobox
+        // Recibe: 
+        // nombre del campo de la clave primaria
+        // nombre de la tabla
+        // nombre del campo para la condición WHERE
+        // valor a buscar
+        // tipo de variable del campo de la clave primaria (I integer, S String)
+        // abrimos conexión BBDD: true / false. No abrir conexión si ya tenemos una abierta
+        public string ObtenerClavesPrimarias(string codigo, string tabla, string nombre,
+                                             string valor, string tipoclave, bool openconexion)
+        {
+            string clavePrimaria = "";
+            if (openconexion)
+                conexion.Open();
+            SqlCommand cmd;
+            cmd = conexion.CreateCommand();
+            cmd.CommandText = "Select TOP 1 " + codigo + " from " + tabla + " where " + nombre + " = @" +
+                nombre;
+            cmd.Parameters.Add("@" + nombre, SqlDbType.NVarChar);
+            cmd.Parameters["@" + nombre].Value = valor;
+            SqlDataReader lector = cmd.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    switch (tipoclave)
+                    {
+                        case "I":
+                            clavePrimaria = lector.GetInt32(0).ToString();
+                            break;
+                        case "S":
+                            clavePrimaria = lector.GetString(0);
+                            break;
+                        default:
+                            clavePrimaria = lector.GetString(0);
+                            break;
+                    }
+                }
+            }
+            lector.Close();
+            if (openconexion)
+                conexion.Close();
+            return clavePrimaria;
+        }
+        public ObservableCollection<Usuario> ObtenerUsuarios(bool insertarFilaVacia)
+        {
+            ObservableCollection<Usuario> usuarios = new ObservableCollection<Usuario>();
+            if (insertarFilaVacia)
+            {
+                usuarios.Add(new Usuario());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select " +
+                "login," +
+                "perfil," +
+                "empleado," +
+                "activo," +
+                "em.nombre," +
+                "em.apellidos, " +
+                "pe.descripcion from usuarios us" +
+                " JOIN empleados em ON us.empleado = em.idEmpleado" +
+                " JOIN perfiles pe ON us.perfil = pe.idPerfil";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    usuarios.Add(new Usuario(lector.GetString(0), "",
+                                 new Perfil(lector.GetInt32(1), lector.GetString(6)),
+                                 new Empleado(lector.GetInt32(2), lector.GetString(4), lector.GetString(5)),
+                                 lector.GetBoolean(3)));
+                }
+            }
+            conexion.Close();
+            return usuarios;
+        }
+        public void BorrarUsuario(Usuario seleccionado)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM usuarios WHERE login = @login";
+            comando.Parameters.Add("@login", SqlDbType.NVarChar);
+            comando.Parameters["@login"].Value = seleccionado.LOGIN;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public void InsertarUsuario(Usuario formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO usuarios " +
+                    "VALUES(@login,HASHBYTES('SHA2_512', '" + formulario.PASSWORD + "'),@perfil,@empleado,@activo)";
+           comando = PreparaDatosUsuario(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarUsuario(Usuario formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE usuarios SET " +
+                "activo = @activo," +
+                "perfil = @perfil," +
+                "empleado = @empleado" +
+                " WHERE login = @login";
+            comando = PreparaDatosUsuario(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public SqlCommand PreparaDatosUsuario(SqlCommand com, Usuario formulario)
+        {
+            SqlCommand cmd = com;
+            com.Parameters.Add("@login", SqlDbType.NVarChar);
+            com.Parameters["@login"].Value = formulario.LOGIN;
+            //cmd.Parameters.Add("@password", SqlDbType.NVarChar);
+            //cmd.Parameters["@password"].Value = formulario.PASSWORD;
+            cmd.Parameters.Add("@perfil", SqlDbType.NVarChar);
+            cmd.Parameters["@perfil"].Value = ObtenerClavesPrimarias("idPerfil", "perfiles", "descripcion",
+                                                                        formulario.NOMBREPERFIL,
+                                                                        "I", false);
+            cmd.Parameters.Add("@empleado", SqlDbType.Int);
+            cmd.Parameters["@empleado"].Value = formulario.IDEMPLEADO;
+            cmd.Parameters.Add("@activo", SqlDbType.Int);
+            cmd.Parameters["@activo"].Value = formulario.ACTIVO;
+            return cmd;
+        }
+        public void ActualizarPassword(string login, string password)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE usuarios SET " +
+            //    "password = HASHBYTES('SHA2_512', @password)" +
+                "password = HASHBYTES('SHA2_512', '"+password+"')" +
+                " WHERE login = @login";
+            comando.Parameters.Add("@login", SqlDbType.NVarChar);
+            comando.Parameters["@login"].Value = login;
+            comando.Parameters.Add("@password", SqlDbType.NVarChar);
+            comando.Parameters["@password"].Value = password;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public SqlBinary BuscarPassword(string login)
+        {
+            SqlBinary palabra;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT password from usuarios " +
+                                 " WHERE login = @login";
+            comando.Parameters.Add("@login", SqlDbType.NVarChar);
+            comando.Parameters["@login"].Value = login;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    palabra = lector.GetSqlBinary(0);
+                }
+            }
+            conexion.Close();
+            return palabra;
         }
     }
 }

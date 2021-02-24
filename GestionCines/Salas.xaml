@@ -1,4 +1,5 @@
-﻿<Window x:Class="AsistenciaTecnica.Salas"
+﻿<Window
+    x:Class="AsistenciaTecnica.Salas"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -40,10 +41,8 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Editar"
-                        ToolTip="Modificar datos">Editar</Button>
-                <Button Command="local:CustomCommands.Insertar"
-                        ToolTip="Insertar nuevo registro">Añadir</Button>
+                <Button Command="local:CustomCommands.Editar" ToolTip="Modificar datos">Editar</Button>
+                <Button Command="local:CustomCommands.Insertar" ToolTip="Insertar nuevo registro">Añadir</Button>
             </StackPanel>
             <DataGrid
                 x:Name="salasDataGrid"
@@ -80,10 +79,18 @@
                 Content="Disponible"
                 IsChecked="{Binding Path=SALAFORMULARIO.DISPONIBLE, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar" IsCancel="True"
-                        ToolTip="Cancelar cambios">Cancelar</Button>
-                <Button Command="local:CustomCommands.GuardarCambios" IsDefault="True"
-                        ToolTip="Guardar cambios">Guardar</Button>
+                <Button
+                    Command="local:CustomCommands.Cancelar"
+                    IsCancel="True"
+                    ToolTip="Cancelar cambios">
+                    Cancelar
+                </Button>
+                <Button
+                    Command="local:CustomCommands.GuardarCambios"
+                    IsDefault="True"
+                    ToolTip="Guardar cambios">
+                    Guardar
+                </Button>
             </StackPanel>
         </StackPanel>
     </Grid>
