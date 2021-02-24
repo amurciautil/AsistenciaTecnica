@@ -77,6 +77,11 @@ namespace AsistenciaTecnica
             PRODUCTOS = bbdd.ObtenerProductos(false, false);
             return PRODUCTOS;
         }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

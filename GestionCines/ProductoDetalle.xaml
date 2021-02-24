@@ -8,7 +8,8 @@
         Title="Mantenimiento de Productos"
         Width="800"
         Height="480"
-    
+        MinWidth="800"
+        MinHeight="480"
         mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"
@@ -16,6 +17,8 @@
                         Executed="CommandBinding_Executed_CuardarCambios" />
         <CommandBinding Command="local:CustomCommands.Cancelar"
                         Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Ayuda"
+                        Executed="CommandBinding_Executed_Ayuda" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  Estilo para el modo  -->
@@ -51,8 +54,27 @@
             <Setter Property="FontSize"
                     Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBlock}" />
         </Style>
+        <Style x:Key="existenciasTextBox"
+               BasedOn="{StaticResource MaterialDesignTextBoxBase}"
+               TargetType="TextBox">
+            <Setter Property="Margin"
+                    Value="0,0,5,10" />
+            <Setter Property="Background"
+                    Value="#C1E7EB" />
+            <Setter Property="FontSize"
+                    Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=FORMULARIO.CONTROLEXISTENCIAS}"
+                             Value="False">
+                    <Setter Property="IsEnabled"
+                            Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Desactivar input del campo clave cuando es editar -->
         <Style x:Key="campoClave"
-              BasedOn="{StaticResource MaterialDesignTextBoxBase}" TargetType="TextBox">
+               BasedOn="{StaticResource MaterialDesignTextBoxBase}"
+               TargetType="TextBox">
             <Setter Property="Margin"
                     Value="0,0,5,10" />
             <Setter Property="Background"
@@ -123,16 +145,17 @@
             <StackPanel Grid.Row="7"
                         Grid.ColumnSpan="2"
                         Orientation="Horizontal">
-                <CheckBox Content="Control de existencias"
+                <CheckBox Content="Control de existencias" x:Name="existenciasCheckBox"
                           IsChecked="{Binding Path=FORMULARIO.CONTROLEXISTENCIAS, UpdateSourceTrigger=PropertyChanged}"
                           Style="{StaticResource checkBox}" />
                 <CheckBox Content="Producto activo"
                           IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}"
                           Style="{StaticResource checkBox}" />
             </StackPanel>
-            <TextBox Grid.Row="1" Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.IDCODIGO}" 
-                     Style="{StaticResource campoClave}"/>
+            <TextBox Grid.Row="1"
+                     Grid.Column="1"
+                     Text="{Binding Path=FORMULARIO.IDCODIGO}"
+                     Style="{StaticResource campoClave}" />
             <TextBox Grid.Row="2"
                      Grid.Column="1"
                      Text="{Binding Path=FORMULARIO.DESCRIPCION}" />
@@ -148,7 +171,8 @@
                       SelectedItem="{Binding Path=FORMULARIO.NOMBRETIPO, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Grid.Row="6"
                      Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.EXISTENCIAS}" />
+                     Text="{Binding Path=FORMULARIO.EXISTENCIAS}" 
+                     Style="{StaticResource existenciasTextBox}"/>
             <StackPanel Grid.Row="8"
                         Grid.ColumnSpan="2"
                         HorizontalAlignment="Center"
@@ -159,6 +183,14 @@
                 <Button Command="local:CustomCommands.GuardarCambios"
                         IsDefault="True"
                         ToolTip="Guardar cambios">Guardar</Button>
+                <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        Width="30"
+                        Height="30"
+                        Command="local:CustomCommands.Ayuda">
+                    <Image Source="Imagenes/ayuda2.ico"
+                           Width="28"
+                           Height="28" />
+                </Button>
             </StackPanel>
         </Grid>
     </Border>

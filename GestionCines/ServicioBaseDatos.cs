@@ -825,6 +825,26 @@ namespace AsistenciaTecnica
             conexion.Close();
             return existe;
         }
+        public AyudaEnLinea LeerAyuda(string codigo)
+        {
+            AyudaEnLinea ayuda = new AyudaEnLinea();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * FROM ayuda WHERE codigo = @codigo";
+            comando.Parameters.Add("@codigo", SqlDbType.VarChar);
+            comando.Parameters["@codigo"].Value = codigo;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    ayuda = new AyudaEnLinea(lector.GetString(0), lector.GetString(1), lector.GetString(2));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return ayuda;
+        }
     }
 
 }
