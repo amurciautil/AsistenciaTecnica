@@ -32,10 +32,6 @@ namespace AsistenciaTecnica
             {
                 PasswdNueva = nuevaPasswordBox.Password;
                 PasswdRepetir = repetirPasswordBox.Password;
-                //if (!Equals(PasswdNueva, PasswdRepetir))
-                //{
-                //    MessageBox.Show("Las password no son iguales", "Conformidad", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}else
                 if (PasswdNueva != PasswdRepetir)
                     MessageBox.Show("Las password no son iguales", "Conformidad", MessageBoxButton.OK, MessageBoxImage.Error);
                 else

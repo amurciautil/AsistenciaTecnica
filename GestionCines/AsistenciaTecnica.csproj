@@ -168,11 +168,6 @@
     <Compile Include="Perfiles.xaml.cs">
       <DependentUpon>Perfiles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sala.cs" />
-    <Compile Include="Salas.xaml.cs">
-      <DependentUpon>Salas.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SalasVM.cs" />
     <Compile Include="ServicioBaseDatos.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Usuarios.xaml.cs">
@@ -214,7 +209,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Pelicula.cs" />
     <Compile Include="CustomCommands.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -225,10 +219,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Provincias.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Salas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

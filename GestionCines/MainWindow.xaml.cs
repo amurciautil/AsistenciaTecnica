@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 
-
 namespace AsistenciaTecnica
 {
     /// <summary>
@@ -60,10 +59,6 @@ namespace AsistenciaTecnica
             e.CanExecute = true;
         }
 
-        private void CommandBinding_Executed_Salas(object sender, ExecutedRoutedEventArgs e)
-        {
-            _vm.Salas(this);
-        }
         private void CommandBinding_Executed_Cargo(object sender, ExecutedRoutedEventArgs e)
         {
             _vm.Cargo(this);

@@ -22,22 +22,13 @@ namespace AsistenciaTecnica
                 new KeyGesture(Key.F4,ModifierKeys.Alt)
             }
             );
-        public static readonly RoutedUICommand Salas = new RoutedUICommand
-            ("Salas",
-            "Salas",
-            typeof(CustomCommands),
-            new InputGestureCollection()
-            {
-                new KeyGesture(Key.S,ModifierKeys.Control)
-            }
-            );
         public static readonly RoutedUICommand Utilidades = new RoutedUICommand
             ("Utilidades",
             "Utilidades",
             typeof(CustomCommands),
             new InputGestureCollection()
             {
-                        new KeyGesture(Key.U,ModifierKeys.Control)
+                new KeyGesture(Key.U,ModifierKeys.Control)
             }
             );
         public static readonly RoutedUICommand Editar = new RoutedUICommand

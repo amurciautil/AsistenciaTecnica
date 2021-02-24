@@ -16,8 +16,6 @@
         Top="20"
         mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Salas"
-                        Executed="CommandBinding_Executed_Salas" />
         <CommandBinding Command="local:CustomCommands.Ayuda"
                         Executed="CommandBinding_Executed_Ayuda" />
         <CommandBinding CanExecute="CommandBinding_CanExecute_Salir"
@@ -111,12 +109,6 @@
                     </MenuItem>
                 </MenuItem>
                 <Separator />
-                <MenuItem Command="local:CustomCommands.Salas"
-                          Header="S_alas">
-                    <MenuItem.Icon>
-                        <Image Source="Imagenes/sala.ico" />
-                    </MenuItem.Icon>
-                </MenuItem>
                 <MenuItem Header="Utilidades...">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/config.ico" />

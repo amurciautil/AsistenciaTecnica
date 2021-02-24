@@ -8,7 +8,6 @@ namespace AsistenciaTecnica
 {
     class ServicioBaseDatos
     {
-        const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqlConnection conexion;
         public SqlCommand comando;
         public ServicioBaseDatos()
@@ -23,92 +22,6 @@ namespace AsistenciaTecnica
                 throw new MisExcepciones(ex.Message + "\nNo se ha podido establecer conexión con la base de datos");
             }
         }
-        public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles, bool insertarFilaVacia)
-        {
-            ObservableCollection<Sala> salas = new ObservableCollection<Sala>();
-            if (insertarFilaVacia)
-            {
-                salas.Add(new Sala());
-                salas[0].NUMERO = "Todas";
-            }
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT * from salas ";
-            // Si solo disponibles, además comprobaremos que no tengan más de MAX_SESIONES_POR_SALA
-            if (soloDisponibles)
-            {
-                comando.CommandText += "WHERE disponible = 1 " +
-                                       "and (select count(*) from sesiones where sala = idSala) < " + MAX_SESIONES_POR_SALA;
-            }
-            comando.CommandText += " ORDER BY numero";
-            SqlDataReader lector = comando.ExecuteReader();
-            if (lector.HasRows)
-            {
-                while (lector.Read())
-                {
-                    salas.Add(new Sala(lector.GetInt32(0), lector.GetString(1),
-                                       lector.GetInt32(2), lector.GetBoolean(3)));
-                }
-            }
-            lector.Close();
-            conexion.Close();
-            return salas;
-        }
-        public void InsertarSala(Sala salaFormulario)
-        {
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "INSERT INTO Salas VALUES(@numero,@capacidad,@disponible)";
-            comando.Parameters.Add("@numero", SqlDbType.NVarChar);
-            comando.Parameters["@numero"].Value = salaFormulario.NUMERO;
-            comando.Parameters.Add("@capacidad", SqlDbType.Int);
-            comando.Parameters["@capacidad"].Value = salaFormulario.CAPACIDAD;
-            comando.Parameters.Add("@disponible", SqlDbType.Int);
-            comando.Parameters["@disponible"].Value = salaFormulario.DISPONIBLE;
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-        public void ActualizarSala(Sala salaFormulario)
-        {
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "UPDATE salas SET numero = @numero, capacidad = @capacidad, disponible = @disponible" +
-                " WHERE idSala = @idSala";
-            comando.Parameters.Add("@idSala", SqlDbType.Int);
-            comando.Parameters["@idSala"].Value = salaFormulario.IDSALA;
-            comando.Parameters.Add("@numero", SqlDbType.NVarChar);
-            comando.Parameters["@numero"].Value = salaFormulario.NUMERO;
-            comando.Parameters.Add("@capacidad", SqlDbType.Int);
-            comando.Parameters["@capacidad"].Value = salaFormulario.CAPACIDAD;
-            comando.Parameters.Add("@disponible", SqlDbType.Int);
-            comando.Parameters["@disponible"].Value = salaFormulario.DISPONIBLE;
-            comando.ExecuteNonQuery();
-            conexion.Close();
-        }
-        // No puede haber dos salas con el mismo número
-        public bool ExisteSala(Sala salaFormulario)
-        {
-            bool existe = false;
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT numero FROM salas WHERE numero = @numero AND idSala <> @idSala";
-            comando.Parameters.Add("@numero", SqlDbType.NVarChar);
-            comando.Parameters["@numero"].Value = salaFormulario.NUMERO;
-            comando.Parameters.Add("@idSala", SqlDbType.Int);
-            comando.Parameters["@idSala"].Value = salaFormulario.IDSALA;
-            SqlDataReader lector = comando.ExecuteReader();
-            if (lector.HasRows)
-            {
-                while (lector.Read() && !existe)
-                {
-                    existe = true;
-                }
-            }
-            lector.Close();
-            conexion.Close();
-            return existe;
-        }
-
         public ObservableCollection<string> ObtenerDatosFiltro(string campo)
         {
             ObservableCollection<string> datos = new ObservableCollection<string>();
@@ -696,7 +609,7 @@ namespace AsistenciaTecnica
             comando = conexion.CreateCommand();
             comando.CommandText = "INSERT INTO usuarios " +
                     "VALUES(@login,HASHBYTES('SHA2_512', '" + formulario.PASSWORD + "'),@perfil,@empleado,@activo)";
-           comando = PreparaDatosUsuario(comando, formulario);
+            comando = PreparaDatosUsuario(comando, formulario);
             comando.ExecuteNonQuery();
             conexion.Close();
         }
@@ -737,7 +650,7 @@ namespace AsistenciaTecnica
             comando = conexion.CreateCommand();
             comando.CommandText = "UPDATE usuarios SET " +
             //    "password = HASHBYTES('SHA2_512', @password)" +
-                "password = HASHBYTES('SHA2_512', '"+password+"')" +
+                "password = HASHBYTES('SHA2_512', '" + password + "')" +
                 " WHERE login = @login";
             comando.Parameters.Add("@login", SqlDbType.NVarChar);
             comando.Parameters["@login"].Value = login;

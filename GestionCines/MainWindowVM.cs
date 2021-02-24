@@ -7,8 +7,6 @@ namespace AsistenciaTecnica
 {
     class MainWindowVM : INotifyPropertyChanged
     {
-        public bool HAYPELICULASCARGADAS { get; set; }
-        public ObservableCollection<Pelicula> PELICULAS { get; set; }
         private readonly ServicioBaseDatos bbdd;
         public MainWindowVM()
         {
@@ -17,16 +15,8 @@ namespace AsistenciaTecnica
 
         public void Ayuda()
         {
-            Help.ShowHelp(null, "GestionCines.chm");
-        }
-
-        public void Salas(MainWindow mainWindow)
-        {
-            Salas salas = new Salas();
-            salas.Owner = mainWindow;
-            salas.Show();
-        }
-      
+            Help.ShowHelp(null, "AsistenciaTecnica.chm");
+        }      
         public void Utilidades(MainWindow mainWindow)
         {
             Utilidades utilidades = new Utilidades();
