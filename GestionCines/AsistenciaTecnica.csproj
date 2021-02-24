@@ -138,6 +138,16 @@
       <DependentUpon>CambioPasswd.xaml</DependentUpon>
     </Compile>
     <Compile Include="CambioPasswdVM.cs" />
+    <Compile Include="ProductoDetalle.xaml.cs">
+      <DependentUpon>ProductoDetalle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoDetalleVM.cs" />
+    <Compile Include="Productos.xaml.cs">
+      <DependentUpon>Productos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProductosVM.cs" />
+    <Compile Include="TipoProducto.cs" />
+    <Compile Include="Producto.cs" />
     <Compile Include="EmpleadoDetalle.xaml.cs">
       <DependentUpon>EmpleadoDetalle.xaml</DependentUpon>
     </Compile>
@@ -215,6 +225,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Perfiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductoDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Productos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +340,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\password.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\producto.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />

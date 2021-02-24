@@ -632,8 +632,6 @@ namespace AsistenciaTecnica
             SqlCommand cmd = com;
             com.Parameters.Add("@login", SqlDbType.NVarChar);
             com.Parameters["@login"].Value = formulario.LOGIN;
-            //cmd.Parameters.Add("@password", SqlDbType.NVarChar);
-            //cmd.Parameters["@password"].Value = formulario.PASSWORD;
             cmd.Parameters.Add("@perfil", SqlDbType.NVarChar);
             cmd.Parameters["@perfil"].Value = ObtenerClavesPrimarias("idPerfil", "perfiles", "descripcion",
                                                                         formulario.NOMBREPERFIL,
@@ -649,7 +647,6 @@ namespace AsistenciaTecnica
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "UPDATE usuarios SET " +
-            //    "password = HASHBYTES('SHA2_512', @password)" +
                 "password = HASHBYTES('SHA2_512', '" + password + "')" +
                 " WHERE login = @login";
             comando.Parameters.Add("@login", SqlDbType.NVarChar);
@@ -679,5 +676,155 @@ namespace AsistenciaTecnica
             conexion.Close();
             return palabra;
         }
+        public ObservableCollection<Producto> ObtenerProductos(bool insertarFilaVacia,bool soloActivos)
+        {
+            ObservableCollection<Producto> productos = new ObservableCollection<Producto>();
+            if (insertarFilaVacia)
+            {
+                productos.Add(new Producto());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT pr.codigo," +
+                "pr.descripcion," +
+                "pr.descripcionAmpliada," +
+                "pr.precioVenta," +
+                "pr.tipoProducto," +
+                "pr.controlExistencias," +
+                "pr.existencias," +
+                "pr.activo," +
+                "tp.nombre" +
+                " from productos pr JOIN tipoproducto tp " +
+                 " ON pr.tipoProducto = tp.idTipo";
+            if (soloActivos)
+                comando.CommandText += " WHERE activo = 1";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    productos.Add(new Producto(lector.GetString(0),
+                        lector.GetString(1),
+                        lector.GetString(2),
+                        (double)lector.GetDecimal(3),
+                        new TipoProducto(lector.GetInt32(4), lector.GetString(8)),
+                        lector.GetBoolean(5),
+                        (double)lector.GetDecimal(6),
+                        lector.GetBoolean(7)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return productos;
+        }
+        public void BorrarProducto(Producto seleccionado)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM productos WHERE codigo = @codigo";
+            comando.Parameters.Add("@codigo", SqlDbType.Int);
+            comando.Parameters["@codigo"].Value = seleccionado.IDCODIGO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public ObservableCollection<TipoProducto> ObtenerTipoProducto(bool insertarFilaVacia)
+        {
+            ObservableCollection<TipoProducto> lista = new ObservableCollection<TipoProducto>();
+            if (insertarFilaVacia)
+            {
+                lista.Add(new TipoProducto());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from tipoProducto";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    lista.Add(new TipoProducto(lector.GetInt32(0), lector.GetString(1)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return lista;
+        }
+        public void InsertarProducto(Producto formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO productos " +
+                    "VALUES(@codigo,@descripcion,@descripcionAmpliada,@precioVenta,@tipoProducto,@controlExistencias," +
+                    "@existencias,@activo)";
+            comando = PreparaDatosProducto(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarProducto(Producto formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE productos SET " +
+                "descripcion = @descripcion," +
+                "descripcionAmpliada = @descripcionAmpliada," +
+                "precioVenta = @precioVenta," +
+                "tipoProducto = @tipoProducto," +
+                "controlExistencias = @controlExistencias," +
+                "existencias = @existencias," +
+                "activo = @activo" +
+                " WHERE codigo = @codigo";
+            comando = PreparaDatosProducto(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public SqlCommand PreparaDatosProducto(SqlCommand com, Producto formulario)
+        {
+            SqlCommand cmd = com;
+            // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
+            string descripcionAmpliada;
+            if (formulario.DESCRIPCIONAMPLIADA == null)
+                descripcionAmpliada = "";
+            else
+                descripcionAmpliada = formulario.DESCRIPCIONAMPLIADA;
+            com.Parameters.Add("@codigo", SqlDbType.NVarChar);
+            com.Parameters["@codigo"].Value = formulario.IDCODIGO;
+            cmd.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+            com.Parameters["@descripcion"].Value = formulario.DESCRIPCION;
+            cmd.Parameters.Add("@descripcionAmpliada", SqlDbType.NVarChar);
+            com.Parameters["@descripcionAmpliada"].Value = descripcionAmpliada;
+            cmd.Parameters.Add("@precioVenta", SqlDbType.Decimal);
+            com.Parameters["@precioVenta"].Value = formulario.PRECIOVENTA;
+            cmd.Parameters.Add("@tipoProducto", SqlDbType.Int);
+            com.Parameters["@tipoProducto"].Value = formulario.IDTIPOPRODUCTO;
+            cmd.Parameters.Add("@controlExistencias", SqlDbType.Int);
+            com.Parameters["@controlExistencias"].Value = formulario.CONTROLEXISTENCIAS;
+            cmd.Parameters.Add("@existencias", SqlDbType.Decimal);
+            com.Parameters["@existencias"].Value = formulario.EXISTENCIAS;
+            cmd.Parameters.Add("@activo", SqlDbType.Int);
+            com.Parameters["@activo"].Value = formulario.ACTIVO;
+            return cmd;
+        }
+        public bool ExisteProducto(Producto formulario)
+        {
+            bool existe = false;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT codigo FROM productos WHERE codigo = @codigo";
+            comando.Parameters.Add("@codigo", SqlDbType.VarChar);
+            comando.Parameters["@codigo"].Value = formulario.IDCODIGO;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read() && !existe)
+                {
+                    existe = true;
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return existe;
+        }
     }
+
 }

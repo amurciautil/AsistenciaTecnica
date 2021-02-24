@@ -88,6 +88,12 @@ namespace AsistenciaTecnica
                 hayCambio = cambioPasswd.HayCambio;
             return hayCambio;
         }
+        public void Productos(MainWindow mainWindow)
+        {
+            Productos productos = new Productos();
+            productos.Owner = mainWindow;
+            productos.Show();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

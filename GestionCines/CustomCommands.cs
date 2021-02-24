@@ -143,6 +143,15 @@ namespace AsistenciaTecnica
               new KeyGesture(Key.T,ModifierKeys.Alt)
            }
            );
+        public static readonly RoutedUICommand Producto = new RoutedUICommand
+           ("Producto",
+           "Producto",
+           typeof(CustomCommands),
+           new InputGestureCollection()
+           {
+                      new KeyGesture(Key.O,ModifierKeys.Alt)
+           }
+           );
     }
 
 }

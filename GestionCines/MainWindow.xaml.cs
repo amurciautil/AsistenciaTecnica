@@ -99,5 +99,10 @@ namespace AsistenciaTecnica
         {
             AutenticarUsuario(false);
         }
+
+        private void CommandBinding_Executed_Producto(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Productos(this);
+        }
     }
 }
