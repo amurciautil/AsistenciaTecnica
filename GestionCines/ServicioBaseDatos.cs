@@ -676,7 +676,7 @@ namespace AsistenciaTecnica
             conexion.Close();
             return palabra;
         }
-        public ObservableCollection<Producto> ObtenerProductos(bool insertarFilaVacia,bool soloActivos)
+        public ObservableCollection<Producto> ObtenerProductos(bool insertarFilaVacia, bool soloActivos)
         {
             ObservableCollection<Producto> productos = new ObservableCollection<Producto>();
             if (insertarFilaVacia)
@@ -845,6 +845,235 @@ namespace AsistenciaTecnica
             conexion.Close();
             return ayuda;
         }
+        public ObservableCollection<Pedido> ObtenerPedidos(string filtro,bool insertarFilaVacia)
+        {
+            ObservableCollection<Pedido> pedidos = new ObservableCollection<Pedido>();
+            if (insertarFilaVacia)
+            {
+                pedidos.Add(new Pedido());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT pe.idPedido," +
+                "pe.descripcion," +
+                "pe.telefono," +
+                "pe.nombre," +
+                "pe.apellidos," +
+                "pe.direccion," +
+                "pe.poblacion," +
+                "pe.codigoPostal," +
+                "pe.provincia, " +
+                "pe.mail, " +
+                "pe.usuario, " +
+                "pe.fechaIntroduccion, " +
+                "pe.fechacierre, " +
+                "pe.situacion, " +
+                "pe.tipoPedido, " +
+                "pe.enGarantia, " +
+                "pr.nombre, " +
+                "si.descripcion, " +
+                "tp.descripcion " +
+                " from pedidos pe JOIN provincias pr " +
+                " ON pe.provincia = pr.idProvincia " +
+                " JOIN situacionpedidos si " +
+                " ON pe.situacion = si.idSituacion " +
+                " JOIN tipopedido tp " +
+                " ON pe.tipoPedido = tp.idTipo " +
+                filtro;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    DateTime fechaCierre;
+                    if (lector.IsDBNull(lector.GetOrdinal("fechaCierre")))
+                    {
+                        fechaCierre = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        fechaCierre = lector.GetDateTime(12);
+                    }
+                        pedidos.Add(new Pedido(lector.GetInt32(0),
+                                  lector.GetString(1),
+                                  lector.GetString(2),
+                                  lector.GetString(3),
+                                  lector.GetString(4),
+                                  lector.GetString(5),
+                                  lector.GetString(6),
+                                  lector.GetString(7),
+                                  new Provincia(lector.GetString(8), lector.GetString(16)),
+                                  lector.GetString(9),
+                                  lector.GetString(10),
+                                  lector.GetDateTime(11),
+                                  fechaCierre,
+                                  new SituacionPedido(lector.GetInt32(13), lector.GetString(17)),
+                                  new TipoPedido(lector.GetInt32(14), lector.GetString(18)),
+                                  lector.GetBoolean(15)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return pedidos;
+        }
+        public ObservableCollection<TipoPedido> ObtenerTipoPedido(bool insertarFilaVacia)
+        {
+            ObservableCollection<TipoPedido> lista = new ObservableCollection<TipoPedido>();
+            if (insertarFilaVacia)
+            {
+                lista.Add(new TipoPedido());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from tipopedido";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    lista.Add(new TipoPedido(lector.GetInt32(0), lector.GetString(1)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return lista;
+        }
+        public ObservableCollection<SituacionPedido> ObtenerSituacionPedidos(bool insertarFilaVacia)
+        {
+            ObservableCollection<SituacionPedido> lista = new ObservableCollection<SituacionPedido>();
+            if (insertarFilaVacia)
+            {
+                lista.Add(new SituacionPedido());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from situacionpedidos";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    lista.Add(new SituacionPedido(lector.GetInt32(0), lector.GetString(1)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return lista;
+        }
+        public void InsertarPedido(Pedido formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO pedidos " +
+                    "VALUES (@descripcion," +
+                    "@telefono," +
+                    "@nombre," +
+                    "@apellidos," +
+                    "@direccion," +
+                    "@poblacion," +
+                    "@codigoPostal," +
+                    "@provincia," +
+                    "@mail," +
+                    "@usuario," +
+                    "@fechaIntroduccion," +
+                    "@fechaCierre," +
+                    "@situacion," +
+                    "@tipoPedido," +
+                    "@enGarantia)";
+            comando = PreparaDatosPedido(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarPedido(Pedido formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE pedidos SET " +
+                "descripcion = @descripcion," +
+                "telefono = @telefono," +
+                "nombre = @nombre," +
+                "apellidos = @apellidos," +
+                "direccion = @direccion," +
+                "poblacion = @poblacion," +
+                "codigoPostal = @codigoPostal," +
+                "provincia = @provincia," +
+                "mail = @mail," +
+                "situacion = @situacion," +
+                "tipoPedido = @tipoPedido," +
+                "enGarantia = @enGarantia," +
+                " WHERE idPedido = @idPedido";
+
+            comando = PreparaDatosPedido(comando, formulario);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario)
+        {
+            SqlCommand cmd = com;
+            // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
+            string codigoPostal,apellidos, mail,usuario;
+            if (formulario.CODIGOPOSTAL == null)
+                codigoPostal = "";
+            else
+                codigoPostal = formulario.CODIGOPOSTAL;
+            if (formulario.APELLIDOS == null)
+                apellidos = "";
+            else
+                apellidos = formulario.APELLIDOS;
+            if (formulario.MAIL == null)
+                mail = "";
+            else
+                mail = formulario.MAIL;
+            if (formulario.USUARIO == null)
+                usuario = "";
+            else
+                usuario = formulario.USUARIO;
+            com.Parameters.Add("@idPedido", SqlDbType.Int);
+            com.Parameters["@idPedido"].Value = formulario.IDPEDIDO;
+            cmd.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+            com.Parameters["@descripcion"].Value = formulario.DESCRIPCION;
+            cmd.Parameters.Add("@telefono", SqlDbType.NVarChar);
+            com.Parameters["@telefono"].Value = formulario.TELEFONO;
+            cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
+            com.Parameters["@nombre"].Value = formulario.NOMBRE;
+            cmd.Parameters.Add("@apellidos", SqlDbType.NVarChar);
+            com.Parameters["@apellidos"].Value = apellidos;
+            cmd.Parameters.Add("@direccion", SqlDbType.NVarChar);
+            com.Parameters["@direccion"].Value = formulario.DIRECCION;
+            cmd.Parameters.Add("@poblacion", SqlDbType.NVarChar);
+            com.Parameters["@poblacion"].Value = formulario.POBLACION;
+            cmd.Parameters.Add("@codigoPostal", SqlDbType.NVarChar);
+            com.Parameters["@codigoPostal"].Value = codigoPostal;
+            cmd.Parameters.Add("@provincia", SqlDbType.NVarChar);
+            com.Parameters["@provincia"].Value = formulario.PROVINCIA;
+            cmd.Parameters.Add("@mail", SqlDbType.NVarChar);
+            com.Parameters["@mail"].Value = mail;
+            cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
+            com.Parameters["@usuario"].Value = usuario;
+            cmd.Parameters.Add("@fechaIntroduccion", SqlDbType.DateTime);
+            com.Parameters["@fechaIntroduccion"].Value = DateTime.Today;
+            cmd.Parameters.Add("@fechaCierre", SqlDbType.DateTime);
+            com.Parameters["@fechaCierre"].Value = DateTime.MinValue;
+            cmd.Parameters.Add("@situacion", SqlDbType.Int);
+            com.Parameters["@situacion"].Value = formulario.SITUACION;
+            cmd.Parameters.Add("@tipoPedido", SqlDbType.Int);
+            com.Parameters["@tipoPedido"].Value = formulario.TIPOPEDIDO;
+            cmd.Parameters.Add("@enGarantia", SqlDbType.Int);
+            com.Parameters["@enGarantia"].Value = formulario.ENGARANTIA;
+            return cmd;
+        }
+        public void BorrarPedido(Pedido seleccionado)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM pedidos WHERE idPedido = @idPedido";
+            comando.Parameters.Add("@idPedido", SqlDbType.Int);
+            comando.Parameters["@idPedido"].Value = seleccionado.IDPEDIDO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        
     }
 
 }

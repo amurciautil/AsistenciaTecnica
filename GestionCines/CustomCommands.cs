@@ -149,9 +149,18 @@ namespace AsistenciaTecnica
            typeof(CustomCommands),
            new InputGestureCollection()
            {
-                      new KeyGesture(Key.O,ModifierKeys.Alt)
+                      new KeyGesture(Key.E,ModifierKeys.Control)
            }
            );
+        public static readonly RoutedUICommand Pedido = new RoutedUICommand
+            ("Pedido",
+            "Pedido",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.E,ModifierKeys.Control)
+            }
+            );
     }
 
 }

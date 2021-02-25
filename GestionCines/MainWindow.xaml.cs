@@ -104,5 +104,10 @@ namespace AsistenciaTecnica
         {
             _vm.Productos(this);
         }
+
+        private void CommandBinding_Executed_Pedido(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Pedidos(this);
+        }
     }
 }

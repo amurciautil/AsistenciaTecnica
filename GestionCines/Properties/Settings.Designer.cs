@@ -124,5 +124,14 @@ namespace AsistenciaTecnica.Properties {
                 this["botonInterno"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("S")]
+        public string modoDesarrollo {
+            get {
+                return ((string)(this["modoDesarrollo"]));
+            }
+        }
     }
 }

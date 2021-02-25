@@ -31,8 +31,8 @@
         <CommandBinding Command="local:CustomCommands.Usuario" Executed="CommandBinding_Executed_Usuario" />
         <CommandBinding Command="local:CustomCommands.Password" Executed="CommandBinding_Executed_Password" />
         <CommandBinding Command="local:CustomCommands.CambioUsuario" Executed="CommandBinding_Executed_CambioUsuario" />
-        <CommandBinding Command="local:CustomCommands.Producto"
-                        Executed="CommandBinding_Executed_Producto" />
+        <CommandBinding Command="local:CustomCommands.Producto" Executed="CommandBinding_Executed_Producto" />
+        <CommandBinding Command="local:CustomCommands.Pedido" Executed="CommandBinding_Executed_Pedido" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  TextBlock StatusBar  -->
@@ -118,6 +118,13 @@
                 <MenuItem Command="local:CustomCommands.Salir" Header="_Salir">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/exit.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Ped_idos">
+                <MenuItem Command="local:CustomCommands.Pedido" Header="Gestión de ped_idos">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/pedido.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

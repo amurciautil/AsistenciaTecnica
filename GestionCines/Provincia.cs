@@ -6,6 +6,7 @@ namespace AsistenciaTecnica
     {
         public string IDPROVINCIA { get; set; }
         public string NOMBRE { get; set; }
+        public string CODIGONOMBRE { get; set; }
 
         public Provincia()
         {  
@@ -14,6 +15,7 @@ namespace AsistenciaTecnica
         {
             IDPROVINCIA = idProvincia;
             NOMBRE = nombre;
+            CODIGONOMBRE = idProvincia + "-" + nombre;
         }
 
         public Provincia(Provincia provincia)

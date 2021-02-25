@@ -94,6 +94,12 @@ namespace AsistenciaTecnica
             productos.Owner = mainWindow;
             productos.Show();
         }
+        public void Pedidos(MainWindow mainWindow)
+        {
+            Pedidos pedidos = new Pedidos();
+            pedidos.Owner = mainWindow;
+            pedidos.Show();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
