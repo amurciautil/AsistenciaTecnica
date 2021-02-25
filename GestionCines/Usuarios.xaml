@@ -32,6 +32,7 @@
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
             Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  Estilo para el modo  -->
@@ -73,84 +74,124 @@
             <Setter Property="Margin" Value="0,5,0,10" />
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="250" />
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
                 <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Borrar"
-                    Content="Borrar"
-                    ToolTip="Eliminar registro seleccionado" />
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Borrar registro seleccionado">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/borrar.ico" />
+                </Button>
                 <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Editar"
-                    Content="Editar"
-                    ToolTip="Modificar registro seleccionado" />
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Modificar el registro seleccionado">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/editar.ico" />
+                </Button>
                 <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Insertar"
-                    Content="Añadir"
-                    ToolTip="Insertar un nuevo registro" />
-            </StackPanel>
-            <DataGrid
-                x:Name="sesionesDataGrid"
-                Margin="10,10,0,10"
-                AlternatingRowBackground="LightBlue"
-                AlternationCount="2"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserDeleteRows="False"
-                ColumnWidth="*"
-                IsReadOnly="True"
-                ItemsSource="{Binding USUARIOS}"
-                SelectedItem="{Binding SELECCIONADA}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        MinWidth="150"
-                        Binding="{Binding Path=LOGIN}"
-                        Header="Login" />
-                    <DataGridTextColumn
-                        MinWidth="300"
-                        Binding="{Binding Path=NOMBREEMPLEADO}"
-                        Header="Nombre" />
-                    <DataGridTextColumn
-                        MinWidth="150"
-                        Binding="{Binding Path=NOMBREPERFIL}"
-                        Header="Perfil" />
-                    <DataGridCheckBoxColumn
-                        Width="100"
-                        Binding="{Binding Path=ACTIVO}"
-                        Header="Activo" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
-        <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
-            <TextBlock Style="{StaticResource textoModo}" />
-            <TextBlock Text="Login" />
-            <TextBox Style="{StaticResource campoClave}" Text="{Binding Path=FORMULARIO.LOGIN, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Password" />
-            <PasswordBox
-                x:Name="passwordPasswordBox"
-                MaxLength="{Binding Source={x:Static properties:Settings.Default}, Path=maxLengthPasswd}"
-                Style="{StaticResource campoContraseña}" />
-            <TextBlock Text="Perfil" />
-            <ComboBox ItemsSource="{Binding PERFILESNOMBRE}" SelectedItem="{Binding Path=FORMULARIO.NOMBREPERFIL, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Empleado" />
-            <ComboBox ItemsSource="{Binding EMPLEADOSNOMBRE}" SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox Content="Usuario activo" IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Insertar nuevo registro">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/insertar.ico" />
+                </Button>
                 <Button
-                    Command="local:CustomCommands.Cancelar"
-                    Content="Cancelar"
-                    IsCancel="True"
-                    ToolTip="Cancelar cambios" />
-                <Button
-                    Command="local:CustomCommands.GuardarCambios"
-                    Content="Guardar"
-                    IsDefault="True"
-                    ToolTip="Guardar cambios" />
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Salir"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Salir">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/exit.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <DataGrid
+                    x:Name="sesionesDataGrid"
+                    Margin="10,10,0,10"
+                    AlternatingRowBackground="LightBlue"
+                    AlternationCount="2"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    ColumnWidth="*"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding USUARIOS}"
+                    SelectedItem="{Binding SELECCIONADA}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            MinWidth="150"
+                            Binding="{Binding Path=LOGIN}"
+                            Header="Login" />
+                        <DataGridTextColumn
+                            MinWidth="300"
+                            Binding="{Binding Path=NOMBREEMPLEADO}"
+                            Header="Nombre" />
+                        <DataGridTextColumn
+                            MinWidth="150"
+                            Binding="{Binding Path=NOMBREPERFIL}"
+                            Header="Perfil" />
+                        <DataGridCheckBoxColumn
+                            Width="100"
+                            Binding="{Binding Path=ACTIVO}"
+                            Header="Activo" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
+                <TextBlock Style="{StaticResource textoModo}" />
+                <TextBlock Text="Login" />
+                <TextBox Style="{StaticResource campoClave}" Text="{Binding Path=FORMULARIO.LOGIN, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Password" />
+                <PasswordBox
+                    x:Name="passwordPasswordBox"
+                    MaxLength="{Binding Source={x:Static properties:Settings.Default}, Path=maxLengthPasswd}"
+                    Style="{StaticResource campoContraseña}" />
+                <TextBlock Text="Perfil" />
+                <ComboBox ItemsSource="{Binding PERFILESNOMBRE}" SelectedItem="{Binding Path=FORMULARIO.NOMBREPERFIL, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Empleado" />
+                <ComboBox ItemsSource="{Binding EMPLEADOSNOMBRE}" SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox Content="Usuario activo" IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        Command="local:CustomCommands.Cancelar"
+                        Content="Cancelar"
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios" />
+                    <Button
+                        Command="local:CustomCommands.GuardarCambios"
+                        Content="Guardar"
+                        IsDefault="True"
+                        ToolTip="Guardar cambios" />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

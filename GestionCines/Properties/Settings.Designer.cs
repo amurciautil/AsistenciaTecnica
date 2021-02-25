@@ -100,5 +100,29 @@ namespace AsistenciaTecnica.Properties {
                 return ((int)(this["minLengthPasswd"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int botonExterno {
+            get {
+                return ((int)(this["botonExterno"]));
+            }
+            set {
+                this["botonExterno"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public int botonInterno {
+            get {
+                return ((int)(this["botonInterno"]));
+            }
+            set {
+                this["botonInterno"] = value;
+            }
+        }
     }
 }

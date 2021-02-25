@@ -44,7 +44,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <!-- CheckBox -->
+        <!--  CheckBox  -->
         <Style x:Key="checkBox"
                TargetType="CheckBox">
             <Setter Property="Margin"
@@ -71,7 +71,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <!-- Desactivar input del campo clave cuando es editar -->
+        <!--  Desactivar input del campo clave cuando es editar  -->
         <Style x:Key="campoClave"
                BasedOn="{StaticResource MaterialDesignTextBoxBase}"
                TargetType="TextBox">
@@ -90,108 +90,125 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Border Margin="5"
-            Padding="20"
-            BorderBrush="Black"
-            BorderThickness="2"
-            CornerRadius="5"
-            Background="#74DDF8">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition Height="60" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="190" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0"
-                       Grid.ColumnSpan="2"
-                       Style="{StaticResource textoModo}">
-                <TextBlock.Effect>
-                    <DropShadowEffect />
-                </TextBlock.Effect></TextBlock>
-            <TextBlock Grid.Row="1"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Código" />
-            <TextBlock Grid.Row="2"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Descripción" />
-            <TextBlock Grid.Row="3"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Descripción ampliada" />
-            <TextBlock Grid.Row="4"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Precio de venta" />
-            <TextBlock Grid.Row="5"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Tipo de producto" />
-            <TextBlock Grid.Row="6"
-                       Grid.Column="0"
-                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                       Text="Existencias" />
-            <StackPanel Grid.Row="7"
-                        Grid.ColumnSpan="2"
-                        Orientation="Horizontal">
-                <CheckBox Content="Control de existencias" x:Name="existenciasCheckBox"
-                          IsChecked="{Binding Path=FORMULARIO.CONTROLEXISTENCIAS, UpdateSourceTrigger=PropertyChanged}"
-                          Style="{StaticResource checkBox}" />
-                <CheckBox Content="Producto activo"
-                          IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}"
-                          Style="{StaticResource checkBox}" />
-            </StackPanel>
-            <TextBox Grid.Row="1"
-                     Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.IDCODIGO}"
-                     Style="{StaticResource campoClave}" />
-            <TextBox Grid.Row="2"
-                     Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.DESCRIPCION}" />
-            <TextBox Grid.Row="3"
-                     Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.DESCRIPCIONAMPLIADA}" />
-            <TextBox Grid.Row="4"
-                     Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.PRECIOVENTA}" />
-            <ComboBox Grid.Row="5"
-                      Grid.Column="1"
-                      ItemsSource="{Binding TIPOSNOMBRE}"
-                      SelectedItem="{Binding Path=FORMULARIO.NOMBRETIPO, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Grid.Row="6"
-                     Grid.Column="1"
-                     Text="{Binding Path=FORMULARIO.EXISTENCIAS}" 
-                     Style="{StaticResource existenciasTextBox}"/>
-            <StackPanel Grid.Row="8"
-                        Grid.ColumnSpan="2"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar"
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Cancelar"
                         IsCancel="True"
-                        ToolTip="Cancelar cambios">Cancelar</Button>
-                <Button Command="local:CustomCommands.GuardarCambios"
-                        IsDefault="True"
-                        ToolTip="Guardar cambios">Guardar</Button>
-                <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        Width="30"
-                        Height="30"
-                        Command="local:CustomCommands.Ayuda">
-                    <Image Source="Imagenes/ayuda2.ico"
-                           Width="28"
-                           Height="28" />
+                        ToolTip="Cancelar cambios"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/cancelar.ico" />
                 </Button>
-            </StackPanel>
-        </Grid>
-    </Border>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.GuardarCambios"
+                        IsDefault="True"
+                        ToolTip="Guardar cambios"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/guardar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Ayuda"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/ayuda.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Border Margin="5"
+                Padding="20"
+                Background="#74DDF8"
+                BorderBrush="Black"
+                BorderThickness="2"
+                CornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.ColumnSpan="2"
+                           Style="{StaticResource textoModo}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect />
+                    </TextBlock.Effect></TextBlock>
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Código" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Descripción" />
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Descripción ampliada" />
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Precio de venta" />
+                <TextBlock Grid.Row="5"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Tipo de producto" />
+                <TextBlock Grid.Row="6"
+                           Grid.Column="0"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Text="Existencias" />
+                <StackPanel Grid.Row="7"
+                            Grid.ColumnSpan="2"
+                            Orientation="Horizontal">
+                    <CheckBox x:Name="existenciasCheckBox"
+                              Content="Control de existencias"
+                              IsChecked="{Binding Path=FORMULARIO.CONTROLEXISTENCIAS, UpdateSourceTrigger=PropertyChanged}"
+                              Style="{StaticResource checkBox}" />
+                    <CheckBox Content="Producto activo"
+                              IsChecked="{Binding Path=FORMULARIO.ACTIVO, UpdateSourceTrigger=PropertyChanged}"
+                              Style="{StaticResource checkBox}" />
+                </StackPanel>
+                <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Style="{StaticResource campoClave}"
+                         Text="{Binding Path=FORMULARIO.IDCODIGO}" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         Text="{Binding Path=FORMULARIO.DESCRIPCION}" />
+                <TextBox Grid.Row="3"
+                         Grid.Column="1"
+                         Text="{Binding Path=FORMULARIO.DESCRIPCIONAMPLIADA}" />
+                <TextBox Grid.Row="4"
+                         Grid.Column="1"
+                         Text="{Binding Path=FORMULARIO.PRECIOVENTA}" />
+                <ComboBox Grid.Row="5"
+                          Grid.Column="1"
+                          ItemsSource="{Binding TIPOSNOMBRE}"
+                          SelectedItem="{Binding Path=FORMULARIO.NOMBRETIPO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Grid.Row="6"
+                         Grid.Column="1"
+                         Style="{StaticResource existenciasTextBox}"
+                         Text="{Binding Path=FORMULARIO.EXISTENCIAS}" />
+            </Grid>
+        </Border>
+    </DockPanel>
 </Window>

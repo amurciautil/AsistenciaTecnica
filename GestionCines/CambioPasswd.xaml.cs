@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlTypes;
 using System.Windows;
+using System.Windows.Input;
 
 namespace AsistenciaTecnica
 {
@@ -51,6 +52,10 @@ namespace AsistenciaTecnica
             }
             else
                 MessageBox.Show("Debe indicar la password a cambiar", "Conformidad", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+        private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ayuda("CAMBCONTRASE");
         }
     }
 }

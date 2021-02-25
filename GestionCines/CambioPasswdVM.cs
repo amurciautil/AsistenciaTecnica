@@ -23,6 +23,11 @@ namespace AsistenciaTecnica
         {
             return bbdd.BuscarPassword(login);
         }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

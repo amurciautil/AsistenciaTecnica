@@ -1,39 +1,45 @@
-﻿<Window x:Class="AsistenciaTecnica.Ayuda"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AsistenciaTecnica"
-        mc:Ignorable="d"
-        Title="Ayuda"
-        Height="235"
-        Width="370"
-        MinHeight="235"
-        MinWidth="370"
-        Background="#81D4FA"
-        ShowInTaskbar="False"
-        Icon="Imagenes/ayuda2.ico">
+﻿<Window
+    x:Class="AsistenciaTecnica.Ayuda"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Ayuda"
+    Width="370"
+    Height="235"
+    MinWidth="370"
+    MinHeight="235"
+    Background="#81D4FA"
+    Icon="Imagenes/ayuda.ico"
+    ShowInTaskbar="False"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Aceptar"
-                        Executed="CommandBinding_Executed_Aceptar" />
+        <CommandBinding Command="local:CustomCommands.Aceptar" Executed="CommandBinding_Executed_Aceptar" />
     </Window.CommandBindings>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top"
-                   x:Name="tituloTextBlock"
-                   Text="{Binding Path=FORMULARIO.DESCRIPCION}"
-                   Style="{StaticResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" FontWeight="DemiBold"/>
-        <StackPanel Margin="0,10,0,0"
-                    DockPanel.Dock="Bottom"
-                    Style="{StaticResource StackPanelBottom}">
-            <Button Command="local:CustomCommands.Aceptar"
-                    Margin="0,0,0,10">Volver</Button>
+        <TextBlock
+            x:Name="tituloTextBlock"
+            HorizontalAlignment="Center"
+            DockPanel.Dock="Top"
+            FontWeight="DemiBold"
+            Style="{StaticResource MaterialDesignBody1TextBlock}"
+            Text="{Binding Path=FORMULARIO.DESCRIPCION}" />
+        <StackPanel
+            Margin="0,10,0,0"
+            DockPanel.Dock="Bottom"
+            Style="{StaticResource StackPanelBottom}">
+            <Button Margin="0,0,0,10" Command="local:CustomCommands.Aceptar">Volver</Button>
         </StackPanel>
-        <Border CornerRadius="5"
-                Margin="5"
-                Padding="5">
-            <TextBlock x:Name="detalleTextBlock"
-                       Text="{Binding Path=FORMULARIO.AMPLIACION}"
-                       TextWrapping="Wrap" TextAlignment="Justify"/>
+        <Border
+            Margin="5"
+            Padding="5"
+            CornerRadius="5">
+            <TextBlock
+                x:Name="detalleTextBlock"
+                Text="{Binding Path=FORMULARIO.AMPLIACION}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
         </Border>
     </DockPanel>
 </Window>

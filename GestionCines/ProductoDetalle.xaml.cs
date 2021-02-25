@@ -43,7 +43,6 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Cancelar(object sender, ExecutedRoutedEventArgs e)
         {
-            this.Close();
             MessageBoxResult result = MessageBox.Show("¿Esta seguro desea salir y volver a lista de productos?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
