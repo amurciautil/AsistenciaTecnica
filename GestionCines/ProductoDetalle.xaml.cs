@@ -56,7 +56,7 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTPRODUCTO");
+            _vm.Ayuda("MANTPEDIDODETALLE");
         }
     }
 }

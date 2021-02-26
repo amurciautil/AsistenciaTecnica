@@ -79,8 +79,8 @@ namespace AsistenciaTecnica
                 FORMULARIO.POBLACION != null &&
                 FORMULARIO.POBLACION.Length > 0 &&
                 FORMULARIO.NOMBREPROVINCIA != null &&
-                FORMULARIO.SITUACION != null &&
-                FORMULARIO.TIPOPEDIDO != null)
+                FORMULARIO.NOMBRESITUACION != null &&
+                FORMULARIO.NOMBRETIPOPEDIDO != null)
                 correcto = true;
             return correcto;
         }
@@ -101,13 +101,34 @@ namespace AsistenciaTecnica
                 bbdd.ActualizarPedido(FORMULARIO);
             FORMULARIO = new Pedido();
 
-            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA,false);
+            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
             return PEDIDOS;
         }
         public void Ayuda(string codigoAyuda)
         {
             Ayuda ayuda = new Ayuda(codigoAyuda);
             ayuda.ShowDialog();
+        }
+        public void Buscar()
+        {
+            Telefono telefono = bbdd.ObtenerTelefono(FORMULARIO.TELEFONO);
+            if (telefono.TELEFONO != null && telefono.TELEFONO.Length >= 9)
+            {
+                FORMULARIO.TELEFONO = telefono.TELEFONO;
+                FORMULARIO.NOMBRE = telefono.NOMBRE;
+                FORMULARIO.APELLIDOS = telefono.APELLIDOS;
+                FORMULARIO.DIRECCION = telefono.DIRECCION;
+                FORMULARIO.POBLACION = telefono.POBLACION;
+                FORMULARIO.CODIGOPOSTAL = telefono.CODIGOPOSTAL;
+                FORMULARIO.PROVINCIA = telefono.PROVINCIA;
+                FORMULARIO.IDPROVINCIA = telefono.IDPROVINCIA;
+                FORMULARIO.NOMBREPROVINCIA = telefono.NOMBREPROVINCIA;
+                FORMULARIO.MAIL = telefono.MAIL;
+            }
+        }
+        public bool HayTelefono()
+        {
+            return (FORMULARIO.TELEFONO != null && FORMULARIO.TELEFONO.Length >= 9);
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

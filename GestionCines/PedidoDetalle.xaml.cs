@@ -22,6 +22,7 @@ namespace AsistenciaTecnica
     /// </summary>
     public partial class PedidoDetalle : Window
     {
+        const int MAXIMA_LONGITUD_TEXTO = 400;
         private readonly PedidoDetalleVM _vm;
         public ObservableCollection<Pedido> PEDIDOS { get; set; }
         public PedidoDetalle(Pedido pedido)
@@ -42,7 +43,7 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Cancelar(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = System.Windows.MessageBox.Show("¿Esta seguro desea salir y volver a lista de productos?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = System.Windows.MessageBox.Show("¿Esta seguro desea salir y volver a lista de pedidos?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -54,7 +55,26 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTPEDIDO");
+            _vm.Ayuda("MANTPEDIDODETALLE");
+        }
+
+        private void CommandBinding_Executed_Buscar(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Buscar();
+        }
+
+        private void CommandBinding_CanExecute_Buscar(object sender, CanExecuteRoutedEventArgs e)
+        {
+            
+            e.CanExecute = _vm.HayTelefono();
+        }
+
+        private void descripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+                int longitud = descripcionTextBox.Text.Length;
+                contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO+" max.caracteres)";
+                if (longitud >= MAXIMA_LONGITUD_TEXTO)
+                    descripcionTextBox.IsReadOnly = true;
         }
     }
 }

@@ -880,6 +880,10 @@ namespace AsistenciaTecnica
                 " JOIN tipopedido tp " +
                 " ON pe.tipoPedido = tp.idTipo " +
                 filtro;
+            if (filtro == " WHERE 1=1")
+            {
+                comando.CommandText += " AND pe.situacion < 3";
+            }
             SqlDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
@@ -965,7 +969,20 @@ namespace AsistenciaTecnica
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "INSERT INTO pedidos " +
-                    "VALUES (@descripcion," +
+                    "(descripcion,telefono," +
+                    "nombre," +
+                    "apellidos," +
+                    "direccion," +
+                    "poblacion," +
+                    "codigoPostal," +
+                    "provincia," +
+                    "mail," +
+                    "usuario," +
+                    "fechaIntroduccion," +
+                    "situacion," +
+                    "tipoPedido," +
+                    "enGarantia" +
+                    ") VALUES (@descripcion," +
                     "@telefono," +
                     "@nombre," +
                     "@apellidos," +
@@ -976,11 +993,10 @@ namespace AsistenciaTecnica
                     "@mail," +
                     "@usuario," +
                     "@fechaIntroduccion," +
-                    "@fechaCierre," +
                     "@situacion," +
                     "@tipoPedido," +
                     "@enGarantia)";
-            comando = PreparaDatosPedido(comando, formulario);
+            comando = PreparaDatosPedido(comando, formulario,"A");
             comando.ExecuteNonQuery();
             conexion.Close();
         }
@@ -1000,15 +1016,15 @@ namespace AsistenciaTecnica
                 "mail = @mail," +
                 "situacion = @situacion," +
                 "tipoPedido = @tipoPedido," +
-                "enGarantia = @enGarantia," +
+                "enGarantia = @enGarantia" +
                 " WHERE idPedido = @idPedido";
 
-            comando = PreparaDatosPedido(comando, formulario);
+            comando = PreparaDatosPedido(comando, formulario,"M");
             comando.ExecuteNonQuery();
             conexion.Close();
         }
 
-        public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario)
+        public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario,string operacion)
         {
             SqlCommand cmd = com;
             // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
@@ -1046,19 +1062,23 @@ namespace AsistenciaTecnica
             cmd.Parameters.Add("@codigoPostal", SqlDbType.NVarChar);
             com.Parameters["@codigoPostal"].Value = codigoPostal;
             cmd.Parameters.Add("@provincia", SqlDbType.NVarChar);
-            com.Parameters["@provincia"].Value = formulario.PROVINCIA;
+            com.Parameters["@provincia"].Value = formulario.IDPROVINCIA;
             cmd.Parameters.Add("@mail", SqlDbType.NVarChar);
             com.Parameters["@mail"].Value = mail;
             cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
             com.Parameters["@usuario"].Value = usuario;
-            cmd.Parameters.Add("@fechaIntroduccion", SqlDbType.DateTime);
-            com.Parameters["@fechaIntroduccion"].Value = DateTime.Today;
-            cmd.Parameters.Add("@fechaCierre", SqlDbType.DateTime);
-            com.Parameters["@fechaCierre"].Value = DateTime.MinValue;
+            if (operacion == "A")
+            {
+                cmd.Parameters.Add("@fechaIntroduccion", SqlDbType.DateTime);
+                com.Parameters["@fechaIntroduccion"].Value = DateTime.Today;
+           //     cmd.Parameters.Add("@fechaCierre", SqlDbType.DateTime);
+           //     com.Parameters["@fechaCierre"].Value = DateTime.MinValue;
+            }
+
             cmd.Parameters.Add("@situacion", SqlDbType.Int);
-            com.Parameters["@situacion"].Value = formulario.SITUACION;
+            com.Parameters["@situacion"].Value = formulario.IDSITUACION;
             cmd.Parameters.Add("@tipoPedido", SqlDbType.Int);
-            com.Parameters["@tipoPedido"].Value = formulario.TIPOPEDIDO;
+            com.Parameters["@tipoPedido"].Value = formulario.IDTIPOPEDIDO;
             cmd.Parameters.Add("@enGarantia", SqlDbType.Int);
             com.Parameters["@enGarantia"].Value = formulario.ENGARANTIA;
             return cmd;
@@ -1073,7 +1093,46 @@ namespace AsistenciaTecnica
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        
+        public Telefono ObtenerTelefono(string telefonoABuscar)
+        {
+            Telefono telefono = new Telefono();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT " +
+                "tl.telefono," +
+                "tl.nombre," +
+                "tl.apellidos," +
+                "tl.direccion," +
+                "tl.poblacion," +
+                "tl.codigoPostal," +
+                "tl.provincia, " +
+                "tl.mail, " +
+                "pr.nombre " +
+                " from telefonos tl JOIN provincias pr " +
+                " ON tl.provincia = pr.idProvincia" +
+                " WHERE telefono = @telefono";
+            comando.Parameters.Add("@telefono", SqlDbType.VarChar);
+            comando.Parameters["@telefono"].Value = telefonoABuscar;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                   telefono = new Telefono(lector.GetString(0),
+                              lector.GetString(1),
+                              lector.GetString(2),
+                              lector.GetString(3),
+                              lector.GetString(4),
+                              lector.GetString(5),
+                              new Provincia(lector.GetString(6), lector.GetString(8)),
+                              lector.GetString(7));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return telefono;
+        }
+
     }
 
 }

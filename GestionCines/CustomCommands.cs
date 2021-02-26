@@ -161,6 +161,15 @@ namespace AsistenciaTecnica
                 new KeyGesture(Key.E,ModifierKeys.Control)
             }
             );
+        public static readonly RoutedUICommand Buscar = new RoutedUICommand
+            ("Buscar",
+             "Buscar",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                        new KeyGesture(Key.F,ModifierKeys.Control)
+            }
+           );
     }
 
 }

@@ -1,16 +1,289 @@
-﻿<Window
-    x:Class="AsistenciaTecnica.PedidoDetalle"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:AsistenciaTecnica"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="Mantenimiento de Pedidos"
-    Width="800"
-    Height="480"
-    MinWidth="800"
-    MinHeight="480"
-    mc:Ignorable="d">
-    <DockPanel />
+﻿<Window x:Class="AsistenciaTecnica.PedidoDetalle"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:AsistenciaTecnica"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+        Title="Mantenimiento de Pedidos (Detalle)"
+        Width="1100"
+        Height="500"
+        MinWidth="1100"
+        MinHeight="500"
+        WindowStartupLocation="CenterScreen" Top="10"
+        mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"
+                        Command="local:CustomCommands.GuardarCambios"
+                        Executed="CommandBinding_Executed_CuardarCambios" />
+        <CommandBinding Command="local:CustomCommands.Cancelar"
+                        Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Ayuda"
+                        Executed="CommandBinding_Executed_Ayuda" />
+        <CommandBinding Command="local:CustomCommands.Buscar"
+                        Executed="CommandBinding_Executed_Buscar"
+                        CanExecute="CommandBinding_CanExecute_Buscar" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <!--  Estilo para el modo  -->
+        <Style x:Key="textoModo"
+               TargetType="TextBlock">
+            <Setter Property="Text"
+                    Value="Añadir pedido" />
+            <Setter Property="FontSize"
+                    Value="25" />
+            <Setter Property="Margin"
+                    Value="0,0,0,20" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="FontFamily"
+                    Value="Arial Black" />
+            <Setter Property="Foreground"
+                    Value="Lavender" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}"
+                             Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="Text"
+                            Value="Editar pedido" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--  CheckBox  -->
+        <Style x:Key="checkBox"
+               TargetType="CheckBox">
+            <Setter Property="Margin"
+                    Value="0,0,20,0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="FontSize"
+                    Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBlock}" />
+        </Style>
+        <!-- Border -->
+        <Style x:Key="bordeCajas"
+               TargetType="Border">
+            <Setter Property="Margin"
+                    Value="5,2,5,2" />
+            <Setter Property="Padding"
+                    Value="10" />
+            <Setter Property="Background"
+                    Value="#74DDF8" />
+            <Setter Property="BorderBrush"
+                    Value="Black" />
+            <Setter Property="BorderThickness"
+                    Value="2" />
+            <Setter Property="CornerRadius"
+                    Value="5" />
+        </Style>
+        <!--  CheckBox  -->
+
+    </Window.Resources>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Cancelar"
+                        IsCancel="True"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Cancelar cambios">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/cancelar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.GuardarCambios"
+                        IsDefault="True"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Guardar cambios">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/guardar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Ayuda"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/ayuda.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <!--  Grid general  -->
+        <Grid Margin="0,0,0,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition />
+                <RowDefinition Height="120" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+            <!--  Modo FILA 0  -->
+            <TextBlock Grid.Row="0"
+                       DockPanel.Dock="Top"
+                       Style="{StaticResource textoModo}" Margin="0,10,0,0">
+                <TextBlock.Effect>
+                    <DropShadowEffect />
+                </TextBlock.Effect></TextBlock>
+            <!--  Descripcion FILA 1  -->
+            <Border Grid.Row="1"
+                    Margin="5"
+                    Style="{StaticResource bordeCajas}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top"
+                               Style="{StaticResource MaterialDesignBody1TextBlock}">
+                        <Run Text="Descripción " />
+                        <Run x:Name="contadorTextBlock" /></TextBlock>
+                    <TextBox x:Name="descripcionTextBox"
+                             Text="{Binding Path=FORMULARIO.DESCRIPCION,UpdateSourceTrigger=PropertyChanged}"
+                             TextChanged="descripcionTextBox_TextChanged" TextWrapping="Wrap" AcceptsReturn="True"/>
+                </DockPanel>
+            </Border>
+            <!-- Fin LINEA 1 -->
+            <!--  Datos personales FILA 2  -->
+            <Border Grid.Row="2"
+                    Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--  telefono fila 1 0  -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                   Text="Teléfono" />
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding Path=FORMULARIO.TELEFONO,UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Grid.Column="2"
+                                Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                                Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                                Command="local:CustomCommands.Buscar"
+                                ToolTip="Buscar y trasladar los datos del cliente"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                            <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                                   Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                                   Source="Imagenes/buscar.ico" />
+                        </Button>
+                        <TextBlock Grid.Column="3"
+                                   Text="Nombre"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="4"
+                                 Text="{Binding Path=FORMULARIO.NOMBRE,UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="5"
+                                   Text="Apellidos"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="6"
+                                 Text="{Binding Path=FORMULARIO.APELLIDOS,UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="7"
+                                   Text="eMail"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="8"
+                                 Text="{Binding Path=FORMULARIO.MAIL,UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                  
+                    <!--  Direccion fila 1 1  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="110"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="Dirección"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding Path=FORMULARIO.DIRECCION,UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2"
+                                   Text="Poblacion"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="3"
+                                 Text="{Binding Path=FORMULARIO.POBLACION,UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="4"
+                                   Text="Cod.Postal"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="5"
+                                 Text="{Binding Path=FORMULARIO.CODIGOPOSTAL,UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="6"
+                                   Text="Provincia"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <ComboBox Grid.Column="7"
+                                  ItemsSource="{Binding PROVINCIANOMBRE}"
+                                  SelectedItem="{Binding Path=FORMULARIO.NOMBREPROVINCIA, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                </Grid>
+            </Border>
+            <!-- Fin LINEA 2 -->
+            <!--  Datos fecha FILA 3  -->
+            <Border Grid.Row="3"
+                    Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--  Fechas fila 2 0  -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="Fecha alta"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding Path=FORMULARIO.FECHAALTAFORMATO}" IsReadOnly="True"/>
+                        <TextBlock Grid.Column="2"
+                                   Text="Fecha cierre"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <TextBox Grid.Column="3"
+                                 Text="{Binding Path=FORMULARIO.FECHACIERREFORMATO}"
+                                 IsReadOnly="True" />
+                        <TextBlock Grid.Column="4"
+                                   Text="Tipo servicio"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <ComboBox Grid.Column="5"
+                                  ItemsSource="{Binding TIPOPEDIDODESCRIPCION}"
+                                  SelectedItem="{Binding Path=FORMULARIO.NOMBRETIPOPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="6"
+                                   Text="Situacion"
+                                   Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                        <ComboBox Grid.Column="7"
+                                  ItemsSource="{Binding SITUACIONDESCRIPCION}"
+                                  SelectedItem="{Binding Path=FORMULARIO.NOMBRESITUACION, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox Grid.Column="8"
+                                  Content="En garantía"
+                                  IsChecked="{Binding Path=FORMULARIO.ENGARANTIA, UpdateSourceTrigger=PropertyChanged}"
+                                  Style="{StaticResource checkBox}" />
+                    </Grid>
+                </Grid>
+            </Border>
+            <!-- Fin LINEA 2 -->
+        </Grid>
+    </DockPanel>
 </Window>

@@ -61,5 +61,9 @@ namespace AsistenciaTecnica
         {
             _vm.RefrescarFiltrado();
         }
+        private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ayuda("MANTPEDIDO");
+        }
     }
 }

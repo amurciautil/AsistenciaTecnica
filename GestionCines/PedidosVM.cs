@@ -72,6 +72,11 @@ namespace AsistenciaTecnica
             //    condicion_filtro += " AND p.genero = '" + GENEROSELECCIONADA + "'";
             PEDIDOS = bbdd.ObtenerPedidos(condicion_filtro,false);
         }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
