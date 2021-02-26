@@ -10,6 +10,7 @@ namespace AsistenciaTecnica
     {
         private readonly SqlConnection conexion;
         public SqlCommand comando;
+        public int situacionCierre = Properties.Settings.Default.situacionCierre;
         public ServicioBaseDatos()
         {
             try
@@ -882,7 +883,7 @@ namespace AsistenciaTecnica
                 filtro;
             if (filtro == " WHERE 1=1")
             {
-                comando.CommandText += " AND pe.situacion < 3";
+                comando.CommandText += " AND pe.situacion < "+ situacionCierre;
             }
             SqlDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
@@ -966,8 +967,14 @@ namespace AsistenciaTecnica
         }
         public void InsertarPedido(Pedido formulario)
         {
+            int situacionAnterior = formulario.IDSITUACION;
+            DateTime fechaCierre;
             conexion.Open();
             comando = conexion.CreateCommand();
+            if (formulario.IDSITUACION == situacionCierre)
+                fechaCierre = DateTime.Today;
+            else
+                fechaCierre = DateTime.Parse("01/01/0001");
             comando.CommandText = "INSERT INTO pedidos " +
                     "(descripcion,telefono," +
                     "nombre," +
@@ -979,6 +986,7 @@ namespace AsistenciaTecnica
                     "mail," +
                     "usuario," +
                     "fechaIntroduccion," +
+                    "fechaCierre," +
                     "situacion," +
                     "tipoPedido," +
                     "enGarantia" +
@@ -992,16 +1000,46 @@ namespace AsistenciaTecnica
                     "@provincia," +
                     "@mail," +
                     "@usuario," +
-                    "@fechaIntroduccion," +
+                    "@fechaIntroduccion,'" + fechaCierre+"',"+
                     "@situacion," +
                     "@tipoPedido," +
                     "@enGarantia)";
-            comando = PreparaDatosPedido(comando, formulario,"A");
+            comando = PreparaDatosPedido(comando, formulario,"A",situacionAnterior);
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+        public int BuscarSituacionPedido(int idPedido)
+        {
+            int situacionPedido = 0;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "Select situacion FROM pedidos WHERE idPedido = @idPedido";
+            comando.Parameters.Add("@idPedido", SqlDbType.Int);
+            comando.Parameters["@idPedido"].Value = idPedido;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    situacionPedido = lector.GetInt32(0);
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return situacionPedido;
+        }
         public void ActualizarPedido(Pedido formulario)
         {
+            int situacionAnterior = BuscarSituacionPedido(formulario.IDPEDIDO);
+            DateTime fechaCierre = new DateTime();
+            if (situacionAnterior != situacionCierre && formulario.IDSITUACION == situacionCierre)
+            {
+                fechaCierre = DateTime.Today;
+            }
+            if (situacionAnterior == situacionCierre && formulario.IDSITUACION != situacionCierre)
+            {
+                fechaCierre = DateTime.Parse("01/01/0001");
+            }
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "UPDATE pedidos SET " +
@@ -1015,16 +1053,17 @@ namespace AsistenciaTecnica
                 "provincia = @provincia," +
                 "mail = @mail," +
                 "situacion = @situacion," +
+                "fechaCierre = '" + fechaCierre + "'," +
                 "tipoPedido = @tipoPedido," +
                 "enGarantia = @enGarantia" +
                 " WHERE idPedido = @idPedido";
 
-            comando = PreparaDatosPedido(comando, formulario,"M");
+            comando = PreparaDatosPedido(comando, formulario,"M", situacionAnterior);
             comando.ExecuteNonQuery();
             conexion.Close();
         }
 
-        public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario,string operacion)
+        public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario,string operacion,int situacionAnterior)
         {
             SqlCommand cmd = com;
             // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
@@ -1067,14 +1106,13 @@ namespace AsistenciaTecnica
             com.Parameters["@mail"].Value = mail;
             cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
             com.Parameters["@usuario"].Value = usuario;
+
+            // Gestionamos el valor de la fecha de cierre en función de la situacion anterior y la nueva
             if (operacion == "A")
             {
                 cmd.Parameters.Add("@fechaIntroduccion", SqlDbType.DateTime);
                 com.Parameters["@fechaIntroduccion"].Value = DateTime.Today;
-           //     cmd.Parameters.Add("@fechaCierre", SqlDbType.DateTime);
-           //     com.Parameters["@fechaCierre"].Value = DateTime.MinValue;
             }
-
             cmd.Parameters.Add("@situacion", SqlDbType.Int);
             com.Parameters["@situacion"].Value = formulario.IDSITUACION;
             cmd.Parameters.Add("@tipoPedido", SqlDbType.Int);

@@ -32,5 +32,8 @@
     <Setting Name="modoDesarrollo" Type="System.String" Scope="Application">
       <Value Profile="(Default)">S</Value>
     </Setting>
+    <Setting Name="situacionCierre" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -68,5 +68,9 @@ namespace AsistenciaTecnica
         {
             e.CanExecute = _vm.HayCargoSeleccionada();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

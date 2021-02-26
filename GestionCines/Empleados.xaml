@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AsistenciaTecnica"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Empleados"
     Width="1100"
     Height="600"
@@ -23,13 +24,53 @@
             CanExecute="CommandBinding_CanExecute_EditarEmpleado"
             Command="local:CustomCommands.Borrar"
             Executed="CommandBinding_Executed_Borrar" />
+        <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
-            <Button Command="local:CustomCommands.Borrar" ToolTip="Borrar datos">Borrar</Button>
-            <Button Command="local:CustomCommands.Editar" ToolTip="Modificar datos">Editar</Button>
-            <Button Command="local:CustomCommands.Insertar" ToolTip="Insertar nuevo registro">Añadir</Button>
-        </StackPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Borrar"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Borrar datos">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/borrar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Editar"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Modificar datos">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/editar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Insertar"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Insertar nuevo registro">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/insertar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Salir"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Salir">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/exit.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <DataGrid
             Margin="10"
             AlternatingRowBackground="LightBlue"

@@ -42,5 +42,9 @@ namespace AsistenciaTecnica
                     break;
             } 
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

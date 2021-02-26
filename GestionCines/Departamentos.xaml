@@ -32,6 +32,7 @@
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
             Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  Estilo para el modo  -->
@@ -61,58 +62,107 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="300" />
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Borrar" ToolTip="Modificar datos">Borrar</Button>
-                <Button Command="local:CustomCommands.Editar" ToolTip="Modificar datos">Editar</Button>
-                <Button Command="local:CustomCommands.Insertar" ToolTip="Insertar nuevo registro">Añadir</Button>
-            </StackPanel>
-            <DataGrid
-                x:Name="departamentoDataGrid"
-                Margin="10,10,0,10"
-                AlternatingRowBackground="LightBlue"
-                AlternationCount="2"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserDeleteRows="False"
-                ColumnWidth="*"
-                IsReadOnly="True"
-                ItemsSource="{Binding Path=DEPARTAMENTOS}"
-                SelectedItem="{Binding Path=DEPARTAMENTOSELECCIONADO}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=IDDEPARTAMENTO}" Header="ID" />
-                    <DataGridTextColumn Binding="{Binding Path=NOMBRE}" Header="Nombre" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
-        <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
-            <TextBlock Style="{StaticResource textoModo}" />
-            <TextBlock Text="Id" />
-            <TextBox
-                x:Name="idDepartamentoTextBox"
-                IsReadOnly="True"
-                Text="{Binding Path=DEPARTAMENTOFORMULARIO.IDDEPARTAMENTO, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Nombre" />
-            <TextBox x:Name="numeroDepartamentoTextBox" Text="{Binding Path=DEPARTAMENTOFORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
                 <Button
-                    Command="local:CustomCommands.Cancelar"
-                    IsCancel="True"
-                    ToolTip="Cancelar cambios">
-                    Cancelar
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Borrar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Borrar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/borrar.ico" />
                 </Button>
                 <Button
-                    Command="local:CustomCommands.GuardarCambios"
-                    IsDefault="True"
-                    ToolTip="Guardar cambios">
-                    Guardar
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Editar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Modificar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/editar.ico" />
                 </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Insertar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Insertar nuevo registro">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/insertar.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Salir"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Salir">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/exit.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <DataGrid
+                    x:Name="departamentoDataGrid"
+                    Margin="10,10,0,10"
+                    AlternatingRowBackground="LightBlue"
+                    AlternationCount="2"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    ColumnWidth="*"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Path=DEPARTAMENTOS}"
+                    SelectedItem="{Binding Path=DEPARTAMENTOSELECCIONADO}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=IDDEPARTAMENTO}" Header="ID" />
+                        <DataGridTextColumn Binding="{Binding Path=NOMBRE}" Header="Nombre" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
+                <TextBlock Style="{StaticResource textoModo}" />
+                <TextBlock Text="Id" />
+                <TextBox
+                    x:Name="idDepartamentoTextBox"
+                    IsReadOnly="True"
+                    Text="{Binding Path=DEPARTAMENTOFORMULARIO.IDDEPARTAMENTO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Nombre" />
+                <TextBox x:Name="numeroDepartamentoTextBox" Text="{Binding Path=DEPARTAMENTOFORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        Command="local:CustomCommands.Cancelar"
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios">
+                        Cancelar
+                    </Button>
+                    <Button
+                        Command="local:CustomCommands.GuardarCambios"
+                        IsDefault="True"
+                        ToolTip="Guardar cambios">
+                        Guardar
+                    </Button>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

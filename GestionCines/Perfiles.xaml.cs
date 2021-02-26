@@ -67,5 +67,9 @@ namespace AsistenciaTecnica
         {
             e.CanExecute = _vm.HayPerfilSeleccionada();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

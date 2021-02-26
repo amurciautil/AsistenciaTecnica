@@ -64,7 +64,10 @@ namespace AsistenciaTecnica
             IDSITUACION = situacion.IDSITUACION;
             IDTIPOPEDIDO = tipoPedido.IDTIPO;
             FECHAALTAFORMATO = FECHAINTRODUCCION.ToString("dd/MM/yyyy");
-            FECHACIERREFORMATO = FECHACIERRE.ToString("dd/MM/yyyy");
+            if (FECHACIERRE.Year == 1)
+                FECHACIERREFORMATO = "";
+            else
+                FECHACIERREFORMATO = FECHACIERRE.ToString("dd/MM/yyyy");
             NOMBREYAPELLIDOS = NOMBRE + " " + APELLIDOS;
         }
 
@@ -93,7 +96,10 @@ namespace AsistenciaTecnica
             IDSITUACION = pedido.SITUACION.IDSITUACION;
             IDTIPOPEDIDO = pedido.TIPOPEDIDO.IDTIPO;
             FECHAALTAFORMATO = FECHAINTRODUCCION.ToString("dd/MM/yyyy");
-            FECHACIERREFORMATO = FECHACIERRE.ToString("dd/MM/yyyy");
+            if (FECHACIERRE.Year == 1)
+                FECHACIERREFORMATO = "";
+            else
+                FECHACIERREFORMATO = FECHACIERRE.ToString("dd/MM/yyyy");
             NOMBREYAPELLIDOS = NOMBRE + " " + APELLIDOS;
 
         }

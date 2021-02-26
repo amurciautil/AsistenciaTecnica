@@ -101,8 +101,8 @@
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Ayuda"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Ayuda"
                     Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -189,19 +189,19 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Style="{StaticResource campoClave}"
-                         Text="{Binding Path=FORMULARIO.IDCODIGO, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.IDCODIGO, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Grid.Row="2"
                     Grid.Column="1"
-                         Text="{Binding Path=FORMULARIO.DESCRIPCION, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.DESCRIPCION, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Grid.Row="3"
                     Grid.Column="1"
-                         Text="{Binding Path=FORMULARIO.DESCRIPCIONAMPLIADA, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.DESCRIPCIONAMPLIADA, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox
                     Grid.Row="4"
                     Grid.Column="1"
-                         Text="{Binding Path=FORMULARIO.PRECIOVENTA, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.PRECIOVENTA, UpdateSourceTrigger=PropertyChanged}" />
                 <ComboBox
                     Grid.Row="5"
                     Grid.Column="1"
@@ -211,7 +211,7 @@
                     Grid.Row="6"
                     Grid.Column="1"
                     Style="{StaticResource existenciasTextBox}"
-                         Text="{Binding Path=FORMULARIO.EXISTENCIAS, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.EXISTENCIAS, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </Border>
     </DockPanel>
