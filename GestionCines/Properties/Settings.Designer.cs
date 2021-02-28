@@ -142,5 +142,26 @@ namespace AsistenciaTecnica.Properties {
                 return ((int)(this["situacionCierre"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int departamentoTecnico {
+            get {
+                return ((int)(this["departamentoTecnico"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int situacionEnReparacion {
+            get {
+                return ((int)(this["situacionEnReparacion"]));
+            }
+            set {
+                this["situacionEnReparacion"] = value;
+            }
+        }
     }
 }

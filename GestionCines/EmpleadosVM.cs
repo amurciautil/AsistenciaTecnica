@@ -13,7 +13,7 @@ namespace AsistenciaTecnica
         public EmpleadosVM()
         {
             bbdd = new ServicioBaseDatos();
-            EMPLEADOS = bbdd.ObtenerEmpleados(false);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
             FORMULARIO = new Empleado();
         }
         public bool HaySelecionada()
@@ -38,7 +38,7 @@ namespace AsistenciaTecnica
         {
             string mensajeBorre = SELECCIONADA.IDEMPLEADO + " " + SELECCIONADA.NOMBREYAPELLIDOS;
             bbdd.BorrarEmpleado(SELECCIONADA);
-            EMPLEADOS = bbdd.ObtenerEmpleados(false);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
             return mensajeBorre;
         }
         public event PropertyChangedEventHandler PropertyChanged;

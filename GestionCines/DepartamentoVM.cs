@@ -51,6 +51,12 @@ namespace AsistenciaTecnica
         {
             return DEPARTAMENTOSELECCIONADO != null;
         }
+        public bool SePuedeBorrar()
+        {
+            // no se puede borrar el departamento parametrizado como técnico
+            int departamentoTecnico = Properties.Settings.Default.departamentoTecnico;
+            return DEPARTAMENTOSELECCIONADO != null && DEPARTAMENTOSELECCIONADO.IDDEPARTAMENTO != departamentoTecnico;
+        }
         public bool FormularioOk()
         {
             return DEPARTAMENTOFORMULARIO.NOMBRE != "";
@@ -74,7 +80,11 @@ namespace AsistenciaTecnica
         {
             return DEPARTAMENTOFORMULARIO.NOMBRE != null;
         }
-
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

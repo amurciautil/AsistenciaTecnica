@@ -56,8 +56,6 @@
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="CornerRadius" Value="5" />
         </Style>
-        <!--  CheckBox  -->
-
     </Window.Resources>
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -245,9 +243,9 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="80" />
                             <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="120"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"

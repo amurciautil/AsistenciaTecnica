@@ -76,7 +76,7 @@ namespace AsistenciaTecnica
                 bbdd.ActualizarEmpleado(FORMULARIO);
             FORMULARIO = new Empleado();
             
-            EMPLEADOS = bbdd.ObtenerEmpleados(false);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
             return EMPLEADOS;
         }
         public event PropertyChangedEventHandler PropertyChanged;

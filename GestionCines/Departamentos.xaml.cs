@@ -76,11 +76,15 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _vm.HayDepartamentoSeleccionado();
+            e.CanExecute = _vm.SePuedeBorrar();
         }
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
+        }
+        private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ayuda("MANTDEPARTAMENTO");
         }
     }
 }

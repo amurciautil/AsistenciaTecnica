@@ -64,13 +64,16 @@ namespace AsistenciaTecnica
                 condicion_filtro += " AND pe.telefono LIKE '%" + TELEFONO + "%'";
             if (POBLACION != null && POBLACION.Trim(' ').Length > 0)
                 condicion_filtro += " AND pe.poblacion LIKE '%" + POBLACION + "%'";
-            //if (SESIONSELECCIONADA.Length > 0 && SESIONSELECCIONADA != "Todas")
-            //    condicion_filtro += " AND se.hora = '" + SESIONSELECCIONADA + "'";
-            //if (CALIFICACIONSELECCIONADA.Length > 0 && CALIFICACIONSELECCIONADA != "Todas")
-            //    condicion_filtro += " AND p.calificacion = '" + CALIFICACIONSELECCIONADA + "'";
-            //if (GENEROSELECCIONADA.Length > 0 && GENEROSELECCIONADA != "Todas")
-            //    condicion_filtro += " AND p.genero = '" + GENEROSELECCIONADA + "'";
             PEDIDOS = bbdd.ObtenerPedidos(condicion_filtro,false);
+        }
+        public void Partes(Pedidos pedidosWindow)
+        {
+            Partes partes = new Partes(SELECCIONADA,"P");
+            partes.Owner = pedidosWindow;
+            if (partes.ShowDialog() == true)
+            {
+                PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
+            }
         }
         public void Ayuda(string codigoAyuda)
         {

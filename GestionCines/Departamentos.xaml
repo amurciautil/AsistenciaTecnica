@@ -28,6 +28,7 @@
             CanExecute="CommandBinding_CanExecute_GuardarCambiosDepartamento"
             Command="local:CustomCommands.GuardarCambios"
             Executed="CommandBinding_Executed_GuardarCambiosDepartamento" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
@@ -100,6 +101,16 @@
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/insertar.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonEAyuda}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonEAyuda}"
+                    Command="local:CustomCommands.Ayuda"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonIAyuda}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonIAyuda}"
+                        Source="Imagenes/ayuda.ico" />
                 </Button>
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace AsistenciaTecnica
@@ -99,6 +97,13 @@ namespace AsistenciaTecnica
             Pedidos pedidos = new Pedidos();
             pedidos.Owner = mainWindow;
             pedidos.Show();
+        }
+        public void Partes(MainWindow mainWindow)
+        {
+
+            Partes partes = new Partes(new Pedido(),"M");
+            partes.Owner = mainWindow;
+            partes.Show();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -1,0 +1,393 @@
+﻿<Window
+    x:Class="AsistenciaTecnica.ParteDetalle"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+    Title="Mantenimiento de partes de trabajo"
+    Width="1100"
+    Height="600"
+    MinWidth="1100"
+    MinHeight="600"
+    Top="10"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_GuardarCambios"
+            Command="local:CustomCommands.GuardarCambios"
+            Executed="CommandBinding_Executed_CuardarCambios" />
+        <CommandBinding Command="local:CustomCommands.Cancelar" Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <!--  Estilo para el modo  -->
+        <Style x:Key="textoModo" TargetType="TextBlock">
+            <Setter Property="Text" Value="Añadir parte de trabajo" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="Margin" Value="0,0,0,20" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Arial Black" />
+            <Setter Property="Foreground" Value="Lavender" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ACCION}" Value="{x:Static local:Modo.Actualizar}">
+                    <Setter Property="Text" Value="Editar parte de trabajo" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!--  CheckBox  -->
+        <Style x:Key="checkBox" TargetType="CheckBox">
+            <Setter Property="Margin" Value="0,0,20,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBlock}" />
+        </Style>
+        <!--  Border  -->
+        <Style x:Key="bordeCajas" TargetType="Border">
+            <Setter Property="Margin" Value="5,2,5,2" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Background" Value="#74DDF8" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
+        <!--  DatePicker  -->
+        <Style
+            x:Key="datePicker"
+            BasedOn="{StaticResource MaterialDesignDatePicker}"
+            TargetType="DatePicker">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Background" Value="#C1E7EB" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Cancelar"
+                    IsCancel="True"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Cancelar cambios">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/cancelar.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.GuardarCambios"
+                    IsDefault="True"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Guardar cambios">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/guardar.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Command="local:CustomCommands.Ayuda"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/ayuda.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <!--  Grid general  -->
+        <Grid Margin="0,0,0,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="155" />
+                <RowDefinition Height="110" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--  Modo FILA 0  Alta / Modificación  -->
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,10,0,0"
+                DockPanel.Dock="Top"
+                Style="{StaticResource textoModo}">
+                <TextBlock.Effect>
+                    <DropShadowEffect />
+                </TextBlock.Effect>
+            </TextBlock>
+            <!--  Descripcion FILA 1 Datos pedido (3 filas)  -->
+            <Border Grid.Row="1" Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--  Fila 1 de pedidos  -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="85" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="110" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Pedido" />
+                        <TextBox
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.IDPEDIDO}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Alta" />
+                        <TextBox
+                            Grid.Column="3"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.FECHAALTAPEDIDOFORMATO}" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Tipo" />
+                        <TextBox
+                            Grid.Column="5"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.NOMBRETIPOPEDIDOSIN}" />
+                        <TextBlock
+                            Grid.Column="6"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Situación" />
+                        <TextBox
+                            Grid.Column="7"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.NOMBRESITUACIONSIN}" />
+                        <TextBlock
+                            Grid.Column="8"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Cierre" />
+                        <TextBox
+                            Grid.Column="9"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.FECHACIERREPEDIDOFORMATO}" />
+                    </Grid>
+                    <!--  FIN Fila 1 de pedidos  -->
+                    <!--  Fila 2 de pedidos  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Cliente" />
+                        <TextBox
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.NOMBRECLIENTE}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Direccion" />
+                        <TextBox
+                            Grid.Column="3"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.DIRECCION}" />
+
+                    </Grid>
+                    <!--  FIN Fila 2 de pedidos  -->
+                    <!--  Fila 3 de pedidos  -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Población" />
+                        <TextBox
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.POBLACION}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Provincia" />
+                        <TextBox
+                            Grid.Column="3"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.PROVINCIA}" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Teléfono" />
+                        <TextBox
+                            Grid.Column="5"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.TELEFONO}" />
+                        <TextBlock
+                            Grid.Column="6"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Mail" />
+                        <TextBox
+                            Grid.Column="7"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.MAIL}" />
+                    </Grid>
+                    <!--  FIN Fila 3 de pedidos  -->
+                </Grid>
+            </Border>
+            <!--  FIN LINEA DE PEDIDOS  -->
+            <!--  LINEA DE PARTES  -->
+            <Border Grid.Row="2" Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--  Fila 1 de partes  -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="85" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Parte" />
+                        <TextBox
+                            Grid.Column="1"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.IDPARTE}" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Alta" />
+                        <TextBox
+                            Grid.Column="3"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.FECHAALTAPARTEFORMATO}" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Cierre" />
+                        <TextBox
+                            Grid.Column="5"
+                            IsReadOnly="True"
+                            Text="{Binding Path=FORMULARIO.FECHACIERREPARTEFORMATO}" />
+                        <TextBlock
+                            Grid.Column="6"
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Fecha prevista intervención" />
+                        <DatePicker
+                            Grid.Column="7"
+                            Style="{StaticResource datePicker}"
+                                    SelectedDate="{Binding Path=FORMULARIO.FECHAPREVISTA, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox
+                            Grid.Column="8"
+                            Content="Cerrado"
+                            Margin="20,0,0,0"
+                            IsChecked="{Binding Path=FORMULARIO.CERRADO, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource checkBox}" />
+                    </Grid>
+                    <!--  Fila 2 de partes  -->
+                    <Grid Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="405" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                       Text="Técnico" />
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{Binding EMPLEADONOMBRE}"
+                                      SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+            <!--  FIN LINEA DE PARTES  -->
+            <!--  LINEA DE DESCRIPCION y OBSERVACIONES  -->
+            <Border Grid.Row="3" Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="26" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--  Fila 1 de Observaciones  -->
+                    <Grid Grid.Row="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                Text="Trabajo a realizar" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                                <Run Text="Observaciones" />
+                                <Run x:Name="contadorTextBlock" /></TextBlock>
+                        </Grid>
+                    </Grid>
+                    <!--  Fila 2 de Observaciones  -->
+                    <Grid Grid.Row="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Grid.Column="0"
+                                IsReadOnly="True"
+                                Text="{Binding Path=FORMULARIO.DESCRIPCION}" />
+                            <TextBox
+                                x:Name="observacionesTextBox"
+                                Grid.Column="1"
+                                AcceptsReturn="True"
+                                Text="{Binding Path=FORMULARIO.OBSERVACIONES, UpdateSourceTrigger=PropertyChanged}"
+                                TextChanged="descripcionTextBox_TextChanged"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+            <!--  FIN LINEA DE DESCRIPCION y OBSERVACIONES  -->
+        </Grid>
+    </DockPanel>
+</Window>

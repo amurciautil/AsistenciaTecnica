@@ -33,6 +33,7 @@
         <CommandBinding Command="local:CustomCommands.CambioUsuario" Executed="CommandBinding_Executed_CambioUsuario" />
         <CommandBinding Command="local:CustomCommands.Producto" Executed="CommandBinding_Executed_Producto" />
         <CommandBinding Command="local:CustomCommands.Pedido" Executed="CommandBinding_Executed_Pedido" />
+        <CommandBinding Command="local:CustomCommands.Parte" Executed="CommandBinding_Executed_Parte" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  TextBlock StatusBar  -->
@@ -125,6 +126,11 @@
                 <MenuItem Command="local:CustomCommands.Pedido" Header="Gestión de ped_idos">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/pedido.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="local:CustomCommands.Parte" Header="Partes de trabajo">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/parte.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

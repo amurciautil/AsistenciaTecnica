@@ -6,27 +6,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace AsistenciaTecnica
 {
     /// <summary>
-    /// Lógica de interacción para PedidoDetalle.xaml
+    /// Lógica de interacción para ParteDetalle.xaml
     /// </summary>
-    public partial class PedidoDetalle : Window
+    public partial class ParteDetalle : Window
     {
         const int MAXIMA_LONGITUD_TEXTO = 400;
-        private readonly PedidoDetalleVM _vm;
-        public ObservableCollection<Pedido> PEDIDOS { get; set; }
-        public PedidoDetalle(Pedido pedido)
+        public ObservableCollection<Parte> PARTES { get; set; }
+        private readonly ParteDetalleVM _vm;
+        public ParteDetalle(Parte parte)
         {
-            _vm = new PedidoDetalleVM(pedido);
+            _vm = new ParteDetalleVM(parte);
             InitializeComponent();
             DataContext = _vm;
         }
         private void CommandBinding_Executed_CuardarCambios(object sender, ExecutedRoutedEventArgs e)
         {
-            PEDIDOS = _vm.GuardarCambios();
+            PARTES = _vm.GuardarCambios();
             DialogResult = true;
         }
 
@@ -36,7 +42,7 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Cancelar(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = System.Windows.MessageBox.Show("¿Esta seguro desea salir y volver a lista de pedidos?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = System.Windows.MessageBox.Show("¿Esta seguro desea salir y volver a lista de partes?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -48,26 +54,16 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTPEDIDODETALLE");
+            _vm.Ayuda("MANTPARTEDETALLE");
         }
 
-        private void CommandBinding_Executed_Buscar(object sender, ExecutedRoutedEventArgs e)
-        {
-            _vm.Buscar();
-        }
-
-        private void CommandBinding_CanExecute_Buscar(object sender, CanExecuteRoutedEventArgs e)
-        {
-            
-            e.CanExecute = _vm.HayTelefono();
-        }
 
         private void descripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-                int longitud = descripcionTextBox.Text.Length;
-                contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO+" max.caracteres)";
-                if (longitud >= MAXIMA_LONGITUD_TEXTO)
-                    descripcionTextBox.IsReadOnly = true;
+            int longitud = observacionesTextBox.Text.Length;
+            contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
+            if (longitud >= MAXIMA_LONGITUD_TEXTO)
+                observacionesTextBox.IsReadOnly = true;
         }
     }
 }

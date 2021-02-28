@@ -22,14 +22,17 @@ namespace AsistenciaTecnica
         public DateTime FECHACIERRE { get; set; }
         public SituacionPedido SITUACION { get; set; }
         public string NOMBRESITUACION { get; set; }
+        public string NOMBRESITUACIONSIN { get; set; }
         public int IDSITUACION { get; set; }
         public TipoPedido TIPOPEDIDO { get; set; }
         public string NOMBRETIPOPEDIDO { get; set; }
+        public string NOMBRETIPOPEDIDOSIN { get; set; }
         public int IDTIPOPEDIDO { get; set; }
         public bool ENGARANTIA { get; set; }
         public string FECHAALTAFORMATO { get; set; }
         public string FECHACIERREFORMATO { get; set; }
         public string NOMBREYAPELLIDOS { get; set; }
+        public string NOMBREPROVINCIASIN { get; set; }
 
         public Pedido()
         {
@@ -60,6 +63,9 @@ namespace AsistenciaTecnica
             NOMBREPROVINCIA = provincia.IDPROVINCIA+"-"+provincia.NOMBRE;
             NOMBRESITUACION = situacion.IDSITUACION+"-"+ situacion.DESCRIPCION;
             NOMBRETIPOPEDIDO = tipoPedido.IDTIPO+"-"+tipoPedido.DESCRIPCION;
+            NOMBRETIPOPEDIDOSIN = tipoPedido.DESCRIPCION;
+            NOMBRESITUACIONSIN = situacion.DESCRIPCION;
+            NOMBREPROVINCIASIN = provincia.NOMBRE;
             IDPROVINCIA = provincia.IDPROVINCIA;
             IDSITUACION = situacion.IDSITUACION;
             IDTIPOPEDIDO = tipoPedido.IDTIPO;
@@ -92,6 +98,9 @@ namespace AsistenciaTecnica
             NOMBREPROVINCIA = pedido.PROVINCIA.IDPROVINCIA+"-"+pedido.PROVINCIA.NOMBRE;
             NOMBRESITUACION = pedido.SITUACION.IDSITUACION+"-"+pedido.SITUACION.DESCRIPCION;
             NOMBRETIPOPEDIDO = pedido.TIPOPEDIDO.IDTIPO+"-"+pedido.TIPOPEDIDO.DESCRIPCION;
+            NOMBRETIPOPEDIDOSIN = pedido.TIPOPEDIDO.DESCRIPCION;
+            NOMBRESITUACIONSIN = pedido.SITUACION.DESCRIPCION;
+            NOMBREPROVINCIASIN = pedido.NOMBREPROVINCIASIN;
             IDPROVINCIA = pedido.PROVINCIA.IDPROVINCIA;
             IDSITUACION = pedido.SITUACION.IDSITUACION;
             IDTIPOPEDIDO = pedido.TIPOPEDIDO.IDTIPO;

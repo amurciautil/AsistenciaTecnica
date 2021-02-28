@@ -25,6 +25,7 @@ namespace AsistenciaTecnica
         public string NOMBRECARGO { get; set; }
         public string NOMBREYAPELLIDOS { get; set; }
         public string IMAGEN { get; set; }
+        public string NOMBRECOMBOBOX { get; set; }
         public Empleado()
         {
         }
@@ -34,6 +35,7 @@ namespace AsistenciaTecnica
             NOMBRE = nombre;
             APELLIDOS = apellidos;
             NOMBREYAPELLIDOS = ObtenerNombreCompleto();
+            NOMBRECOMBOBOX = IDEMPLEADO + "-" + NOMBREYAPELLIDOS;
         }
         public Empleado(int idEmpleado, string nombre, string apellidos, string telefono, 
                         string direccion, string poblacion, string codigoPostal, 
@@ -55,6 +57,7 @@ namespace AsistenciaTecnica
             NOMBRECARGO = cargo.NOMBRE;
             NOMBREPROVINCIA = provincia.NOMBRE;
             NOMBREYAPELLIDOS = ObtenerNombreCompleto();
+            NOMBRECOMBOBOX = IDEMPLEADO + "-" + NOMBREYAPELLIDOS;
             IMAGEN = imagen;
         }
         public Empleado(Empleado empleado)
@@ -74,6 +77,7 @@ namespace AsistenciaTecnica
             NOMBRECARGO = empleado.CARGO.NOMBRE;
             NOMBREPROVINCIA = empleado.PROVINCIA.NOMBRE;
             NOMBREYAPELLIDOS = empleado.ObtenerNombreCompleto();
+            NOMBRECOMBOBOX = IDEMPLEADO+"-"+ NOMBREYAPELLIDOS;
             IMAGEN = empleado.IMAGEN;
         }
 

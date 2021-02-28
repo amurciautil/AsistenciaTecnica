@@ -365,7 +365,7 @@ namespace AsistenciaTecnica
             return provincias;
         }
 
-        public ObservableCollection<Empleado> ObtenerEmpleados(bool insertarFilaVacia)
+        public ObservableCollection<Empleado> ObtenerEmpleados(bool insertarFilaVacia,int departamento)
         {
             ObservableCollection<Empleado> empleados = new ObservableCollection<Empleado>();
             if (insertarFilaVacia)
@@ -386,7 +386,9 @@ namespace AsistenciaTecnica
                  " ON em.provincia = pr.idProvincia" +
                 " JOIN cargos ca" +
                 " ON em.cargo = ca.idCargo";
-            SqlDataReader lector = comando.ExecuteReader();
+            if (departamento > 0)
+                comando.CommandText += " WHERE departamento = " + departamento;
+           SqlDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
                 while (lector.Read())
@@ -1041,6 +1043,11 @@ namespace AsistenciaTecnica
                 fechaCierre = DateTime.Parse("01/01/0001");
             }
             conexion.Open();
+            // Si nueva situacion es cancelada o cerrada cerraremos todos los partes que esten abiertos
+            if (formulario.IDSITUACION >= situacionCierre)
+            {
+                CerrarPartesDelPedido(formulario.IDPEDIDO);
+            }
             comando = conexion.CreateCommand();
             comando.CommandText = "UPDATE pedidos SET " +
                 "descripcion = @descripcion," +
@@ -1061,6 +1068,18 @@ namespace AsistenciaTecnica
             comando = PreparaDatosPedido(comando, formulario,"M", situacionAnterior);
             comando.ExecuteNonQuery();
             conexion.Close();
+        }
+        public void CerrarPartesDelPedido(int idPedido)
+        {
+            SqlCommand cmd = conexion.CreateCommand();
+            DateTime fechaCierre = DateTime.Today;
+            cmd = conexion.CreateCommand();
+            cmd.CommandText = "UPDATE partes SET " +
+                "cerrado = 1," +
+                "fechaCierre = '" + fechaCierre + "'" +
+                " WHERE pedido = " + @idPedido+
+                " AND cerrado = 0";
+            cmd.ExecuteNonQuery();
         }
 
         public SqlCommand PreparaDatosPedido(SqlCommand com, Pedido formulario,string operacion,int situacionAnterior)
@@ -1170,7 +1189,273 @@ namespace AsistenciaTecnica
             conexion.Close();
             return telefono;
         }
+        public ObservableCollection<Parte> ObtenerPartes(string filtro,int idPedido, bool insertarFilaVacia)
+        {
+            ObservableCollection<Parte> lista = new ObservableCollection<Parte>();
+            if (insertarFilaVacia)
+            {
+                lista.Add(new Parte());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT pe.idPedido," +
+                "pe.descripcion," +
+                "pe.telefono," +
+                "pe.nombre," +
+                "pe.apellidos," +
+                "pe.direccion," +
+                "pe.poblacion," +
+                "pe.codigoPostal," +
+                "pe.provincia," +
+                "pe.mail," +
+                "pe.usuario," +
+                "pe.fechaIntroduccion," +
+                "pe.fechacierre as fechacierrePe," +
+                "pe.situacion," +
+                "pe.tipoPedido," +
+                "pe.enGarantia," +
+                "pr.nombre," +
+                "si.descripcion," +
+                "tp.descripcion," +
+                "pa.idEmpleado," +
+                "em.nombre," +
+                "em.apellidos," +
+                "pa.idParte," +
+                "pa.fechaIntroduccion," +
+                "pa.fechacierre as fechacierrePa," +
+                "pa.cerrado,"+
+                "pa.fechaprevista,"+
+                "pa.observaciones" +
+                " from partes pa JOIN empleados em " +
+                " ON pa.idEmpleado = em.idEmpleado " +
+                " JOIN pedidos pe " +
+                " ON pe.idPedido = pa.pedido " +
+                " JOIN provincias pr " +
+                " ON pe.provincia = pr.idProvincia " +
+                " JOIN situacionpedidos si " +
+                " ON pe.situacion = si.idSituacion " +
+                " JOIN tipopedido tp " +
+                " ON pe.tipoPedido = tp.idTipo " +
+                filtro;
+            if (idPedido > 0)
+                comando.CommandText += " AND pe.idPedido = "+idPedido;
+            else
+                comando.CommandText += " AND pe.situacion < " + situacionCierre;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    DateTime fechaCierrePe;
+                    DateTime fechaCierrePa;
+                    if (lector.IsDBNull(lector.GetOrdinal("fechaCierrePe")))
+                    {
+                        fechaCierrePe = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        fechaCierrePe = lector.GetDateTime(12);
+                    }
+                    if (lector.IsDBNull(lector.GetOrdinal("fechaCierrePa")))
+                    {
+                        fechaCierrePa = DateTime.MinValue;
+                    }
+                    else
+                    {
+                        fechaCierrePa = lector.GetDateTime(24);
+                    }
 
+                    lista.Add(new Parte(lector.GetInt32(22),
+                        new Pedido(lector.GetInt32(0),
+                              lector.GetString(1),
+                              lector.GetString(2),
+                              lector.GetString(3),
+                              lector.GetString(4),
+                              lector.GetString(5),
+                              lector.GetString(6),
+                              lector.GetString(7),
+                              new Provincia(lector.GetString(8), lector.GetString(16)),
+                              lector.GetString(9),
+                              lector.GetString(10),
+                              lector.GetDateTime(11),
+                              fechaCierrePe,
+                              new SituacionPedido(lector.GetInt32(13), lector.GetString(17)),
+                              new TipoPedido(lector.GetInt32(14), lector.GetString(18)),
+                              lector.GetBoolean(15)),
+                              lector.GetDateTime(23),
+                              fechaCierrePa,
+                              lector.GetBoolean(25),
+                              new Empleado(lector.GetInt32(19), lector.GetString(20), lector.GetString(21)),
+                              lector.GetString(27),
+                              lector.GetDateTime(26)
+                              ));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return lista;
+        }
+        public void BorrarParte(Parte seleccionado)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM partes WHERE idParte = @idParte";
+            comando.Parameters.Add("@idParte", SqlDbType.Int);
+            comando.Parameters["@idParte"].Value = seleccionado.IDPARTE;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void InsertarParte(Parte formulario)
+        {
+            bool situacionAnterior = formulario.CERRADO;
+            DateTime fechaCierre;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            if (formulario.CERRADO)
+                fechaCierre = DateTime.Today;
+            else
+                fechaCierre = DateTime.Parse("01/01/0001");
+            comando.CommandText = "INSERT INTO partes " +
+                    "(pedido," +
+                    "fechaIntroduccion," +
+                    "fechaCierre," +
+                    "cerrado," +
+                    "idEmpleado," +
+                    "observaciones," +
+                    "fechaprevista" +
+                    ") VALUES (@pedido," +
+                    "@fechaIntroduccion, '" + fechaCierre+"',"+
+                    "@cerrado," +
+                    "@idEmpleado," +
+                    "@observaciones," +
+                    "@fechaprevista)";
+            comando = PreparaDatosParte(comando, formulario, "A", situacionAnterior);
+            comando.ExecuteNonQuery();
+            ActualizarSituacionPedido(situacionAnterior, formulario.CERRADO, formulario.IDPEDIDO);
+            conexion.Close();
+        }
+        public void ActualizarParte(Parte formulario)
+        {
+            bool situacionAnterior = BuscarSituacionParte(formulario.IDPARTE);
+            DateTime fechaCierre = new DateTime();
+            if (!situacionAnterior && formulario.CERRADO)
+            {
+                fechaCierre = DateTime.Today;
+            }
+            if (situacionAnterior && !formulario.CERRADO)
+            {
+                fechaCierre = DateTime.Parse("01/01/0001");
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE partes SET " +
+                "cerrado = @cerrado," +
+                "idEmpleado = @idEmpleado," +
+                "observaciones = @observaciones," +
+                "fechaprevista = @fechaprevista," +
+                "fechacierre = '" + fechaCierre + "'" +
+                " WHERE idParte = @idParte";
+            comando = PreparaDatosParte(comando, formulario, "M", situacionAnterior);
+            comando.ExecuteNonQuery();
+            ActualizarSituacionPedido(situacionAnterior, formulario.CERRADO, formulario.IDPEDIDO);
+            conexion.Close();
+        }
+        public SqlCommand PreparaDatosParte(SqlCommand com, Parte formulario, string operacion, bool situacionAnterior)
+        {
+            SqlCommand cmd = com;
+            // Es necesario controlar los nulos para grabar "" si el valor capturado en pantalla es nulo.
+            string observaciones;
+            if (formulario.OBSERVACIONES == null)
+                observaciones = "";
+            else
+                observaciones = formulario.OBSERVACIONES;
+            com.Parameters.Add("@idParte", SqlDbType.Int);
+            com.Parameters["@idParte"].Value = formulario.IDPARTE;
+            com.Parameters.Add("@pedido", SqlDbType.Int);
+            com.Parameters["@pedido"].Value = formulario.IDPEDIDO;
+            if (operacion == "A")
+            {
+                cmd.Parameters.Add("@fechaIntroduccion", SqlDbType.DateTime);
+                com.Parameters["@fechaIntroduccion"].Value = DateTime.Today;
+            }
+            cmd.Parameters.Add("@cerrado", SqlDbType.Int);
+            com.Parameters["@cerrado"].Value = formulario.CERRADO;
+            cmd.Parameters.Add("@idEmpleado", SqlDbType.Int);
+            com.Parameters["@idEmpleado"].Value = formulario.IDEMPLEADO;
+            cmd.Parameters.Add("@observaciones", SqlDbType.NVarChar);
+            com.Parameters["@observaciones"].Value = observaciones;
+            cmd.Parameters.Add("@fechaprevista", SqlDbType.DateTime);
+            com.Parameters["@fechaprevista"].Value = formulario.FECHAPREVISTA;
+            return cmd;
+        }
+        public bool BuscarSituacionParte(int idParte)
+        {
+            bool situacionParte = false;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "Select cerrado FROM partes WHERE idParte = @idParte";
+            comando.Parameters.Add("@idParte", SqlDbType.Int);
+            comando.Parameters["@idParte"].Value = idParte;
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    situacionParte = lector.GetBoolean(0);
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return situacionParte;
+        }
+        public void ActualizarSituacionPedido(bool cerradoAntes, bool cerradoDespues,int idPedido)
+        {
+            DateTime fechaCierre = new DateTime();
+            bool actualizar = false;
+            // Obtener situaciones de cerrado y en reparacion
+            int situacionCerrado = Properties.Settings.Default.situacionCierre;
+            int situacionEnReparacion = Properties.Settings.Default.situacionEnReparacion;
+            // Si cerramos el parte y no quedan partes abiertos se cierra el pedido
+            // Si se abre o crea un parte nuevo como abirto se abre el pedido
+            SqlCommand cmd = conexion.CreateCommand();
+            cmd.CommandText = "Update pedidos SET " +
+                "fechaCierre = '"+@fechaCierre+ "'," +
+                "situacion = @situacion " +
+                " WHERE idPedido = @idPedido";
+            cmd.Parameters.Add("@idPedido", SqlDbType.Int);
+            cmd.Parameters["@idPedido"].Value = idPedido;
+            cmd.Parameters.Add("@situacion", SqlDbType.Int);
+            // Antes y ahora abierto o antes cerrado y despues abierto => ABRIMOS PEDIDO
+            if (!cerradoAntes == !cerradoDespues ||
+               (cerradoAntes && !cerradoDespues))
+            {
+                cmd.Parameters["@situacion"].Value = situacionEnReparacion;
+                fechaCierre = DateTime.Parse("01/01/0001");
+                actualizar = true;
+            }
+            // Antes abiero y ahora cerrado y no hay partes abiertos de este pedido => CERRAMOS PEDIDO
+            if (!cerradoAntes && cerradoDespues && ContarPartesAbiertos(idPedido) == 0)
+            {
+                cmd.Parameters["@situacion"].Value = situacionCerrado;
+                fechaCierre = DateTime.Today;
+                actualizar = true;
+            }
+            // Actualizamos pedido
+            if (actualizar)
+                cmd.ExecuteNonQuery();
+        }
+        public int ContarPartesAbiertos(int idPedido)
+        {
+           int partesAbiertos = 0;
+            SqlCommand com = conexion.CreateCommand();
+            com.CommandText = "select count(*) from partes where pedido = @idPedido " +
+                            "AND cerrado = 0";
+            com.Parameters.Add("@idPedido", SqlDbType.Int);
+            com.Parameters["@idPedido"].Value = idPedido;
+            partesAbiertos = (Int32)com.ExecuteScalar();
+            return partesAbiertos;
+        }
     }
+
 
 }

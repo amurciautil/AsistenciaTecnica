@@ -7,7 +7,6 @@ namespace AsistenciaTecnica
         public string IDPROVINCIA { get; set; }
         public string NOMBRE { get; set; }
         public string CODIGONOMBRE { get; set; }
-
         public Provincia()
         {  
         }

@@ -33,7 +33,7 @@ namespace AsistenciaTecnica
             {
                 PERFILESNOMBRE.Add(perfil.NOMBRE);
             }
-            EMPLEADOS = bbdd.ObtenerEmpleados(false);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
             EMPLEADOSNOMBRE = new ObservableCollection<string>();
             foreach (var empleado in EMPLEADOS)
             {

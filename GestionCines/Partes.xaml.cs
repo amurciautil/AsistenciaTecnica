@@ -1,34 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace AsistenciaTecnica
 {
     /// <summary>
-    /// Lógica de interacción para Pedidos.xaml
+    /// Lógica de interacción para Partes.xaml
     /// </summary>
-    public partial class Pedidos : Window
+    public partial class Partes : Window
     {
-        private readonly PedidosVM _vm;
-        public Pedidos()
+        private readonly PartesVM _vm;
+        public Pedido PEDIDO { get; set; }
+        public string ORIGEN { get; set; } // para saber si venfo desde menu principal o desde pedidos (M/P)
+        public Partes(Pedido PEDIDO, string ORIGEN)
         {
-            _vm = new PedidosVM();
+            _vm = new PartesVM(PEDIDO);
+            this.PEDIDO = PEDIDO;
+            this.ORIGEN = ORIGEN;
             InitializeComponent();
             DataContext = _vm;
         }
+
         private void CommandBinding_Executed_Añadir(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Añadir(this);
+            _vm.Añadir(this,PEDIDO);
+        }
+        private void CommandBinding_CanExecute_Añadir(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = PEDIDO.IDPEDIDO > 0;
+            // si venimos a partes desde el menu principal no se pueden añadir partes porque no tenemos un pedido 
+            // de referencia del cual colgar los partes
         }
         private void CommandBinding_Executed_Editar(object sender, ExecutedRoutedEventArgs e)
         {
@@ -53,26 +54,22 @@ namespace AsistenciaTecnica
                     break;
             }
         }
-        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.Close();
-        }
         private void CommandBinding_Executed_Filtrar(object sender, ExecutedRoutedEventArgs e)
         {
             _vm.RefrescarFiltrado();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ORIGEN == "M")
+                this.Close();
+            else
+                DialogResult = true;
+        }
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTPEDIDO");
-        }
-        private void CommandBinding_Executed_Parte(object sender, ExecutedRoutedEventArgs e)
-        {
-            _vm.Partes(this);
+            _vm.Ayuda("MANTPARTES");
         }
 
-        private void CommandBinding_CanExecute_Parte(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = _vm.HaySelecionada();
-        }
+
     }
 }

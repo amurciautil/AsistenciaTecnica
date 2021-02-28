@@ -29,9 +29,12 @@
             Command="local:CustomCommands.Borrar"
             Executed="CommandBinding_Executed_Borrar" />
         <CommandBinding Command="local:CustomCommands.Filtrar" Executed="CommandBinding_Executed_Filtrar" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Parte"
+            Command="local:CustomCommands.Parte"
+            Executed="CommandBinding_Executed_Parte" />
         <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
         <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
-
     </Window.CommandBindings>
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -90,8 +93,21 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
+                    Command="local:CustomCommands.Parte"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Gestion de partes de trabajo">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/parte.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Ayuda"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Ayuda en línea">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -112,14 +128,13 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <Grid>
+        <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="70" />
             </Grid.RowDefinitions>
             <DataGrid
                 Grid.Row="0"
-                Margin="10"
                 AlternatingRowBackground="LightBlue"
                 AlternationCount="2"
                 AutoGenerateColumns="False"
@@ -144,9 +159,9 @@
                     <DataGridTextColumn Binding="{Binding Path=NOMBRETIPOPEDIDO}" Header="Tipo" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Grid.Row="1" Margin="10,0,0,0">
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="25" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -154,6 +169,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="40"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Row="0"
@@ -162,7 +178,8 @@
                 <ComboBox
                     Grid.Row="1"
                     Grid.Column="0"
-                    DisplayMemberPath="DESCRIPCION"
+                          Margin="0,0,5,10"
+                          DisplayMemberPath="DESCRIPCION"
                     ItemsSource="{Binding SITUACIONESPEDIDO}"
                     SelectedItem="{Binding Path=SITUACIONESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValue="IDSITIACION"
@@ -174,7 +191,8 @@
                 <ComboBox
                     Grid.Row="1"
                     Grid.Column="1"
-                    DisplayMemberPath="DESCRIPCION"
+                          Margin="0,0,5,10"
+                          DisplayMemberPath="DESCRIPCION"
                     ItemsSource="{Binding TIPOSPEDIDO}"
                     SelectedItem="{Binding Path=TIPOPEDIDOESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValue="IDTIPO"
@@ -186,7 +204,7 @@
                 <TextBox
                     Grid.Row="1"
                     Grid.Column="2"
-                    Text="{Binding TELEFONO, UpdateSourceTrigger=PropertyChanged}" />
+                         Text="{Binding TELEFONO, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="3"
@@ -195,6 +213,18 @@
                     Grid.Row="1"
                     Grid.Column="3"
                     Text="{Binding POBLACION, UpdateSourceTrigger=PropertyChanged}" />
+                <Button  Grid.Row="1"
+                         Grid.Column="4"
+                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Filtrar"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Refrescar datos">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/refresh.ico" />
+                </Button>
             </Grid>
         </Grid>
     </DockPanel>
