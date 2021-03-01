@@ -165,65 +165,98 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="0"
+                    Text="Pedido" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="{Binding NUMEROPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="Año Alta" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,0,5,10"
+                    ItemsSource="{Binding AÑOS}"
+                    SelectedItem="{Binding Path=AÑOSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="Mes Alta" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="0,0,5,10"
+                    ItemsSource="{Binding MESES}"
+                    SelectedItem="{Binding Path=MESSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="3"
                     Text="Situación" />
                 <ComboBox
                     Grid.Row="1"
-                    Grid.Column="0"
-                          Margin="0,0,5,10"
-                          DisplayMemberPath="DESCRIPCION"
+                    Grid.Column="3"
+                    Margin="0,0,5,10"
+                    DisplayMemberPath="DESCRIPCION"
                     ItemsSource="{Binding SITUACIONESPEDIDO}"
                     SelectedItem="{Binding Path=SITUACIONESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValue="IDSITIACION"
                     SelectedValuePath="SITUACION" />
                 <TextBlock
                     Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="4"
                     Text="Tipo" />
                 <ComboBox
                     Grid.Row="1"
-                    Grid.Column="1"
-                          Margin="0,0,5,10"
-                          DisplayMemberPath="DESCRIPCION"
+                    Grid.Column="4"
+                    Margin="0,0,5,10"
+                    DisplayMemberPath="DESCRIPCION"
                     ItemsSource="{Binding TIPOSPEDIDO}"
                     SelectedItem="{Binding Path=TIPOPEDIDOESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValue="IDTIPO"
                     SelectedValuePath="TIPOPEDIDO" />
                 <TextBlock
                     Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="5"
                     Text="Telefono" />
                 <TextBox
                     Grid.Row="1"
-                    Grid.Column="2"
-                         Text="{Binding TELEFONO, UpdateSourceTrigger=PropertyChanged}" />
+                    Grid.Column="5"
+                    Text="{Binding TELEFONO, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock
                     Grid.Row="0"
-                    Grid.Column="3"
+                    Grid.Column="6"
                     Text="Población" />
                 <TextBox
                     Grid.Row="1"
-                    Grid.Column="3"
+                    Grid.Column="6"
                     Text="{Binding POBLACION, UpdateSourceTrigger=PropertyChanged}" />
-                <Button  Grid.Row="1"
-                         Grid.Column="4"
-                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Filtrar"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Refrescar datos">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/refresh.ico" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="7"
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="5,0,10,0"
+                    Command="local:CustomCommands.Filtrar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Refrescar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/refresh.ico" />
                 </Button>
             </Grid>
         </Grid>

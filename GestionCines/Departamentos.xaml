@@ -103,13 +103,14 @@
                         Source="Imagenes/insertar.ico" />
                 </Button>
                 <Button
-                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonEAyuda}"
-                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonEAyuda}"
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Ayuda"
                     Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
                     <Image
-                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonIAyuda}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonIAyuda}"
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/ayuda.ico" />
                 </Button>
                 <Button

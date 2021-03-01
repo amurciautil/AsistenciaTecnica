@@ -245,7 +245,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="80" />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"

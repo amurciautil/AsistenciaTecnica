@@ -1,107 +1,120 @@
-﻿<Window x:Class="AsistenciaTecnica.Partes"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:AsistenciaTecnica"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-        Title="Partes de trabajo"
-        Width="1100"
-        Height="500"
-        Icon="Imagenes/parte.ico"
-        WindowState="Maximized"
-        Background="#74DDF8"
-        mc:Ignorable="d">
+﻿<Window
+    x:Class="AsistenciaTecnica.Partes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AsistenciaTecnica"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
+    Title="Partes de trabajo"
+    Width="1100"
+    Height="500"
+    Background="#74DDF8"
+    Icon="Imagenes/parte.ico"
+    WindowState="Maximized"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Insertar"
-                        Executed="CommandBinding_Executed_Añadir"
-                        CanExecute="CommandBinding_CanExecute_Añadir" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
-                        Command="local:CustomCommands.Editar"
-                        Executed="CommandBinding_Executed_Editar" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
-                        Command="local:CustomCommands.Borrar"
-                        Executed="CommandBinding_Executed_Borrar" />
-        <CommandBinding Command="local:CustomCommands.Filtrar"
-                        Executed="CommandBinding_Executed_Filtrar" />
-        <CommandBinding Command="local:CustomCommands.Ayuda"
-                        Executed="CommandBinding_Executed_Ayuda" />
-        <CommandBinding Command="local:CustomCommands.Salir"
-                        Executed="CommandBinding_Executed_Salir" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Añadir"
+            Command="local:CustomCommands.Insertar"
+            Executed="CommandBinding_Executed_Añadir" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Editar"
+            Command="local:CustomCommands.Editar"
+            Executed="CommandBinding_Executed_Editar" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Editar"
+            Command="local:CustomCommands.Borrar"
+            Executed="CommandBinding_Executed_Borrar" />
+        <CommandBinding Command="local:CustomCommands.Filtrar" Executed="CommandBinding_Executed_Filtrar" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
+        <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  DatePicker  -->
-        <Style x:Key="combosFiltro"
-               BasedOn="{StaticResource MaterialDesignDatePicker}"
-               TargetType="DatePicker">
-            <Setter Property="Margin"
-                    Value="0,0,5,11" />
+        <Style
+            x:Key="combosFiltro"
+            BasedOn="{StaticResource MaterialDesignDatePicker}"
+            TargetType="DatePicker">
+            <Setter Property="Margin" Value="0,0,5,11" />
         </Style>
     </Window.Resources>
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Borrar"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Borrar datos">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/borrar.ico" />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Borrar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Borrar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/borrar.ico" />
                 </Button>
                 <Separator />
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Editar"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Modificar datos">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/editar.ico" />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Editar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Modificar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/editar.ico" />
                 </Button>
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Insertar"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Insertar nuevo registro">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/insertar.ico" />
-                </Button>
-                <Separator />
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Filtrar"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Refrescar datos">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/refresh.ico" />
-                </Button>
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Ayuda"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/ayuda.ico" />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Insertar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Insertar nuevo registro">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/insertar.ico" />
                 </Button>
                 <Separator />
-                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                        Margin="0,0,10,0"
-                        Command="local:CustomCommands.Salir"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Salir">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/exit.ico" />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Filtrar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Refrescar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/refresh.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Ayuda"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/ayuda.ico" />
+                </Button>
+                <Separator />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Salir"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Salir">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/exit.ico" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
@@ -110,48 +123,51 @@
                 <RowDefinition />
                 <RowDefinition Height="70" />
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0"
-                      AlternatingRowBackground="LightBlue"
-                      AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ColumnWidth="*"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding Path=PARTES}"
-                      SelectedItem="{Binding Path=SELECCIONADA}">
+            <DataGrid
+                Grid.Row="0"
+                AlternatingRowBackground="LightBlue"
+                AlternationCount="2"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                ColumnWidth="*"
+                IsReadOnly="True"
+                ItemsSource="{Binding Path=PARTES}"
+                SelectedItem="{Binding Path=SELECCIONADA}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="80"
-                                        Binding="{Binding Path=IDPEDIDO}"
-                                        Header="Pedido" />
-                    <DataGridTextColumn Width="80"
-                                        Binding="{Binding Path=IDPARTE}"
-                                        Header="Parte" />
-                    <DataGridTextColumn Binding="{Binding Path=OBSERVACIONES}"
-                                        Header="Observaciones" />
-                    <DataGridTextColumn Binding="{Binding Path=NOMBREEMPLEADO}"
-                                        Header="Técnico" />
-                    <DataGridTextColumn Width="112"
-                                        Binding="{Binding Path=FECHAALTAPARTEFORMATO}"
-                                        Header="Fecha alta" />
-                    <DataGridTextColumn Width="112"
-                                        Binding="{Binding Path=FECHAPREVISTAFORMATO}"
-                                        Header="Fecha prevista" />
-                    <DataGridTextColumn Binding="{Binding Path=NOMBRECLIENTE}"
-                                        Header="Cliente" />
-                    <DataGridTextColumn Binding="{Binding Path=DIRECCION}"
-                                        Header="Dirección" />
-                    <DataGridTextColumn Width="112"
-                                        Binding="{Binding Path=TELEFONO}"
-                                        Header="Telefono" />
-                    <DataGridTextColumn Width="112"
-                                        Binding="{Binding Path=POBLACION}"
-                                        Header="Población" />
-                    <DataGridTextColumn Binding="{Binding Path=NOMBRETIPOPEDIDOSIN}"
-                                        Header="Tipo intervencion" />
-                    <DataGridCheckBoxColumn Width="90"
-                                            Binding="{Binding Path=CERRADO}"
-                                            Header="Cerrado" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Path=IDPEDIDO}"
+                        Header="Pedido" />
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding Path=IDPARTE}"
+                        Header="Parte" />
+                    <DataGridTextColumn Binding="{Binding Path=OBSERVACIONES}" Header="Observaciones" />
+                    <DataGridTextColumn Binding="{Binding Path=NOMBREEMPLEADO}" Header="Técnico" />
+                    <DataGridTextColumn
+                        Width="112"
+                        Binding="{Binding Path=FECHAALTAPARTEFORMATO}"
+                        Header="Fecha alta" />
+                    <DataGridTextColumn
+                        Width="112"
+                        Binding="{Binding Path=FECHAPREVISTAFORMATO}"
+                        Header="Fecha prevista" />
+                    <DataGridTextColumn Binding="{Binding Path=NOMBRECLIENTE}" Header="Cliente" />
+                    <DataGridTextColumn Binding="{Binding Path=DIRECCION}" Header="Dirección" />
+                    <DataGridTextColumn
+                        Width="112"
+                        Binding="{Binding Path=TELEFONO}"
+                        Header="Telefono" />
+                    <DataGridTextColumn
+                        Width="112"
+                        Binding="{Binding Path=POBLACION}"
+                        Header="Población" />
+                    <DataGridTextColumn Binding="{Binding Path=NOMBRETIPOPEDIDOSIN}" Header="Tipo intervencion" />
+                    <DataGridCheckBoxColumn
+                        Width="90"
+                        Binding="{Binding Path=CERRADO}"
+                        Header="Cerrado" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="1">
@@ -160,7 +176,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -168,61 +184,75 @@
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           Text="Pedido" />
-                <TextBox Grid.Row="1"
-                         Grid.Column="0"
-                         Text="{Binding NUMEROPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="1"
-                           Text="Situación" />
-                <ComboBox Grid.Row="1"
-                          Grid.Column="1"
-                          Margin="0,0,5,11"
-                          ItemsSource="{Binding SITUACIONESPARTE}"
-                          SelectedItem="{Binding Path=SITUACIONESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedValue="IDSITIACION"
-                          SelectedValuePath="SITUACION" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="2"
-                           Text="Nombre técnico" />
-                <TextBox Grid.Row="1"
-                         Grid.Column="2"
-                         Text="{Binding NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="3"
-                           Text="Apellidos técnico" />
-                <TextBox Grid.Row="1"
-                         Grid.Column="3"
-                         Text="{Binding APELLIDOS, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="4"
-                           Text="Año Alta" />
-                <ComboBox Grid.Row="1"
-                          Grid.Column="4"
-                          Margin="0,0,5,10"
-                          ItemsSource="{Binding AÑOS}"
-                          SelectedItem="{Binding Path=AÑOSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Grid.Row="0"
-                           Grid.Column="5"
-                           Text="Mes Alta" />
-                <ComboBox Grid.Row="1"
-                          Grid.Column="5"
-                          Margin="0,0,5,10"
-                          ItemsSource="{Binding MESES}"
-                          SelectedItem="{Binding Path=MESSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
-                <Button  Grid.Row="1"
-                         Grid.Column="6"
-                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
-                         Margin="0,0,5,5"
-                         Command="local:CustomCommands.Filtrar"
-                         Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                         ToolTip="Refrescar datos">
-                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
-                           Source="Imagenes/refresh.ico" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Pedido" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="{Binding NUMEROPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="Situación" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,0,5,11"
+                    ItemsSource="{Binding SITUACIONESPARTE}"
+                    SelectedItem="{Binding Path=SITUACIONESELECCIONADA, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValue="IDSITIACION"
+                    SelectedValuePath="SITUACION" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="Nombre técnico" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="{Binding NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Text="Apellidos técnico" />
+                <TextBox
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Text="{Binding APELLIDOS, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Text="Año Alta" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Margin="0,0,5,10"
+                    ItemsSource="{Binding AÑOS}"
+                    SelectedItem="{Binding Path=AÑOSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="5"
+                    Text="Mes Alta" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="5"
+                    Margin="0,0,5,10"
+                    ItemsSource="{Binding MESES}"
+                    SelectedItem="{Binding Path=MESSELECCIONADO, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="6"
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,5,5"
+                    Command="local:CustomCommands.Filtrar"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Refrescar datos">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/refresh.ico" />
                 </Button>
             </Grid>
         </Grid>

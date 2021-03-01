@@ -22,16 +22,43 @@
             CanExecute="CommandBinding_CanExecute_Salir"
             Command="local:CustomCommands.Salir"
             Executed="CommandBinding_Executed_Salir" />
-        <CommandBinding Command="local:CustomCommands.Utilidades" Executed="CommandBinding_Executed_Utilidades" />
-        <CommandBinding Command="local:CustomCommands.Cargo" Executed="CommandBinding_Executed_Cargo" />
-        <CommandBinding Command="local:CustomCommands.Departamento" Executed="CommandBinding_Executed_Departamento" />
-        <CommandBinding Command="local:CustomCommands.Perfil" Executed="CommandBinding_Executed_Perfil" />
-        <CommandBinding Command="local:CustomCommands.Provincia" Executed="CommandBinding_Executed_Provincia" />
-        <CommandBinding Command="local:CustomCommands.Empleado" Executed="CommandBinding_Executed_Empleado" />
-        <CommandBinding Command="local:CustomCommands.Usuario" Executed="CommandBinding_Executed_Usuario" />
+        <CommandBinding Command="local:CustomCommands.Utilidades"
+                        CanExecute="CommandBinding_CanExecute_modulo"
+                        Executed="CommandBinding_Executed_Utilidades" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Cargo"
+            Executed="CommandBinding_Executed_Cargo" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Departamento"
+            Executed="CommandBinding_Executed_Departamento" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Perfil"
+            Executed="CommandBinding_Executed_Perfil" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Provincia"
+            Executed="CommandBinding_Executed_Provincia" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Empleado"
+            Executed="CommandBinding_Executed_Empleado" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Usuario"
+            Executed="CommandBinding_Executed_Usuario" />
         <CommandBinding Command="local:CustomCommands.Password" Executed="CommandBinding_Executed_Password" />
         <CommandBinding Command="local:CustomCommands.CambioUsuario" Executed="CommandBinding_Executed_CambioUsuario" />
-        <CommandBinding Command="local:CustomCommands.Producto" Executed="CommandBinding_Executed_Producto" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Producto"
+            Executed="CommandBinding_Executed_Producto" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.TablaAyuda"
+            Executed="CommandBinding_Executed_TablaAyuda" />
         <CommandBinding Command="local:CustomCommands.Pedido" Executed="CommandBinding_Executed_Pedido" />
         <CommandBinding Command="local:CustomCommands.Parte" Executed="CommandBinding_Executed_Parte" />
     </Window.CommandBindings>
@@ -99,7 +126,7 @@
                     <MenuItem.Icon>
                         <Image Source="Imagenes/config.ico" />
                     </MenuItem.Icon>
-                    <MenuItem Command="local:CustomCommands.Utilidades" Header="_Utilidades">
+                    <MenuItem Command="local:CustomCommands.Utilidades" Header="_Propiedades">
                         <MenuItem.Icon>
                             <Image Source="Imagenes/config.ico" />
                         </MenuItem.Icon>
@@ -112,6 +139,11 @@
                     <MenuItem Command="local:CustomCommands.Password" Header="Cambiar pass_word">
                         <MenuItem.Icon>
                             <Image Source="Imagenes/password.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="local:CustomCommands.TablaAyuda" Header="Mantenimiento a_yuda">
+                        <MenuItem.Icon>
+                            <Image Source="Imagenes/ayuda.ico" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>

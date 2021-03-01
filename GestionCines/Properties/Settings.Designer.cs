@@ -25,18 +25,6 @@ namespace AsistenciaTecnica.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Bizum")]
-        public string formaDePago {
-            get {
-                return ((string)(this["formaDePago"]));
-            }
-            set {
-                this["formaDePago"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("login")]
         public string login {
             get {
@@ -74,9 +62,9 @@ namespace AsistenciaTecnica.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("14")]
-        public string fuenteTextBlock {
+        public int fuenteTextBlock {
             get {
-                return ((string)(this["fuenteTextBlock"]));
+                return ((int)(this["fuenteTextBlock"]));
             }
             set {
                 this["fuenteTextBlock"] = value;
@@ -161,6 +149,27 @@ namespace AsistenciaTecnica.Properties {
             }
             set {
                 this["situacionEnReparacion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int perfilAdministrador {
+            get {
+                return ((int)(this["perfilAdministrador"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int perfilUsuario {
+            get {
+                return ((int)(this["perfilUsuario"]));
+            }
+            set {
+                this["perfilUsuario"] = value;
             }
         }
     }

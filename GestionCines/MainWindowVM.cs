@@ -19,10 +19,27 @@ namespace AsistenciaTecnica
         {
             Utilidades utilidades = new Utilidades();
             utilidades.Owner = mainWindow;
-            utilidades.FormaDePago = Properties.Settings.Default.formaDePago;
+            utilidades.BOTONEXTERNO = Properties.Settings.Default.botonExterno;
+            utilidades.BOTONINTERNO = Properties.Settings.Default.botonInterno;
+            utilidades.MODODESARROLLO = Properties.Settings.Default.modoDesarrollo;
+            utilidades.SITUACIONCIERRE = Properties.Settings.Default.situacionCierre;
+            utilidades.DEPARTAMENTOTECNICO = Properties.Settings.Default.departamentoTecnico;
+            utilidades.SITUACIONREPARACION = Properties.Settings.Default.situacionEnReparacion;
+            utilidades.PERFILADMINISTRADOR = Properties.Settings.Default.perfilAdministrador;
+            utilidades.LOGIN = Properties.Settings.Default.login;
+            utilidades.NOMBREUSUARIO = Properties.Settings.Default.nombreUsuario;
+            utilidades.PERFILUSUARIO = Properties.Settings.Default.perfilUsuario;
+            utilidades.MINLONGITUDPASSWD = Properties.Settings.Default.minLengthPasswd;
+            utilidades.MAXLONGITUDPASSWD = Properties.Settings.Default.maxLengthPasswd;
+            utilidades.FUENTETEXTBLOCK = Properties.Settings.Default.fuenteTextBlock;
+            utilidades.FUENTETEXTBOX = Properties.Settings.Default.fuenteTextBox;
+
             if (utilidades.ShowDialog() == true)
             {
-                Properties.Settings.Default.formaDePago = utilidades.FormaDePago;
+                Properties.Settings.Default.botonExterno = utilidades.BOTONEXTERNO;
+                Properties.Settings.Default.botonInterno = utilidades.BOTONINTERNO;
+                Properties.Settings.Default.fuenteTextBlock = utilidades.FUENTETEXTBLOCK;
+                Properties.Settings.Default.fuenteTextBox = utilidades.FUENTETEXTBOX;
                 Properties.Settings.Default.Save();
             }
         }
@@ -37,6 +54,7 @@ namespace AsistenciaTecnica
             Empleado empleado = bbdd.BuscarEmpleado(usuario.EMPLEADO.IDEMPLEADO);
             Properties.Settings.Default.login = usuario.LOGIN;
             Properties.Settings.Default.nombreUsuario = empleado.ObtenerNombreCompleto();
+            Properties.Settings.Default.perfilUsuario = usuario.PERFIL.IDPERFIL;
             Properties.Settings.Default.Save();
         }
         public void Cargo(MainWindow mainWindow)
@@ -104,6 +122,13 @@ namespace AsistenciaTecnica
             Partes partes = new Partes(new Pedido(),"M");
             partes.Owner = mainWindow;
             partes.Show();
+        }
+        public void MantenimientoAyuda(MainWindow mainWindow)
+        {
+
+            MantenimientoAyuda ayuda = new MantenimientoAyuda();
+            ayuda.Owner = mainWindow;
+            ayuda.Show();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -114,5 +114,16 @@ namespace AsistenciaTecnica
         {
             _vm.Partes(this);
         }
+        private void CommandBinding_Executed_TablaAyuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.MantenimientoAyuda(this);
+        }
+
+        private void CommandBinding_CanExecute_modulo(object sender, CanExecuteRoutedEventArgs e)
+        {
+            int perfilAdministrador = Properties.Settings.Default.perfilAdministrador;
+            int perfilUsuario = Properties.Settings.Default.perfilUsuario;
+            e.CanExecute = perfilUsuario == perfilAdministrador;
+        }
     }
 }

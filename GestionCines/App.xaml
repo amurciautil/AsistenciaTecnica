@@ -35,6 +35,11 @@
                 <Setter Property="Margin" Value="0,0,5,10" />
                 <Setter Property="Background" Value="#C1E7EB" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
+                <Style.Triggers>
+                    <Trigger Property="IsReadOnly" Value="True">
+                        <Setter Property="Background" Value="#B3E5FC" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
             <Style TargetType="TextBlock">
                 <Setter Property="Margin" Value="0,0,0,5" />

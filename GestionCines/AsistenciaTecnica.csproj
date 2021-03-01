@@ -145,6 +145,10 @@
     </Compile>
     <Compile Include="CambioPasswdVM.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="MantenimientoAyuda.xaml.cs">
+      <DependentUpon>MantenimientoAyuda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MantenimientoAyudaVM.cs" />
     <Compile Include="Parte.cs" />
     <Compile Include="ParteDetalle.xaml.cs">
       <DependentUpon>ParteDetalle.xaml</DependentUpon>
@@ -172,6 +176,7 @@
     </Compile>
     <Compile Include="ProductosVM.cs" />
     <Compile Include="SituacionPedido.cs" />
+    <Compile Include="TablaAyuda.cs" />
     <Compile Include="Telefono.cs" />
     <Compile Include="TipoPedido.cs" />
     <Compile Include="TipoProducto.cs" />
@@ -256,6 +261,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MantenimientoAyuda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ParteDetalle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

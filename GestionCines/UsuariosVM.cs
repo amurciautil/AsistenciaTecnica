@@ -104,6 +104,11 @@ namespace AsistenciaTecnica
         {
             return FORMULARIO.LOGIN != null && FORMULARIO.LOGIN.Length > 0;
         }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

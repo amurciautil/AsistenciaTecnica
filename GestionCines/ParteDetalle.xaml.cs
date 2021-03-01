@@ -58,7 +58,7 @@ namespace AsistenciaTecnica
         }
 
 
-        private void descripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DescripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int longitud = observacionesTextBox.Text.Length;
             contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";

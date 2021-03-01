@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace AsistenciaTecnica
 {
@@ -12,6 +14,11 @@ namespace AsistenciaTecnica
         public ObservableCollection<TipoPedido> TIPOSPEDIDO { get; set; }
         public string TELEFONO { get; set; }
         public string POBLACION { get; set; }
+        public string NUMEROPEDIDO { get; set; }
+        public string AÑOSELECCIONADO { get; set; }
+        public ObservableCollection<string> AÑOS { get; set; }
+        public string MESSELECCIONADO { get; set; }
+        public ObservableCollection<string> MESES { get; set; }
         public Pedido SELECCIONADA { get; set; }
         public Pedido FORMULARIO { get; set; }
         public ObservableCollection<Pedido> PEDIDOS { get; set; }
@@ -25,8 +32,20 @@ namespace AsistenciaTecnica
             // Datos para filtrado
             SITUACIONESELECCIONADA = new SituacionPedido();
             TIPOPEDIDOESELECCIONADA = new TipoPedido();
-            SITUACIONESPEDIDO = bbdd.ObtenerSituacionPedidos(true);
+            SITUACIONESPEDIDO = bbdd.ObtenerSituacionPedidos(false);
             TIPOSPEDIDO = bbdd.ObtenerTipoPedido(true);
+            AÑOS = new ObservableCollection<string>();
+            AÑOS.Add("");
+            AÑOS.Add(DateTime.Now.Year.ToString());
+            for (int i = 2020; i <= 2040; i++)
+                if (i.ToString() != DateTime.Now.Year.ToString())
+                    AÑOS.Add(i.ToString());
+            MESES = new ObservableCollection<string>();
+            MESES.Add("");
+            MESES.Add(DateTime.Now.Month.ToString());
+            for (int i = 1; i <= 12; i++)
+                if (i.ToString() != DateTime.Now.Month.ToString())
+                    MESES.Add(i.ToString());
         }
         public bool HaySelecionada()
         {
@@ -56,6 +75,14 @@ namespace AsistenciaTecnica
         public void RefrescarFiltrado()
         {
             string condicion_filtro = CONDICION_FIJA;
+            string patron = @"^[0-9]*$";
+            Regex pa = new Regex(patron);
+            if (NUMEROPEDIDO != null && NUMEROPEDIDO.Trim(' ').Length > 0 && pa.IsMatch(NUMEROPEDIDO))
+                condicion_filtro += " AND pe.idPedido = " + NUMEROPEDIDO;
+            if (AÑOSELECCIONADO != null && AÑOSELECCIONADO.Length > 0)
+                condicion_filtro += " AND YEAR(pe.fechaIntroduccion) = " + Convert.ToInt32(AÑOSELECCIONADO);
+            if (MESSELECCIONADO != null && MESSELECCIONADO.Length > 0)
+                condicion_filtro += " AND MONTH(pe.fechaIntroduccion) = " + Convert.ToInt32(MESSELECCIONADO);
             if (SITUACIONESELECCIONADA.IDSITUACION != 0)
                 condicion_filtro += " AND pe.situacion = '" + SITUACIONESELECCIONADA.IDSITUACION + "'";
             if (TIPOPEDIDOESELECCIONADA.IDTIPO != 0)

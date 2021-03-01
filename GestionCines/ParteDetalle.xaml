@@ -59,8 +59,7 @@
             TargetType="DatePicker">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Background" Value="#C1E7EB" />
-            <Setter Property="VerticalAlignment"
-                    Value="Top" />
+            <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
         </Style>
     </Window.Resources>
@@ -313,12 +312,12 @@
                             Text="Fecha prevista intervención" />
                         <DatePicker
                             Grid.Column="7"
-                            Style="{StaticResource datePicker}"
-                                    SelectedDate="{Binding Path=FORMULARIO.FECHAPREVISTA, UpdateSourceTrigger=PropertyChanged}" />
+                            SelectedDate="{Binding Path=FORMULARIO.FECHAPREVISTA, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource datePicker}" />
                         <CheckBox
                             Grid.Column="8"
-                            Content="Cerrado"
                             Margin="20,0,0,0"
+                            Content="Cerrado"
                             IsChecked="{Binding Path=FORMULARIO.CERRADO, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource checkBox}" />
                     </Grid>
@@ -331,12 +330,14 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Style="{StaticResource MaterialDesignBody1TextBlock}"
-                                       Text="Técnico" />
-                            <ComboBox Grid.Column="1"
-                                      ItemsSource="{Binding EMPLEADONOMBRE}"
-                                      SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Grid.Column="0"
+                                Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                Text="Técnico" />
+                            <ComboBox
+                                Grid.Column="1"
+                                ItemsSource="{Binding EMPLEADONOMBRE}"
+                                SelectedItem="{Binding Path=FORMULARIO.NOMBREEMPLEADO, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -381,7 +382,7 @@
                                 Grid.Column="1"
                                 AcceptsReturn="True"
                                 Text="{Binding Path=FORMULARIO.OBSERVACIONES, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="descripcionTextBox_TextChanged"
+                                TextChanged="DescripcionTextBox_TextChanged"
                                 TextWrapping="Wrap" />
                         </Grid>
                     </Grid>

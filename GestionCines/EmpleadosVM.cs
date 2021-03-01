@@ -41,6 +41,11 @@ namespace AsistenciaTecnica
             EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
             return mensajeBorre;
         }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -179,6 +179,15 @@ namespace AsistenciaTecnica
                         new KeyGesture(Key.F,ModifierKeys.Control)
             }
            );
+        public static readonly RoutedUICommand TablaAyuda = new RoutedUICommand
+            ("TablaAyuda",
+             "TablaAyuda",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+               new KeyGesture(Key.F1,ModifierKeys.Control)
+            }
+           );
     }
 
 }

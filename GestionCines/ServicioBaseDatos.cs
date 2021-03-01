@@ -136,6 +136,70 @@ namespace AsistenciaTecnica
             return empleado;
         }
 
+        public ObservableCollection<TablaAyuda> ObtenerTablaAyuda(bool insertarFilaVacia)
+        {
+            ObservableCollection<TablaAyuda> lista = new ObservableCollection<TablaAyuda>();
+            if (insertarFilaVacia)
+            {
+                lista.Add(new TablaAyuda());
+            }
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT * from ayuda";
+            SqlDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    lista.Add(new TablaAyuda(lector.GetString(0), lector.GetString(1), lector.GetString(2)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return lista;
+        }
+        public void InsertarTablaAyuda(TablaAyuda formulario)
+        {
+            try
+            {
+                conexion.Open();
+                comando = conexion.CreateCommand();
+                string ampliacion;
+                if (formulario.AMPLIACION != null)
+                    ampliacion = formulario.AMPLIACION;
+                else
+                    ampliacion = "";
+                comando.CommandText = "INSERT INTO ayuda VALUES(@codigo,@descripcion,@ampliacion)";
+                comando.Parameters.Add("@codigo", SqlDbType.VarChar);
+                comando.Parameters["@codigo"].Value = formulario.CODIGO;
+                comando.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+                comando.Parameters["@descripcion"].Value = formulario.DESCRIPCION;
+                comando.Parameters.Add("@ampliacion", SqlDbType.NVarChar);
+                comando.Parameters["@ampliacion"].Value = ampliacion;
+                comando.ExecuteNonQuery();
+                conexion.Close();
+            }
+            catch(Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
+        }
+        public void ActualizarTablaAyuda(TablaAyuda formulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE ayuda SET descripcion = @descripcion," +
+                                  "ampliacion = @ampliacion"+
+                                  " WHERE codigo = @codigo";
+            comando.Parameters.Add("@codigo", SqlDbType.VarChar);
+            comando.Parameters["@codigo"].Value = formulario.CODIGO;
+            comando.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+            comando.Parameters["@descripcion"].Value = formulario.DESCRIPCION;
+            comando.Parameters.Add("@ampliacion", SqlDbType.NVarChar);
+            comando.Parameters["@ampliacion"].Value = formulario.AMPLIACION;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
 
         public ObservableCollection<Departamento> ObtenerDepartamentos(bool insertarFilaVacia)
         {
