@@ -160,11 +160,11 @@
                                 <Run FontWeight="Bold" Text="Id: " />
                                 <Run FontWeight="Bold" Text="{Binding Path=FORMULARIO.IDEMPLEADO}" /></TextBlock>
                         </StackPanel>
-                        <TextBox Grid.Row="1" Text="{Binding Path=FORMULARIO.NOMBRE}" />
-                        <TextBox Grid.Row="2" Text="{Binding Path=FORMULARIO.APELLIDOS}" />
-                        <TextBox Grid.Row="3" Text="{Binding Path=FORMULARIO.MAIL}" />
-                        <TextBox Grid.Row="4" Text="{Binding Path=FORMULARIO.TELEFONO}" />
-                        <TextBox Grid.Row="5" Text="{Binding Path=FORMULARIO.IMAGEN}" />
+                        <TextBox Grid.Row="1" Text="{Binding Path=FORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Row="2" Text="{Binding Path=FORMULARIO.APELLIDOS, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Row="3" Text="{Binding Path=FORMULARIO.MAIL, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Row="4" Text="{Binding Path=FORMULARIO.TELEFONO, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Row="5" Text="{Binding Path=FORMULARIO.IMAGEN, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
@@ -203,15 +203,15 @@
                     <TextBox
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="{Binding Path=FORMULARIO.DIRECCION}" />
+                        Text="{Binding Path=FORMULARIO.DIRECCION, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="{Binding Path=FORMULARIO.POBLACION}" />
+                        Text="{Binding Path=FORMULARIO.POBLACION, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{Binding Path=FORMULARIO.CODIGOPOSTAL}" />
+                        Text="{Binding Path=FORMULARIO.CODIGOPOSTAL, UpdateSourceTrigger=PropertyChanged}" />
                     <ComboBox
                         Grid.Row="3"
                         Grid.Column="1"

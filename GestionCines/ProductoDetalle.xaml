@@ -201,7 +201,7 @@
                 <TextBox
                     Grid.Row="4"
                     Grid.Column="1"
-                    Text="{Binding Path=FORMULARIO.PRECIOVENTA, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.PRECIOVENTA, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}" />
                 <ComboBox
                     Grid.Row="5"
                     Grid.Column="1"
@@ -211,7 +211,7 @@
                     Grid.Row="6"
                     Grid.Column="1"
                     Style="{StaticResource existenciasTextBox}"
-                    Text="{Binding Path=FORMULARIO.EXISTENCIAS, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Path=FORMULARIO.EXISTENCIAS, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}" />
             </Grid>
         </Border>
     </DockPanel>

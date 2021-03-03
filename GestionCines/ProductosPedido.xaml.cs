@@ -1,43 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace AsistenciaTecnica
 {
     /// <summary>
-    /// Lógica de interacción para Departamento.xaml
+    /// Lógica de interacción para ProductosPedido.xaml
     /// </summary>
-    public partial class Departamentos : Window
+    public partial class ProductosPedido : Window
     {
-        private readonly DepartamentoVM _vm;
-        public Departamentos()
+        private readonly ProductosPedidoVM _vm;
+        public Pedido PEDIDO { get; set; }
+        public ProductosPedido(Pedido PEDIDO)
         {
-            _vm = new DepartamentoVM();
+            _vm = new ProductosPedidoVM(PEDIDO);
+            this.PEDIDO = PEDIDO;
             InitializeComponent();
             DataContext = _vm;
         }
-
         private void CommandBinding_Executed_Editar(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.EditarDepartamento();
+            _vm.Editar();
         }
 
         private void CommandBinding_CanExecute_Editar(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _vm.HayDepartamentoSeleccionado();
+            e.CanExecute = _vm.HaySeleccionada();
         }
 
-        private void CommandBinding_Executed_AñadirDepartamento(object sender, ExecutedRoutedEventArgs e)
+        private void CommandBinding_Executed_Añadir(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.AñadirDepartamento();
+            _vm.Añadir();
         }
-        private void CommandBinding_CanExecute_GuardarCambiosDepartamento(object sender, CanExecuteRoutedEventArgs e)
+
+        private void CommandBinding_CanExecute_GuardarCambios(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _vm.FormularioOk();
         }
 
-        private void CommandBinding_Executed_GuardarCambiosDepartamento(object sender, ExecutedRoutedEventArgs e)
+        private void CommandBinding_Executed_GuardarCambios(object sender, ExecutedRoutedEventArgs e)
         {
             try
             {
@@ -66,7 +77,7 @@ namespace AsistenciaTecnica
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        string borrado = _vm.BorrarDepartamento();
+                        string borrado = _vm.Borrar();
                         MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         break;
                     case MessageBoxResult.No:
@@ -80,7 +91,7 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _vm.SePuedeBorrar();
+            e.CanExecute = _vm.HaySeleccionada();
         }
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {
@@ -88,7 +99,15 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTDEPARTAMENTO");
+            _vm.Ayuda("PRODUCTOSPEDIDO");
+        }
+        private void CommandBinding_Executed_Buscar(object sender, ExecutedRoutedEventArgs e)
+        { 
+           precioTextBox.Text = _vm.Buscar().ToString();
+        }
+        private void CommandBinding_CanExecute_Buscar(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HayDatos();
         }
     }
 }

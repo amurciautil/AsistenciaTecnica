@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AsistenciaTecnica
-{   
+{
     class PerfilesVM : INotifyPropertyChanged
     {
         public Perfil SELECCIONADA { get; set; }
@@ -30,17 +31,24 @@ namespace AsistenciaTecnica
         }
         public string BorrarPerfil()
         {
-            string mensajeBorre = SELECCIONADA.IDPERFIL + " " + SELECCIONADA.NOMBRE;
-            FORMULARIO = new Perfil(SELECCIONADA);
-            bbdd.BorrarPerfil(FORMULARIO);
-            FORMULARIO = new Perfil();
-            PERFILES = bbdd.ObtenerPerfiles(false);
-            ACCION = Modo.Borrar;
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.IDPERFIL + " " + SELECCIONADA.NOMBRE;
+                FORMULARIO = new Perfil(SELECCIONADA);
+                bbdd.BorrarPerfil(FORMULARIO);
+                FORMULARIO = new Perfil();
+                PERFILES = bbdd.ObtenerPerfiles(false);
+                ACCION = Modo.Borrar;
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public bool HayPerfilSeleccionada()
         {
-              return SELECCIONADA != null;
+            return SELECCIONADA != null;
         }
         public bool FormularioOk()
         {
@@ -48,14 +56,21 @@ namespace AsistenciaTecnica
         }
         public void GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarPerfil(FORMULARIO);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarPerfil(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarPerfil(FORMULARIO);
+                FORMULARIO = new Perfil();
+                PERFILES = bbdd.ObtenerPerfiles(false);
             }
-            else
-                bbdd.ActualizarPerfil(FORMULARIO);
-            FORMULARIO = new Perfil();
-            PERFILES = bbdd.ObtenerPerfiles(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {

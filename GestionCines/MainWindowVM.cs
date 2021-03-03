@@ -33,6 +33,7 @@ namespace AsistenciaTecnica
             utilidades.MAXLONGITUDPASSWD = Properties.Settings.Default.maxLengthPasswd;
             utilidades.FUENTETEXTBLOCK = Properties.Settings.Default.fuenteTextBlock;
             utilidades.FUENTETEXTBOX = Properties.Settings.Default.fuenteTextBox;
+            utilidades.FECHAPREVISTA = Properties.Settings.Default.fechaPrevista;
 
             if (utilidades.ShowDialog() == true)
             {
@@ -40,6 +41,7 @@ namespace AsistenciaTecnica
                 Properties.Settings.Default.botonInterno = utilidades.BOTONINTERNO;
                 Properties.Settings.Default.fuenteTextBlock = utilidades.FUENTETEXTBLOCK;
                 Properties.Settings.Default.fuenteTextBox = utilidades.FUENTETEXTBOX;
+                Properties.Settings.Default.fechaPrevista = utilidades.FECHAPREVISTA;
                 Properties.Settings.Default.Save();
             }
         }

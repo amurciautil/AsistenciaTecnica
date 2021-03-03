@@ -33,8 +33,15 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_CuardarCambios(object sender, ExecutedRoutedEventArgs e)
         {
-            PRODUCTOS = _vm.GuardarCambios();
-            DialogResult = true;
+            try
+            {
+                PRODUCTOS = _vm.GuardarCambios();
+                DialogResult = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CommandBinding_CanExecute_GuardarCambios(object sender, CanExecuteRoutedEventArgs e)
@@ -56,7 +63,7 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTPEDIDODETALLE");
+            _vm.Ayuda("MANTPRODUCTODETALLE");
         }
     }
 }

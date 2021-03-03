@@ -33,7 +33,7 @@ namespace AsistenciaTecnica
             {
                 PERFILESNOMBRE.Add(perfil.NOMBRE);
             }
-            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false, 0);
             EMPLEADOSNOMBRE = new ObservableCollection<string>();
             foreach (var empleado in EMPLEADOS)
             {
@@ -52,13 +52,20 @@ namespace AsistenciaTecnica
         }
         public string BorrarUsuario()
         {
-            string mensajeBorre = SELECCIONADA.LOGIN + " " + SELECCIONADA.NOMBREEMPLEADO;
-            FORMULARIO = new Usuario(SELECCIONADA);
-            bbdd.BorrarUsuario(FORMULARIO);
-            FORMULARIO = new Usuario();
-            USUARIOS = bbdd.ObtenerUsuarios(false);
-            ACCION = Modo.Borrar;
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.LOGIN + " " + SELECCIONADA.NOMBREEMPLEADO;
+                FORMULARIO = new Usuario(SELECCIONADA);
+                bbdd.BorrarUsuario(FORMULARIO);
+                FORMULARIO = new Usuario();
+                USUARIOS = bbdd.ObtenerUsuarios(false);
+                ACCION = Modo.Borrar;
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public bool HayUsuarioSeleccionada()
         {
@@ -85,16 +92,23 @@ namespace AsistenciaTecnica
         }
         public void GuardarCambios()
         {
-            string[] valores = FORMULARIO.NOMBREEMPLEADO.Split('-');
-            FORMULARIO.IDEMPLEADO = Int32.Parse(valores[0]); 
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarUsuario(FORMULARIO);
+                string[] valores = FORMULARIO.NOMBREEMPLEADO.Split('-');
+                FORMULARIO.IDEMPLEADO = Int32.Parse(valores[0]);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarUsuario(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarUsuario(FORMULARIO);
+                FORMULARIO = new Usuario();
+                USUARIOS = bbdd.ObtenerUsuarios(false);
             }
-            else
-                bbdd.ActualizarUsuario(FORMULARIO);
-            FORMULARIO = new Usuario();
-            USUARIOS = bbdd.ObtenerUsuarios(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {

@@ -8,9 +8,9 @@
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
     Title="Mantenimiento de Pedidos (Detalle)"
     Width="1100"
-    Height="500"
+    Height="600"
     MinWidth="1100"
-    MinHeight="500"
+    MinHeight="600"
     Top="10"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -102,6 +102,7 @@
         <Grid Margin="0,0,0,5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
+                <RowDefinition Height="70" />
                 <RowDefinition />
                 <RowDefinition Height="120" />
                 <RowDefinition Height="70" />
@@ -116,11 +117,25 @@
                     <DropShadowEffect />
                 </TextBlock.Effect>
             </TextBlock>
-            <!--  Descripcion FILA 1  -->
-            <Border
-                Grid.Row="1"
-                Margin="5"
-                Style="{StaticResource bordeCajas}">
+            <!--  Numero de pedido FILA 1  -->
+            <Border Grid.Row="1" Style="{StaticResource bordeCajas}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+                        Text="Pedido" />
+                    <TextBox
+                        Grid.Column="1"
+                        IsReadOnly="True"
+                        Text="{Binding Path=FORMULARIO.IDPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </Border>
+            <!--  Descripcion FILA 2  -->
+            <Border Grid.Row="2" Style="{StaticResource bordeCajas}">
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignBody1TextBlock}">
                         <Run Text="Descripción " />
@@ -133,9 +148,9 @@
                         TextWrapping="Wrap" />
                 </DockPanel>
             </Border>
-            <!--  Fin LINEA 1  -->
-            <!--  Datos personales FILA 2  -->
-            <Border Grid.Row="2" Style="{StaticResource bordeCajas}">
+            <!--  Fin LINEA 2  -->
+            <!--  Datos personales FILA 3  -->
+            <Border Grid.Row="3" Style="{StaticResource bordeCajas}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -227,9 +242,9 @@
                     </Grid>
                 </Grid>
             </Border>
-            <!--  Fin LINEA 2  -->
-            <!--  Datos fecha FILA 3  -->
-            <Border Grid.Row="3" Style="{StaticResource bordeCajas}">
+            <!--  Fin LINEA 3  -->
+            <!--  Datos fecha FILA 4  -->
+            <Border Grid.Row="4" Style="{StaticResource bordeCajas}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -287,7 +302,7 @@
                     </Grid>
                 </Grid>
             </Border>
-            <!--  Fin LINEA 2  -->
+            <!--  Fin LINEA 4  -->
         </Grid>
     </DockPanel>
 </Window>

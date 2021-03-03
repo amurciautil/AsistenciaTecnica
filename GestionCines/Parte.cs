@@ -19,6 +19,7 @@ namespace AsistenciaTecnica
         public string EMPLEADONOMBRE { get; set; }
         public string NOMBREEMPLEADO { get; set; }
         public string OBSERVACIONES { get; set; }
+        public string INCIDENCIAS { get; set; }
         public string DIRECCION { get; set; }
         public string POBLACION { get; set; }
         public string NOMBRECLIENTE { get; set; }
@@ -44,21 +45,21 @@ namespace AsistenciaTecnica
         {
             Empleado empleado = new Empleado();
             Parte parte = new Parte();
-            switch (DateTime.Now.DayOfWeek.ToString())
+            DateTime fechaPrevista = DateTime.Now.AddDays(Properties.Settings.Default.fechaPrevista);
+            switch (fechaPrevista.ToString())
             {
                 case "Saturday":
-                    FECHAPREVISTA = DateTime.Now.AddDays(2);
+                    FECHAPREVISTA = fechaPrevista.AddDays(2);
                     break;
-                case "Friday":
-                    FECHAPREVISTA = DateTime.Now.AddDays(3);
+                case "Sunday":
+                    FECHAPREVISTA = fechaPrevista.AddDays(1);
                     break;
                 default:
-                    FECHAPREVISTA = DateTime.Now.AddDays(1);
+                    FECHAPREVISTA = fechaPrevista;
                     break;
             }
             FECHAALTA = DateTime.Now;
             FECHACIERREPARTEFORMATO = "";
-
             IDPARTE = 0;
             PEDIDO = pedido;
             IDPEDIDO = pedido.IDPEDIDO;
@@ -87,7 +88,7 @@ namespace AsistenciaTecnica
 
         public Parte(int idParte, Pedido pedido, DateTime fechaAlta, DateTime fechaCierre, 
                      bool cerrado, Empleado empleado,
-                     string observaciones, DateTime fechaPrevista)
+                     string observaciones, DateTime fechaPrevista,string incidencias)
         {
             IDPARTE = idParte;
             PEDIDO = pedido;
@@ -119,6 +120,7 @@ namespace AsistenciaTecnica
             NOMBRETIPOPEDIDO = pedido.NOMBRETIPOPEDIDO;
             NOMBRETIPOPEDIDOSIN = pedido.NOMBRETIPOPEDIDOSIN;
             NOMBRESITUACIONSIN = pedido.NOMBRESITUACIONSIN;
+            INCIDENCIAS = incidencias;
         }
         public Parte(Parte parte)
         {
@@ -149,6 +151,7 @@ namespace AsistenciaTecnica
             NOMBRETIPOPEDIDO = parte.NOMBRETIPOPEDIDO;
             NOMBRETIPOPEDIDOSIN = parte.NOMBRETIPOPEDIDOSIN;
             NOMBRESITUACIONSIN = parte.NOMBRESITUACIONSIN;
+            INCIDENCIAS = parte.INCIDENCIAS;
         }
 
     }

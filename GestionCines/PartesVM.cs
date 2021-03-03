@@ -27,9 +27,9 @@ namespace AsistenciaTecnica
         {
             bbdd = new ServicioBaseDatos();
             PEDIDO = pedido;
-            PARTES = bbdd.ObtenerPartes(CONDICION_FIJA,PEDIDO.IDPEDIDO, false);
+            PARTES = bbdd.ObtenerPartes(CONDICION_FIJA, PEDIDO.IDPEDIDO, false);
             FORMULARIO = new Parte();
-            SITUACIONESPARTE = new ObservableCollection<string>{ "Todos","Abierto", "Cerrado" };
+            SITUACIONESPARTE = new ObservableCollection<string> { "Todos", "Abierto", "Cerrado" };
             AÑOS = new ObservableCollection<string>();
             AÑOS.Add("");
             AÑOS.Add(DateTime.Now.Year.ToString());
@@ -47,7 +47,7 @@ namespace AsistenciaTecnica
         {
             return SELECCIONADA != null;
         }
-        public void Añadir(Partes partesWindow,Pedido pedido)
+        public void Añadir(Partes partesWindow, Pedido pedido)
         {
             Parte parte = new Parte(pedido);
             ParteDetalle parteDetalle = new ParteDetalle(parte);
@@ -64,10 +64,17 @@ namespace AsistenciaTecnica
         }
         public string Borrar()
         {
-            string mensajeBorre = SELECCIONADA.IDPARTE + " " + SELECCIONADA.OBSERVACIONES;
-            bbdd.BorrarParte(SELECCIONADA);
-            PARTES = bbdd.ObtenerPartes(CONDICION_FIJA, PEDIDO.IDPEDIDO, false);
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.IDPARTE + " " + SELECCIONADA.OBSERVACIONES;
+                bbdd.BorrarParte(SELECCIONADA);
+                PARTES = bbdd.ObtenerPartes(CONDICION_FIJA, PEDIDO.IDPEDIDO, false);
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void RefrescarFiltrado()
         {
@@ -81,6 +88,7 @@ namespace AsistenciaTecnica
                     condicion_filtro += " AND pa.cerrado = 1";
                     break;
                 default:
+                    condicion_filtro += " AND pa.cerrado IN (0,1)";
                     break;
             }
             string patron = @"^[0-9]*$";
@@ -92,7 +100,7 @@ namespace AsistenciaTecnica
             if (APELLIDOS != null && APELLIDOS.Trim(' ').Length > 0)
                 condicion_filtro += " AND em.apellidos LIKE '%" + APELLIDOS + "%'";
             if (AÑOSELECCIONADO != null && AÑOSELECCIONADO.Length > 0)
-                condicion_filtro += " AND YEAR(pa.fechaIntroduccion) = "+ Convert.ToInt32(AÑOSELECCIONADO);
+                condicion_filtro += " AND YEAR(pa.fechaIntroduccion) = " + Convert.ToInt32(AÑOSELECCIONADO);
             if (MESSELECCIONADO != null && MESSELECCIONADO.Length > 0)
                 condicion_filtro += " AND MONTH(pa.fechaIntroduccion) = " + Convert.ToInt32(MESSELECCIONADO);
             PARTES = bbdd.ObtenerPartes(condicion_filtro, PEDIDO.IDPEDIDO, false);

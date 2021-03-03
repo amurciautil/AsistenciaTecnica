@@ -24,6 +24,7 @@ namespace AsistenciaTecnica
         public int MAXLONGITUDPASSWD { get; set; }
         public int FUENTETEXTBLOCK { get; set; }
         public int FUENTETEXTBOX { get; set; }
+        public int FECHAPREVISTA { get; set; }
         public Utilidades()
         {
             ServicioBaseDatos bbdd = new ServicioBaseDatos();

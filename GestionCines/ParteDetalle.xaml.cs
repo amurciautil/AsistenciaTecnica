@@ -21,7 +21,7 @@ namespace AsistenciaTecnica
     /// </summary>
     public partial class ParteDetalle : Window
     {
-        const int MAXIMA_LONGITUD_TEXTO = 400;
+        const int MAXIMA_LONGITUD_TEXTO = 500;
         public ObservableCollection<Parte> PARTES { get; set; }
         private readonly ParteDetalleVM _vm;
         public ParteDetalle(Parte parte)
@@ -32,8 +32,15 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_CuardarCambios(object sender, ExecutedRoutedEventArgs e)
         {
-            PARTES = _vm.GuardarCambios();
-            DialogResult = true;
+            try
+            {
+                PARTES = _vm.GuardarCambios();
+                DialogResult = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CommandBinding_CanExecute_GuardarCambios(object sender, CanExecuteRoutedEventArgs e)
@@ -56,14 +63,23 @@ namespace AsistenciaTecnica
         {
             _vm.Ayuda("MANTPARTEDETALLE");
         }
-
-
         private void DescripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int longitud = observacionesTextBox.Text.Length;
-            contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
-            if (longitud >= MAXIMA_LONGITUD_TEXTO)
-                observacionesTextBox.IsReadOnly = true;
+            contadorOTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
+            if (longitud > MAXIMA_LONGITUD_TEXTO)
+                contadorOTextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#F00");
+            else
+                contadorOTextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#000");
+        }
+        private void IncidenciasTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int longitud = incidenciasTextBox.Text.Length;
+            contadorITextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
+            if (longitud > MAXIMA_LONGITUD_TEXTO)
+                contadorITextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#F00");
+            else
+                contadorITextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#000");
         }
     }
 }

@@ -25,9 +25,7 @@ namespace AsistenciaTecnica
                 bbdd = new ServicioBaseDatos();
                 if (parte.IDPARTE == 0)
                 {
-                 //   FORMULARIO = new Parte();
                     FORMULARIO = new Parte(parte);
-
                     ACCION = Modo.Insertar;
                 }
                 else
@@ -47,7 +45,7 @@ namespace AsistenciaTecnica
         public void ObtenerDatosCombo()
         {
             int departamentoTecnico = Properties.Settings.Default.departamentoTecnico;
-            EMPLEADOS = bbdd.ObtenerEmpleados(false,departamentoTecnico);
+            EMPLEADOS = bbdd.ObtenerEmpleados(false, departamentoTecnico);
             EMPLEADONOMBRE = new ObservableCollection<string>();
             foreach (Empleado empleado in EMPLEADOS)
             {
@@ -65,18 +63,25 @@ namespace AsistenciaTecnica
         }
         public ObservableCollection<Parte> GuardarCambios()
         {
-            string[] valores = FORMULARIO.NOMBREEMPLEADO.Split('-');
-            FORMULARIO.IDEMPLEADO = Int32.Parse(valores[0]);
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarParte(FORMULARIO);
-            }
-            else
-                bbdd.ActualizarParte(FORMULARIO);
-            FORMULARIO = new Parte();
+                string[] valores = FORMULARIO.NOMBREEMPLEADO.Split('-');
+                FORMULARIO.IDEMPLEADO = Int32.Parse(valores[0]);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarParte(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarParte(FORMULARIO);
+                FORMULARIO = new Parte();
 
-            PARTES = bbdd.ObtenerPartes(CONDICION_FIJA,FORMULARIO.IDPEDIDO, false);
-            return PARTES;
+                PARTES = bbdd.ObtenerPartes(CONDICION_FIJA, FORMULARIO.IDPEDIDO, false);
+                return PARTES;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Ayuda(string codigoAyuda)
         {

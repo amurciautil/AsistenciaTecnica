@@ -41,6 +41,7 @@
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/borrar.ico" />
                 </Button>
+                <Separator />
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
@@ -92,15 +93,30 @@
             SelectedItem="{Binding Path=SELECCIONADA}">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="80"
+                    Width="110"
                     Binding="{Binding Path=IDCODIGO}"
                     Header="ID" />
                 <DataGridTextColumn Binding="{Binding Path=DESCRIPCION}" Header="Descripcion" />
-                <DataGridTextColumn Binding="{Binding Path=PRECIOVENTA}" Header="Precio" />
-                <DataGridTextColumn Binding="{Binding Path=NOMBRETIPO}" Header="Tipo producto" />
-                <DataGridCheckBoxColumn Binding="{Binding Path=CONTROLEXISTENCIAS}" Header="Control existencias" />
-                <DataGridTextColumn Binding="{Binding Path=EXISTENCIAS}" Header="Existenias" />
-                <DataGridCheckBoxColumn Binding="{Binding Path=ACTIVO}" Header="Activo" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding Path=PRECIOVENTA}"
+                    Header="Precio" />
+                <DataGridTextColumn
+                    Width="140"
+                    Binding="{Binding Path=NOMBRETIPO}"
+                    Header="Tipo producto" />
+                <DataGridCheckBoxColumn
+                    Width="80"
+                    Binding="{Binding Path=CONTROLEXISTENCIAS}"
+                    Header="Control existencias" />
+                <DataGridTextColumn
+                    Width="110"
+                    Binding="{Binding Path=EXISTENCIAS}"
+                    Header="Existencias" />
+                <DataGridCheckBoxColumn
+                    Width="80"
+                    Binding="{Binding Path=ACTIVO}"
+                    Header="Activo" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

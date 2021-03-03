@@ -42,15 +42,22 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes:
-                    string borrado = _vm.Borrar();
-                    MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    break;
-                case MessageBoxResult.No:
-                    break;
+                MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        string borrado = _vm.Borrar();
+                        MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
@@ -71,6 +78,16 @@ namespace AsistenciaTecnica
         }
 
         private void CommandBinding_CanExecute_Parte(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HaySelecionada();
+        }
+
+        private void CommandBinding_Executed_ProductoPedido(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.ProductosPedido(this);
+        }
+
+        private void CommandBinding_CanExecute_ProductoPedido(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _vm.HaySelecionada();
         }

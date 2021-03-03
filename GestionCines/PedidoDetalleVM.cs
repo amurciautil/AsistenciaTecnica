@@ -86,23 +86,30 @@ namespace AsistenciaTecnica
         }
         public ObservableCollection<Pedido> GuardarCambios()
         {
-            string[] valores = FORMULARIO.NOMBRESITUACION.Split('-');
-            FORMULARIO.IDSITUACION = Int32.Parse(valores[0]);
-            valores = FORMULARIO.NOMBREPROVINCIA.Split('-');
-            FORMULARIO.IDPROVINCIA = valores[0];
-            valores = FORMULARIO.NOMBRETIPOPEDIDO.Split('-');
-            FORMULARIO.IDTIPOPEDIDO = Int32.Parse(valores[0]);
-            if (ACCION == Modo.Insertar)
+            try
             {
-                FORMULARIO.USUARIO = Properties.Settings.Default.login;
-                bbdd.InsertarPedido(FORMULARIO);
-            }
-            else
-                bbdd.ActualizarPedido(FORMULARIO);
-            FORMULARIO = new Pedido();
+                string[] valores = FORMULARIO.NOMBRESITUACION.Split('-');
+                FORMULARIO.IDSITUACION = Int32.Parse(valores[0]);
+                valores = FORMULARIO.NOMBREPROVINCIA.Split('-');
+                FORMULARIO.IDPROVINCIA = valores[0];
+                valores = FORMULARIO.NOMBRETIPOPEDIDO.Split('-');
+                FORMULARIO.IDTIPOPEDIDO = Int32.Parse(valores[0]);
+                if (ACCION == Modo.Insertar)
+                {
+                    FORMULARIO.USUARIO = Properties.Settings.Default.login;
+                    bbdd.InsertarPedido(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarPedido(FORMULARIO);
+                FORMULARIO = new Pedido();
 
-            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
-            return PEDIDOS;
+                PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
+                return PEDIDOS;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Ayuda(string codigoAyuda)
         {

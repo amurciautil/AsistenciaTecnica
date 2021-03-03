@@ -11,6 +11,7 @@ namespace AsistenciaTecnica
         public TipoProducto TIPOPRODUCTO { get; set; }
         public int IDTIPOPRODUCTO { get; set; }
         public string NOMBRETIPO { get; set; }
+        public string NOMBRECOMBO { get; set; }
         public bool CONTROLEXISTENCIAS { get; set; }
         public double EXISTENCIAS { get; set; }
         public bool ACTIVO { get; set; }
@@ -33,6 +34,7 @@ namespace AsistenciaTecnica
             ACTIVO = activo;
             IDTIPOPRODUCTO = TIPOPRODUCTO.IDTIPO;
             NOMBRETIPO = TIPOPRODUCTO.IDTIPO + "-" + TIPOPRODUCTO.NOMBRE;
+            NOMBRECOMBO = IDCODIGO + "-" + DESCRIPCION;
         }
 
         public Producto(Producto producto)
@@ -46,7 +48,8 @@ namespace AsistenciaTecnica
             EXISTENCIAS = producto.EXISTENCIAS;
             ACTIVO = producto.ACTIVO;
             IDTIPOPRODUCTO = producto.TIPOPRODUCTO.IDTIPO;
-            NOMBRETIPO = producto.TIPOPRODUCTO.IDTIPO + "-" + producto.TIPOPRODUCTO.NOMBRE;
+            NOMBRETIPO = producto.NOMBRETIPO;
+            NOMBRECOMBO = producto.NOMBRECOMBO;
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

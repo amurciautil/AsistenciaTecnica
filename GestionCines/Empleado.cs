@@ -73,11 +73,11 @@ namespace AsistenciaTecnica
             MAIL = empleado.MAIL;
             CARGO = empleado.CARGO;
             DEPARTAMENTO = empleado.DEPARTAMENTO;
-            NOMBREDEPARTAMENTO = empleado.DEPARTAMENTO.NOMBRE;
-            NOMBRECARGO = empleado.CARGO.NOMBRE;
+            NOMBREDEPARTAMENTO = empleado.NOMBREDEPARTAMENTO;
+            NOMBRECARGO = empleado.NOMBRECARGO;
             NOMBREPROVINCIA = empleado.PROVINCIA.NOMBRE;
-            NOMBREYAPELLIDOS = empleado.ObtenerNombreCompleto();
-            NOMBRECOMBOBOX = IDEMPLEADO+"-"+ NOMBREYAPELLIDOS;
+            NOMBREYAPELLIDOS = empleado.NOMBREYAPELLIDOS;
+            NOMBRECOMBOBOX = empleado.NOMBRECOMBOBOX;
             IMAGEN = empleado.IMAGEN;
         }
 

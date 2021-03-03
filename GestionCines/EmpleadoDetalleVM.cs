@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AsistenciaTecnica
@@ -26,8 +27,9 @@ namespace AsistenciaTecnica
             }
             else
             {
-                FORMULARIO = new Empleado(empleado);
+                //FORMULARIO = new Empleado(empleado);
                 SELECCIONADA = new Empleado(empleado);
+                FORMULARIO = new Empleado(SELECCIONADA);
                 ACCION = Modo.Actualizar;
             }
             // Obtener valores para los combobox
@@ -68,16 +70,23 @@ namespace AsistenciaTecnica
         }
         public ObservableCollection<Empleado> GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarEmpleado(FORMULARIO);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarEmpleado(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarEmpleado(FORMULARIO);
+                FORMULARIO = new Empleado();
+
+                EMPLEADOS = bbdd.ObtenerEmpleados(false, 0);
+                return EMPLEADOS;
             }
-            else
-                bbdd.ActualizarEmpleado(FORMULARIO);
-            FORMULARIO = new Empleado();
-            
-            EMPLEADOS = bbdd.ObtenerEmpleados(false,0);
-            return EMPLEADOS;
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Ayuda(string codigoAyuda)
         {

@@ -11,7 +11,7 @@ namespace AsistenciaTecnica
     {
         private readonly ServicioBaseDatos bbdd;
         public Usuario USUARIOSELECCIONADO { get; set; }
-    
+
         public LoginVM()
         {
             bbdd = new ServicioBaseDatos();
@@ -22,11 +22,18 @@ namespace AsistenciaTecnica
         {
             USUARIOSELECCIONADO = new Usuario();
         }
-        public void BuscarUsuario(string login,string password)
+        public void BuscarUsuario(string login, string password)
         {
-            if (bbdd.BuscarUsuario(login, password) == 1)
+            try
             {
-                USUARIOSELECCIONADO = bbdd.LeerUsuario(login);
+                if (bbdd.BuscarUsuario(login, password) == 1)
+                {
+                    USUARIOSELECCIONADO = bbdd.LeerUsuario(login);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

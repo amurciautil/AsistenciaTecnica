@@ -171,9 +171,14 @@
       <DependentUpon>ProductoDetalle.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProductoDetalleVM.cs" />
+    <Compile Include="ProductoPedido.cs" />
     <Compile Include="Productos.xaml.cs">
       <DependentUpon>Productos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProductosPedido.xaml.cs">
+      <DependentUpon>ProductosPedido.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProductosPedidoVM.cs" />
     <Compile Include="ProductosVM.cs" />
     <Compile Include="SituacionPedido.cs" />
     <Compile Include="TablaAyuda.cs" />
@@ -290,6 +295,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Productos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductosPedido.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AsistenciaTecnica
@@ -31,16 +32,23 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes:
-                    string borrado = _vm.BorrarEmpleado();
-                    MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    break;
-                case MessageBoxResult.No:
-                    break;
-            } 
+                MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        string borrado = _vm.BorrarEmpleado();
+                        MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {

@@ -27,7 +27,7 @@ namespace AsistenciaTecnica
         public PedidosVM()
         {
             bbdd = new ServicioBaseDatos();
-            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA,false);
+            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
             FORMULARIO = new Pedido();
             // Datos para filtrado
             SITUACIONESELECCIONADA = new SituacionPedido();
@@ -67,10 +67,17 @@ namespace AsistenciaTecnica
         }
         public string Borrar()
         {
-            string mensajeBorre = SELECCIONADA.IDPEDIDO + " " + SELECCIONADA.DESCRIPCION;
-            bbdd.BorrarPedido(SELECCIONADA);
-            PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA,false);
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.IDPEDIDO + " " + SELECCIONADA.DESCRIPCION;
+                bbdd.BorrarPedido(SELECCIONADA);
+                PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void RefrescarFiltrado()
         {
@@ -86,18 +93,27 @@ namespace AsistenciaTecnica
             if (SITUACIONESELECCIONADA.IDSITUACION != 0)
                 condicion_filtro += " AND pe.situacion = '" + SITUACIONESELECCIONADA.IDSITUACION + "'";
             if (TIPOPEDIDOESELECCIONADA.IDTIPO != 0)
-               condicion_filtro += " AND pe.tipoPedido = '" + TIPOPEDIDOESELECCIONADA.IDTIPO + "'";
+                condicion_filtro += " AND pe.tipoPedido = '" + TIPOPEDIDOESELECCIONADA.IDTIPO + "'";
             if (TELEFONO != null && TELEFONO.Trim(' ').Length > 0)
                 condicion_filtro += " AND pe.telefono LIKE '%" + TELEFONO + "%'";
             if (POBLACION != null && POBLACION.Trim(' ').Length > 0)
                 condicion_filtro += " AND pe.poblacion LIKE '%" + POBLACION + "%'";
-            PEDIDOS = bbdd.ObtenerPedidos(condicion_filtro,false);
+            PEDIDOS = bbdd.ObtenerPedidos(condicion_filtro, false);
         }
         public void Partes(Pedidos pedidosWindow)
         {
-            Partes partes = new Partes(SELECCIONADA,"P");
+            Partes partes = new Partes(SELECCIONADA, "P");
             partes.Owner = pedidosWindow;
             if (partes.ShowDialog() == true)
+            {
+                PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
+            }
+        }
+        public void ProductosPedido(Pedidos pedidosWindow)
+        {
+            ProductosPedido productosPedido = new ProductosPedido(SELECCIONADA);
+            productosPedido.Owner = pedidosWindow;
+            if (productosPedido.ShowDialog() == true)
             {
                 PEDIDOS = bbdd.ObtenerPedidos(CONDICION_FIJA, false);
             }

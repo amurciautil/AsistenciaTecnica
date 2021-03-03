@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AsistenciaTecnica
-{   
+{
     class ProvinciasVM : INotifyPropertyChanged
     {
         public Provincia SELECCIONADA { get; set; }
@@ -30,40 +31,54 @@ namespace AsistenciaTecnica
         }
         public string BorrarProvincia()
         {
-            string mensajeBorre = SELECCIONADA.IDPROVINCIA + " " + SELECCIONADA.NOMBRE;
-            FORMULARIO = new Provincia(SELECCIONADA);
-            bbdd.BorrarProvincia(FORMULARIO);
-            FORMULARIO = new Provincia();
-            PROVINCIAS = bbdd.ObtenerProvincias(false);
-            ACCION = Modo.Borrar;
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.IDPROVINCIA + " " + SELECCIONADA.NOMBRE;
+                FORMULARIO = new Provincia(SELECCIONADA);
+                bbdd.BorrarProvincia(FORMULARIO);
+                FORMULARIO = new Provincia();
+                PROVINCIAS = bbdd.ObtenerProvincias(false);
+                ACCION = Modo.Borrar;
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public bool HayProvinciaSeleccionada()
         {
-              return SELECCIONADA != null;
+            return SELECCIONADA != null;
         }
         public bool FormularioOk()
         {
             bool estado = false;
-            estado = (FORMULARIO.NOMBRE != null && FORMULARIO.NOMBRE.Length > 0 && 
+            estado = (FORMULARIO.NOMBRE != null && FORMULARIO.NOMBRE.Length > 0 &&
                       FORMULARIO.IDPROVINCIA != null && FORMULARIO.IDPROVINCIA.Length > 0 &&
                       FORMULARIO.IDPROVINCIA.Length < 3);
-            if (estado && ACCION == Modo.Insertar && !bbdd.ExisteProvincia(FORMULARIO))
-                estado = true;
-            else
-                estado = false;
+            //if (estado && ACCION == Modo.Insertar && !bbdd.ExisteProvincia(FORMULARIO))
+            //    estado = true;
+            //else
+            //    estado = false;
             return estado;
         }
         public void GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarProvincia(FORMULARIO);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarProvincia(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarProvincia(FORMULARIO);
+                FORMULARIO = new Provincia();
+                PROVINCIAS = bbdd.ObtenerProvincias(false);
             }
-            else
-                bbdd.ActualizarProvincia(FORMULARIO);
-            FORMULARIO = new Provincia();
-            PROVINCIAS = bbdd.ObtenerProvincias(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {
@@ -72,6 +87,11 @@ namespace AsistenciaTecnica
         public bool HayDatos()
         {
             return FORMULARIO.NOMBRE != null;
+        }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

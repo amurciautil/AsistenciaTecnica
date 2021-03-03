@@ -172,5 +172,17 @@ namespace AsistenciaTecnica.Properties {
                 this["perfilUsuario"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int fechaPrevista {
+            get {
+                return ((int)(this["fechaPrevista"]));
+            }
+            set {
+                this["fechaPrevista"] = value;
+            }
+        }
     }
 }

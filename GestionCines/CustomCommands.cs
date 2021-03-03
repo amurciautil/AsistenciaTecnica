@@ -188,6 +188,11 @@ namespace AsistenciaTecnica
                new KeyGesture(Key.F1,ModifierKeys.Control)
             }
            );
+        public static readonly RoutedUICommand ProductoPedido = new RoutedUICommand
+            ("ProductoPedido",
+            "ProductoPedido",
+            typeof(CustomCommands)
+            );
     }
 
 }

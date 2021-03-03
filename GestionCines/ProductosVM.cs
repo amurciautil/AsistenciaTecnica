@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AsistenciaTecnica
@@ -13,7 +14,7 @@ namespace AsistenciaTecnica
         public ProductosVM()
         {
             bbdd = new ServicioBaseDatos();
-            PRODUCTOS = bbdd.ObtenerProductos(false,false);
+            PRODUCTOS = bbdd.ObtenerProductos(false, false);
             FORMULARIO = new Producto();
         }
         public bool HaySelecionada()
@@ -36,10 +37,17 @@ namespace AsistenciaTecnica
         }
         public string BorrarProducto()
         {
-            string mensajeBorre = SELECCIONADA.IDCODIGO + " " + SELECCIONADA.DESCRIPCION;
-            bbdd.BorrarProducto(SELECCIONADA);
-            PRODUCTOS = bbdd.ObtenerProductos(false,false);
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = SELECCIONADA.IDCODIGO + " " + SELECCIONADA.DESCRIPCION;
+                bbdd.BorrarProducto(SELECCIONADA);
+                PRODUCTOS = bbdd.ObtenerProductos(false, false);
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

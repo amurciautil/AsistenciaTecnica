@@ -15,7 +15,7 @@ namespace AsistenciaTecnica
     /// </summary>
     public partial class PedidoDetalle : Window
     {
-        const int MAXIMA_LONGITUD_TEXTO = 400;
+        const int MAXIMA_LONGITUD_TEXTO = 500;
         private readonly PedidoDetalleVM _vm;
         public ObservableCollection<Pedido> PEDIDOS { get; set; }
         public PedidoDetalle(Pedido pedido)
@@ -26,8 +26,15 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_CuardarCambios(object sender, ExecutedRoutedEventArgs e)
         {
-            PEDIDOS = _vm.GuardarCambios();
-            DialogResult = true;
+            try
+            {
+                PEDIDOS = _vm.GuardarCambios();
+                DialogResult = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CommandBinding_CanExecute_GuardarCambios(object sender, CanExecuteRoutedEventArgs e)
@@ -58,16 +65,16 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_CanExecute_Buscar(object sender, CanExecuteRoutedEventArgs e)
         {
-            
+
             e.CanExecute = _vm.HayTelefono();
         }
 
         private void descripcionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-                int longitud = descripcionTextBox.Text.Length;
-                contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO+" max.caracteres)";
-                if (longitud >= MAXIMA_LONGITUD_TEXTO)
-                    descripcionTextBox.IsReadOnly = true;
+            int longitud = descripcionTextBox.Text.Length;
+            contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
+            if (longitud >= MAXIMA_LONGITUD_TEXTO)
+                descripcionTextBox.IsReadOnly = true;
         }
     }
 }

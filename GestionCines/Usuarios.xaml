@@ -90,6 +90,7 @@
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/borrar.ico" />
                 </Button>
+                <Separator />
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"

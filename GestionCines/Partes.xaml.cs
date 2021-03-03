@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -11,7 +12,7 @@ namespace AsistenciaTecnica
     {
         private readonly PartesVM _vm;
         public Pedido PEDIDO { get; set; }
-        public string ORIGEN { get; set; } // para saber si venfo desde menu principal o desde pedidos (M/P)
+        public string ORIGEN { get; set; } // para saber si vengo desde menu principal o desde pedidos (M/P)
         public Partes(Pedido PEDIDO, string ORIGEN)
         {
             _vm = new PartesVM(PEDIDO);
@@ -23,7 +24,7 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Añadir(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Añadir(this,PEDIDO);
+            _vm.Añadir(this, PEDIDO);
         }
         private void CommandBinding_CanExecute_Añadir(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -43,15 +44,22 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes:
-                    string borrado = _vm.Borrar();
-                    MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    break;
-                case MessageBoxResult.No:
-                    break;
+                MessageBoxResult result = MessageBox.Show("¿Esta seguro que quiere borrar el registro?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        string borrado = _vm.Borrar();
+                        MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void CommandBinding_Executed_Filtrar(object sender, ExecutedRoutedEventArgs e)
@@ -69,7 +77,5 @@ namespace AsistenciaTecnica
         {
             _vm.Ayuda("MANTPARTES");
         }
-
-
     }
 }

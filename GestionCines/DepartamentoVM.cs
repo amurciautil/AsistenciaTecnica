@@ -39,13 +39,20 @@ namespace AsistenciaTecnica
         }
         public string BorrarDepartamento()
         {
-            string mensajeBorre = DEPARTAMENTOSELECCIONADO.IDDEPARTAMENTO + " " + DEPARTAMENTOSELECCIONADO.NOMBRE;
-            DEPARTAMENTOFORMULARIO = new Departamento(DEPARTAMENTOSELECCIONADO);
-            bbdd.BorrarDepartamento(DEPARTAMENTOFORMULARIO);
-            DEPARTAMENTOFORMULARIO = new Departamento();
-            DEPARTAMENTOS = bbdd.ObtenerDepartamentos(false);
-            ACCION = Modo.Borrar;
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = DEPARTAMENTOSELECCIONADO.IDDEPARTAMENTO + " " + DEPARTAMENTOSELECCIONADO.NOMBRE;
+                DEPARTAMENTOFORMULARIO = new Departamento(DEPARTAMENTOSELECCIONADO);
+                bbdd.BorrarDepartamento(DEPARTAMENTOFORMULARIO);
+                DEPARTAMENTOFORMULARIO = new Departamento();
+                DEPARTAMENTOS = bbdd.ObtenerDepartamentos(false);
+                ACCION = Modo.Borrar;
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public bool HayDepartamentoSeleccionado()
         {
@@ -59,18 +66,25 @@ namespace AsistenciaTecnica
         }
         public bool FormularioOk()
         {
-            return DEPARTAMENTOFORMULARIO.NOMBRE != "";
+            return DEPARTAMENTOFORMULARIO.NOMBRE != null && DEPARTAMENTOFORMULARIO.NOMBRE.Length > 0;
         }
         public void GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarDepartamento(DEPARTAMENTOFORMULARIO);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarDepartamento(DEPARTAMENTOFORMULARIO);
+                }
+                else
+                    bbdd.ActualizarDepartamento(DEPARTAMENTOFORMULARIO);
+                DEPARTAMENTOFORMULARIO = new Departamento();
+                DEPARTAMENTOS = bbdd.ObtenerDepartamentos(false);
             }
-            else
-                bbdd.ActualizarDepartamento(DEPARTAMENTOFORMULARIO);
-            DEPARTAMENTOFORMULARIO = new Departamento();
-            DEPARTAMENTOS = bbdd.ObtenerDepartamentos(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {
@@ -78,7 +92,7 @@ namespace AsistenciaTecnica
         }
         public bool HayDatos()
         {
-            return DEPARTAMENTOFORMULARIO.NOMBRE != null;
+            return DEPARTAMENTOFORMULARIO.NOMBRE != null && DEPARTAMENTOFORMULARIO.NOMBRE.Length > 0;
         }
         public void Ayuda(string codigoAyuda)
         {

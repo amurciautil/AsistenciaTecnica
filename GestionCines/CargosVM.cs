@@ -1,8 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AsistenciaTecnica
-{   
+{
     class CargosVM : INotifyPropertyChanged
     {
         public Cargo CARGOSELECCIONADA { get; set; }
@@ -30,17 +31,24 @@ namespace AsistenciaTecnica
         }
         public string BorrarCargo()
         {
-            string mensajeBorre = CARGOSELECCIONADA.IDCARGO + " " + CARGOSELECCIONADA.NOMBRE;
-            CARGOFORMULARIO = new Cargo(CARGOSELECCIONADA);
-            bbdd.BorrarCargo(CARGOFORMULARIO);
-            CARGOFORMULARIO = new Cargo();
-            CARGOS = bbdd.ObtenerCargos(false);
-            ACCION = Modo.Borrar;
-            return mensajeBorre;
+            try
+            {
+                string mensajeBorre = CARGOSELECCIONADA.IDCARGO + " " + CARGOSELECCIONADA.NOMBRE;
+                CARGOFORMULARIO = new Cargo(CARGOSELECCIONADA);
+                bbdd.BorrarCargo(CARGOFORMULARIO);
+                CARGOFORMULARIO = new Cargo();
+                CARGOS = bbdd.ObtenerCargos(false);
+                ACCION = Modo.Borrar;
+                return mensajeBorre;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public bool HayCargoSeleccionada()
         {
-              return CARGOSELECCIONADA != null;
+            return CARGOSELECCIONADA != null;
         }
         public bool FormularioOk()
         {
@@ -48,14 +56,23 @@ namespace AsistenciaTecnica
         }
         public void GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarCargo(CARGOFORMULARIO);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarCargo(CARGOFORMULARIO);
+                }
+                else
+                {
+                    bbdd.ActualizarCargo(CARGOFORMULARIO);
+                }
+                CARGOFORMULARIO = new Cargo();
+                CARGOS = bbdd.ObtenerCargos(false);
             }
-            else
-                bbdd.ActualizarCargo(CARGOFORMULARIO);
-            CARGOFORMULARIO = new Cargo();
-            CARGOS = bbdd.ObtenerCargos(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {

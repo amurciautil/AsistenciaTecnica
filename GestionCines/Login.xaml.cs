@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -30,18 +31,27 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Aceptar(object sender, ExecutedRoutedEventArgs e)
         {
-            PasswordUsuario = passwordPasswordBox.Password;
-            // Para fase de pruebas
-            if (ModoDesarrollo == "S")
-                _vm.BuscarUsuario("amurcia", "damfp2019");
-            else
-                _vm.BuscarUsuario(LoginUsuario, PasswordUsuario);
-
-            USUARIO = _vm.USUARIOSELECCIONADO;
-            if (USUARIO.LOGIN != null)
-                DialogResult = true;
-            else
-                MessageBox.Show("Usuario o password incorrecto", "Fallo de identificación", MessageBoxButton.OK, MessageBoxImage.Error);
+            try
+            {
+                PasswordUsuario = passwordPasswordBox.Password;
+                // Para fase de pruebas
+                if (ModoDesarrollo == "S")
+                    _vm.BuscarUsuario("amurcia", "damfp2019");
+                else
+                    _vm.BuscarUsuario(LoginUsuario, PasswordUsuario);
+                USUARIO = _vm.USUARIOSELECCIONADO;
+                if (USUARIO.LOGIN != null)
+                    if (USUARIO.ACTIVO)
+                        DialogResult = true;
+                    else
+                        MessageBox.Show("Usuario sin acceso al sistema", "Fallo de identificación", MessageBoxButton.OK, MessageBoxImage.Error);
+                else
+                    MessageBox.Show("Usuario o password incorrecto", "Fallo de identificación", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void CommandBinding_CanExecute_Aceptar(object sender, CanExecuteRoutedEventArgs e)
         {

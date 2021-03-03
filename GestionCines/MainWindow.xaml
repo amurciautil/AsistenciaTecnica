@@ -22,9 +22,10 @@
             CanExecute="CommandBinding_CanExecute_Salir"
             Command="local:CustomCommands.Salir"
             Executed="CommandBinding_Executed_Salir" />
-        <CommandBinding Command="local:CustomCommands.Utilidades"
-                        CanExecute="CommandBinding_CanExecute_modulo"
-                        Executed="CommandBinding_Executed_Utilidades" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_modulo"
+            Command="local:CustomCommands.Utilidades"
+            Executed="CommandBinding_Executed_Utilidades" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_modulo"
             Command="local:CustomCommands.Cargo"

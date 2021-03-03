@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
     Title="Empleados"
-    Width="1100"
+    Width="1200"
     Height="600"
-    MinWidth="1100"
+    MinWidth="1200"
     MinHeight="600"
     Background="#74DDF8"
     ShowInTaskbar="False"
@@ -42,6 +42,7 @@
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/borrar.ico" />
                 </Button>
+                <Separator />
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"

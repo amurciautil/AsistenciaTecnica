@@ -33,6 +33,10 @@
             CanExecute="CommandBinding_CanExecute_Parte"
             Command="local:CustomCommands.Parte"
             Executed="CommandBinding_Executed_Parte" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_ProductoPedido"
+            Command="local:CustomCommands.ProductoPedido"
+            Executed="CommandBinding_Executed_ProductoPedido" />
         <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
         <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
@@ -100,6 +104,18 @@
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/parte.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.ProductoPedido"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Gestion de productos del pedido">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/producto.ico" />
                 </Button>
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"

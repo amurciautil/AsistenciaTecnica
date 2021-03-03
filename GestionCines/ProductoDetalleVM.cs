@@ -64,18 +64,25 @@ namespace AsistenciaTecnica
         }
         public ObservableCollection<Producto> GuardarCambios()
         {
-            string[] valores = FORMULARIO.NOMBRETIPO.Split('-');
-            FORMULARIO.IDTIPOPRODUCTO = Int32.Parse(valores[0]);
-            if (ACCION == Modo.Insertar)
+            try
             {
-                bbdd.InsertarProducto(FORMULARIO);
-            }
-            else
-                bbdd.ActualizarProducto(FORMULARIO);
-            FORMULARIO = new Producto();
+                string[] valores = FORMULARIO.NOMBRETIPO.Split('-');
+                FORMULARIO.IDTIPOPRODUCTO = Int32.Parse(valores[0]);
+                if (ACCION == Modo.Insertar)
+                {
+                    bbdd.InsertarProducto(FORMULARIO);
+                }
+                else
+                    bbdd.ActualizarProducto(FORMULARIO);
+                FORMULARIO = new Producto();
 
-            PRODUCTOS = bbdd.ObtenerProductos(false, false);
-            return PRODUCTOS;
+                PRODUCTOS = bbdd.ObtenerProductos(false, false);
+                return PRODUCTOS;
+            }
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Ayuda(string codigoAyuda)
         {

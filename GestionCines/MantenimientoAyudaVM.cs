@@ -41,27 +41,36 @@ namespace AsistenciaTecnica
         }
         public bool FormularioOk()
         {
-            return FORMULARIO.CODIGO != null && 
-                FORMULARIO.CODIGO.Length > 0 && 
+            return FORMULARIO.CODIGO != null &&
+                FORMULARIO.CODIGO.Length > 0 &&
                 FORMULARIO.DESCRIPCION != null &&
                 FORMULARIO.DESCRIPCION.Length > 0;
         }
         public void GuardarCambios()
         {
-            if (ACCION == Modo.Insertar)
+            try
             {
-                try
+                if (ACCION == Modo.Insertar)
                 {
-                    bbdd.InsertarTablaAyuda(FORMULARIO);
-                }catch(Exception e)
-                {
-                    throw new MisExcepciones(e.Message);
+                    try
+                    {
+                        bbdd.InsertarTablaAyuda(FORMULARIO);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new MisExcepciones(e.Message);
+                    }
                 }
+                else
+                    bbdd.ActualizarTablaAyuda(FORMULARIO);
+                FORMULARIO = new TablaAyuda();
+                LISTA = bbdd.ObtenerTablaAyuda(false);
+
             }
-            else
-                bbdd.ActualizarTablaAyuda(FORMULARIO);
-            FORMULARIO = new TablaAyuda();
-            LISTA = bbdd.ObtenerTablaAyuda(false);
+            catch (Exception e)
+            {
+                throw new MisExcepciones(e.Message);
+            }
         }
         public void Cancelar()
         {

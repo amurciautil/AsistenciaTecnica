@@ -19,20 +19,6 @@
             Executed="CommandBinding_Executed_CuardarCambios" />
         <CommandBinding Command="local:CustomCommands.Cancelar" Executed="CommandBinding_Executed_Cancelar" />
     </Window.CommandBindings>
-    <Window.Resources>
-        <!--
-        <Style x:Key="textBox"
-               TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="IsReadOnly"
-                         Value="True">
-                    <Setter Property="Background"
-                            Value="AntiqueWhite" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        -->
-    </Window.Resources>
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
@@ -49,6 +35,7 @@
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/cancelar.ico" />
                 </Button>
+                <Separator />
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
@@ -66,7 +53,7 @@
         </ToolBarTray>
         <Border
             Margin="5"
-            Padding="20"
+            Padding="10"
             Background="#74DDF8"
             BorderBrush="Black"
             BorderThickness="2"
@@ -87,9 +74,10 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="325" />
+                    <ColumnDefinition Width="370" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -299,6 +287,20 @@
                     Grid.Row="13"
                     Grid.Column="2"
                     Text="{Binding Path=FUENTETEXTBOX, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="14"
+                    Grid.Column="0"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="Incremento dias fecha (Fecha prevista intervención)" />
+                <TextBlock
+                    Grid.Row="14"
+                    Grid.Column="1"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="User" />
+                <TextBox
+                    Grid.Row="14"
+                    Grid.Column="2"
+                    Text="{Binding Path=FECHAPREVISTA, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
         </Border>
     </DockPanel>

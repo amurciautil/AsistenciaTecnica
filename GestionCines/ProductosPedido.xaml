@@ -1,63 +1,55 @@
 ﻿<Window
-    x:Class="AsistenciaTecnica.Cargos"
+    x:Class="AsistenciaTecnica.ProductosPedido"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:AsistenciaTecnica"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="Cargos"
-    Width="800"
-    Height="450"
-    MinWidth="800"
-    MinHeight="450"
+    Title="Productos del pedido"
+    Width="1000"
+    Height="600"
+    MinWidth="1000"
+    MinHeight="600"
     Background="#74DDF8"
     ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding
-            CanExecute="CommandBinding_CanExecute_EditarCargo"
+            CanExecute="CommandBinding_CanExecute_Editar"
             Command="local:CustomCommands.Editar"
-            Executed="CommandBinding_Executed_EditarCargo" />
-        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_AñadirCargo" />
+            Executed="CommandBinding_Executed_Editar" />
+        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_Añadir" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Borrar"
             Command="local:CustomCommands.Borrar"
             Executed="CommandBinding_Executed_Borrar" />
         <CommandBinding
-            CanExecute="CommandBinding_CanExecute_GuardarCambiosCargo"
+            CanExecute="CommandBinding_CanExecute_GuardarCambios"
             Command="local:CustomCommands.GuardarCambios"
-            Executed="CommandBinding_Executed_GuardarCambiosCargo" />
+            Executed="CommandBinding_Executed_GuardarCambios" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
             Executed="CommandBinding_Executed_Cancelar" />
         <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Buscar"
+            Command="local:CustomCommands.Buscar"
+            Executed="CommandBinding_Executed_Buscar" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  Estilo para el modo  -->
         <Style x:Key="textoModo" TargetType="TextBlock">
-            <Setter Property="Text" Value="Añadir nuevo cargo" />
+            <Setter Property="Text" Value="Añadir nueva línea" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Margin" Value="0,0,0,15" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=ACCION}" Value="{x:Static local:Modo.Actualizar}">
-                    <Setter Property="Text" Value="Editar el cargo seleccionado" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <!--  Deshabilitar el campo de clave  -->
-        <Style
-            x:Key="campoClave"
-            BasedOn="{StaticResource MaterialDesignTextBox}"
-            TargetType="TextBox">
-            <Setter Property="Margin" Value="0,0,0,10" />
-            <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBox}" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=ACCION}" Value="{x:Static local:Modo.Actualizar}">
-                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="Text" Value="Editar la línea seleccionada" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -71,7 +63,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Borrar"
                     Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                    ToolTip="Borrar datos">
+                    ToolTip="Borrar registro seleccionado">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -84,7 +76,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Editar"
                     Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                    ToolTip="Modificar datos">
+                    ToolTip="Modificar el registro seleccionado">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -101,6 +93,18 @@
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/insertar.ico" />
+                </Button>
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
+                    Command="local:CustomCommands.Ayuda"
+                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    ToolTip="Ayuda en línea">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/ayuda.ico" />
                 </Button>
                 <Separator />
                 <Button
@@ -120,11 +124,10 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Column="0">
                 <DataGrid
-                    x:Name="cargosDataGrid"
                     Margin="10,10,0,10"
                     AlternatingRowBackground="LightBlue"
                     AlternationCount="2"
@@ -133,33 +136,71 @@
                     CanUserDeleteRows="False"
                     ColumnWidth="*"
                     IsReadOnly="True"
-                    ItemsSource="{Binding Path=CARGOS}"
-                    SelectedItem="{Binding Path=CARGOSELECCIONADA}">
+                    ItemsSource="{Binding PRODUCTOSPEDIDO}"
+                    SelectedItem="{Binding SELECCIONADA}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=IDCARGO}" Header="ID" />
-                        <DataGridTextColumn Binding="{Binding Path=NOMBRE}" Header="Nombre" />
+                        <DataGridTextColumn
+                            Width="80"
+                            Binding="{Binding Path=ID}"
+                            Header="ID" />
+                        <DataGridTextColumn Binding="{Binding Path=NOMBREPRODUCTO}" Header="Nombre" />
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding Path=CANTIDAD, StringFormat={}{0:F1}}"
+                            Header="Cantidad" />
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding Path=PRECIOVENTA, StringFormat={}{0:F1}}"
+                            Header="Precio" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
             <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
-                <TextBlock Style="{StaticResource textoModo}" />
+                <TextBlock x:Name="modoTextBlock" Style="{StaticResource textoModo}" />
+                <TextBlock Text="Pedido" />
+                <TextBox IsReadOnly="True" Text="{Binding Path=FORMULARIO.PEDIDO.IDPEDIDO, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="Id" />
-                <TextBox Style="{StaticResource campoClave}" Text="{Binding Path=CARGOFORMULARIO.IDCARGO, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="Nombre del cargo" />
-                <TextBox Text="{Binding Path=CARGOFORMULARIO.NOMBRE, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox IsReadOnly="True" Text="{Binding Path=FORMULARIO.ID, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Producto" />
+                <ComboBox ItemsSource="{Binding PRODUCTOSNOMBRE}" SelectedItem="{Binding Path=FORMULARIO.NOMBREPRODUCTO, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Cantidad" />
+                <TextBox Text="{Binding Path=FORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}" />
+                <TextBlock Text="Precio" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        x:Name="precioTextBox"
+                        Grid.Column="0"
+                        Text="{Binding Path=FORMULARIO.PRECIOVENTA, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1}}" />
+                    <Button
+                        Grid.Column="1"
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Margin="0,0,10,0"
+                        Command="local:CustomCommands.Buscar"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Aplicar precio estandar">
+                        <Image
+                            Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                            Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                            Source="Imagenes/buscar.ico" />
+                    </Button>
+                </Grid>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <Button
                         Command="local:CustomCommands.Cancelar"
+                        Content="Cancelar"
                         IsCancel="True"
-                        ToolTip="Cancelar cambios">
-                        Cancelar
-                    </Button>
+                        ToolTip="Cancelar cambios" />
                     <Button
                         Command="local:CustomCommands.GuardarCambios"
+                        Content="Guardar"
                         IsDefault="True"
-                        ToolTip="Guardar cambios">
-                        Guardar
-                    </Button>
+                        ToolTip="Guardar cambios" />
                 </StackPanel>
             </StackPanel>
         </Grid>
