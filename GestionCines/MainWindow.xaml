@@ -62,6 +62,10 @@
             Executed="CommandBinding_Executed_TablaAyuda" />
         <CommandBinding Command="local:CustomCommands.Pedido" Executed="CommandBinding_Executed_Pedido" />
         <CommandBinding Command="local:CustomCommands.Parte" Executed="CommandBinding_Executed_Parte" />
+        <CommandBinding Command="local:CustomCommands.InformeParteTrabajo"
+                        Executed="CommandBinding_Executed_InformeParteTrabajo" />
+        <CommandBinding Command="local:CustomCommands.GraficoPartesTecnico"
+                        Executed="CommandBinding_Executed_GraficoPartesTecnico" />
     </Window.CommandBindings>
     <Window.Resources>
         <!--  TextBlock StatusBar  -->
@@ -164,6 +168,19 @@
                 <MenuItem Command="local:CustomCommands.Parte" Header="Partes de trabajo">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/parte.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Informes">
+                <MenuItem Command="local:CustomCommands.InformeParteTrabajo" Header="Parte de trabajo abiertos">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/parte.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="local:CustomCommands.GraficoPartesTecnico"
+                          Header="Número de partes por técnico">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/grafico.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

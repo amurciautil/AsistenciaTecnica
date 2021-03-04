@@ -149,7 +149,7 @@ namespace AsistenciaTecnica
            typeof(CustomCommands),
            new InputGestureCollection()
            {
-                      new KeyGesture(Key.E,ModifierKeys.Control)
+                      new KeyGesture(Key.O,ModifierKeys.Alt)
            }
            );
         public static readonly RoutedUICommand Pedido = new RoutedUICommand
@@ -192,6 +192,24 @@ namespace AsistenciaTecnica
             ("ProductoPedido",
             "ProductoPedido",
             typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand InformeParteTrabajo = new RoutedUICommand
+            ("InformeParteTrabajo",
+             "InformeParteTrabajo",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                  new KeyGesture(Key.F1,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand GraficoPartesTecnico = new RoutedUICommand
+            ("GraficoPartesTecnico",
+             "GraficoPartesTecnico",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                          new KeyGesture(Key.F2,ModifierKeys.Alt)
+            }
             );
     }
 

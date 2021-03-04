@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsistenciaTecnica.Informes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,7 +73,7 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.Ayuda("MANTAYUDA");
+           _vm.Ayuda("MANTAYUDA");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AsistenciaTecnica.Informes;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace AsistenciaTecnica
@@ -127,11 +128,21 @@ namespace AsistenciaTecnica
         }
         public void MantenimientoAyuda(MainWindow mainWindow)
         {
-
             MantenimientoAyuda ayuda = new MantenimientoAyuda();
             ayuda.Owner = mainWindow;
             ayuda.Show();
         }
+        public void InformeParteTrabajo(MainWindow mainWindow)
+        {
+            InformeParteDeTrabajo informeParteDeTrabajo = new InformeParteDeTrabajo();
+            informeParteDeTrabajo.Show();
+        }
+        public void GraficoPartesTecnico(MainWindow mainWindow)
+        {
+            GraficosPartesTecnico graficoPartesTecnico = new GraficosPartesTecnico();
+            graficoPartesTecnico.Show();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsistenciaTecnica.Informes;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -124,6 +125,16 @@ namespace AsistenciaTecnica
             int perfilAdministrador = Properties.Settings.Default.perfilAdministrador;
             int perfilUsuario = Properties.Settings.Default.perfilUsuario;
             e.CanExecute = perfilUsuario == perfilAdministrador;
+        }
+
+        private void CommandBinding_Executed_InformeParteTrabajo(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.InformeParteTrabajo(this);
+        }
+
+        private void CommandBinding_Executed_GraficoPartesTecnico(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.GraficoPartesTecnico(this);
         }
     }
 }

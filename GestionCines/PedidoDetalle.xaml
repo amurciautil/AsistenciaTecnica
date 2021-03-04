@@ -66,7 +66,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Cancelar"
                     IsCancel="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Cancelar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -79,7 +79,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.GuardarCambios"
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -90,7 +90,7 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Command="local:CustomCommands.Ayuda"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                        Style="{StaticResource MaterialDesignToolForegroundButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -180,7 +180,7 @@
                             Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                             Margin="0,0,10,0"
                             Command="local:CustomCommands.Buscar"
-                            Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                                Style="{StaticResource MaterialDesignToolForegroundButton}"
                             ToolTip="Buscar y trasladar los datos del cliente">
                             <Image
                                 Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"

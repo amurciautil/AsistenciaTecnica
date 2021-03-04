@@ -184,17 +184,5 @@ namespace AsistenciaTecnica.Properties {
                 this["fechaPrevista"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MaterialDesignToolForegroundButton")]
-        public string estiloBotones {
-            get {
-                return ((string)(this["estiloBotones"]));
-            }
-            set {
-                this["estiloBotones"] = value;
-            }
-        }
     }
 }
