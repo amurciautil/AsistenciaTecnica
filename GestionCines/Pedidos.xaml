@@ -41,7 +41,7 @@
         <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <DockPanel>
-        <ToolBarTray Height="40" DockPanel.Dock="Top">
+        <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"

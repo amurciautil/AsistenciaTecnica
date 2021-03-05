@@ -85,7 +85,7 @@
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Archivos">
+            <MenuItem Header="Archi_vos">
                 <MenuItem Header="Maes_tros...">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/mantenimiento.ico" />
@@ -171,7 +171,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Informes">
+            <MenuItem Header="In_formes">
                 <MenuItem Command="local:CustomCommands.InformeParteTrabajo" Header="Parte de trabajo abiertos">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/parte.ico" />

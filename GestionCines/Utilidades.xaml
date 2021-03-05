@@ -9,6 +9,7 @@
     Title="Utilidades"
     Width="800"
     Height="700"
+    Icon="Imagenes/config.ico"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     mc:Ignorable="d">
@@ -28,7 +29,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Cancelar"
                     IsCancel="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Cancelar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -42,7 +43,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.GuardarCambios"
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"

@@ -21,7 +21,7 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="botonExterno" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">30</Value>
+      <Value Profile="(Default)">38</Value>
     </Setting>
     <Setting Name="botonInterno" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">28</Value>

@@ -50,6 +50,10 @@ namespace AsistenciaTecnica
         {
             return SELECCIONADA != null;
         }
+        public bool SePuedeBorrar()
+        {
+            return (HayPerfilSeleccionada() && SELECCIONADA.IDPERFIL != Properties.Settings.Default.perfilAdministrador);
+        }
         public bool FormularioOk()
         {
             return (FORMULARIO.NOMBRE != null && FORMULARIO.NOMBRE.Length > 0);
@@ -79,6 +83,11 @@ namespace AsistenciaTecnica
         public bool HayDatos()
         {
             return FORMULARIO.NOMBRE != null;
+        }
+        public void Ayuda(string codigoAyuda)
+        {
+            Ayuda ayuda = new Ayuda(codigoAyuda);
+            ayuda.ShowDialog();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

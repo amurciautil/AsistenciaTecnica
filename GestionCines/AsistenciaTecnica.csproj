@@ -455,7 +455,7 @@
     <Resource Include="Imagenes\ayuda.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Imagenes\guardar.ico" />
+    <Resource Include="Imagenes\guardar_old.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\borrar_old.ico" />
@@ -488,6 +488,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\grafico.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\login.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\guardar.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />

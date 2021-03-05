@@ -23,7 +23,7 @@ namespace AsistenciaTecnica
 
         private void CommandBinding_CanExecute_EditarPerfil(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _vm.HayPerfilSeleccionada();
+            e.CanExecute = _vm.SePuedeBorrar();
         }
 
         private void CommandBinding_Executed_AñadirPerfil(object sender, ExecutedRoutedEventArgs e)
@@ -80,11 +80,15 @@ namespace AsistenciaTecnica
         }
         private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _vm.HayPerfilSeleccionada();
+            e.CanExecute = _vm.SePuedeBorrar();
         }
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
+        }
+        private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ayuda("MANTPERFILES");
         }
     }
 }

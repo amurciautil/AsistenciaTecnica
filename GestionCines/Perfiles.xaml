@@ -14,6 +14,7 @@
     MinHeight="500"
     Background="#74DDF8"
     ShowInTaskbar="False"
+    Icon="Imagenes/perfil.ico"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding
@@ -33,6 +34,7 @@
             CanExecute="CommandBinding_CanExecute_Cancelar"
             Command="local:CustomCommands.Cancelar"
             Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Ayuda" Executed="CommandBinding_Executed_Ayuda" />
         <CommandBinding Command="local:CustomCommands.Salir" Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <Window.Resources>
@@ -71,19 +73,20 @@
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Borrar"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Borrar datos">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Source="Imagenes/borrar.ico" />
                 </Button>
+                <Separator />
                 <Button
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Editar"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Modificar datos">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -95,7 +98,7 @@
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Insertar"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Insertar nuevo registro">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -106,8 +109,20 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
+                    Command="local:CustomCommands.Ayuda"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}">
+                    <Image
+                        Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                        Source="Imagenes/ayuda.ico" />
+                </Button>
+                <Separator />
+                <Button
+                    Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                    Margin="0,0,10,0"
                     Command="local:CustomCommands.Salir"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Salir">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"

@@ -9,6 +9,7 @@
     Title="Cambio de Password"
     Width="400"
     Height="210"
+    Icon="Imagenes/login.ico"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     mc:Ignorable="d">
@@ -32,7 +33,7 @@
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
                     IsCancel="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Cancelar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -45,7 +46,7 @@
                     Margin="0,0,10,0"
                     Click="Button_Click_Aceptar"
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -56,7 +57,7 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Command="local:CustomCommands.Ayuda"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    Style="{StaticResource MaterialDesignToolForegroundButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"

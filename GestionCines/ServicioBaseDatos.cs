@@ -935,7 +935,7 @@ namespace AsistenciaTecnica
                 conexion.Open();
                 comando = conexion.CreateCommand();
                 comando.CommandText = "DELETE FROM productos WHERE codigo = @codigo";
-                comando.Parameters.Add("@codigo", SqlDbType.Int);
+                comando.Parameters.Add("@codigo", SqlDbType.VarChar);
                 comando.Parameters["@codigo"].Value = seleccionado.IDCODIGO;
                 comando.ExecuteNonQuery();
                 conexion.Close();

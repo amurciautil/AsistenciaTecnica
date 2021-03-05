@@ -11,6 +11,7 @@
     Height="650"
     MinWidth="1100"
     MinHeight="650"
+    Icon="Imagenes/parte.ico"
     Top="10"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -72,7 +73,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Cancelar"
                     IsCancel="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Cancelar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -85,7 +86,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.GuardarCambios"
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignIconForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -96,7 +97,7 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Command="local:CustomCommands.Ayuda"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    Style="{StaticResource MaterialDesignIconForegroundButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"

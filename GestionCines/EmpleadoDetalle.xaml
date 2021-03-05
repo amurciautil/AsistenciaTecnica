@@ -8,9 +8,10 @@
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
     Title="Datos Empleado"
     Width="900"
-    Height="520"
+    Height="498"
     MinWidth="900"
-    MinHeight="520"
+    MinHeight="498"
+    Icon="Imagenes/empleado.ico"
     ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
@@ -44,7 +45,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Cancelar"
                     IsCancel="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Cancelar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -57,7 +58,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.GuardarCambios"
                     IsDefault="True"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -68,7 +69,7 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Command="local:CustomCommands.Ayuda"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    Style="{StaticResource MaterialDesignToolForegroundButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -80,7 +81,7 @@
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.Salir"
-                    Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Salir">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -98,7 +99,7 @@
             CornerRadius="5">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="245" />
+                    <RowDefinition Height="250" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -172,10 +173,9 @@
                         <ColumnDefinition Width="110" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="110" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="180"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -196,8 +196,8 @@
                         Style="{StaticResource MaterialDesignBody1TextBlock}"
                         Text="Cod.Postal" />
                     <TextBlock
-                        Grid.Row="3"
-                        Grid.Column="0"
+                        Grid.Row="2"
+                        Grid.Column="2"
                         Style="{StaticResource MaterialDesignBody1TextBlock}"
                         Text="Provincia" />
                     <TextBox
@@ -213,8 +213,8 @@
                         Grid.Column="1"
                         Text="{Binding Path=FORMULARIO.CODIGOPOSTAL, UpdateSourceTrigger=PropertyChanged}" />
                     <ComboBox
-                        Grid.Row="3"
-                        Grid.Column="1"
+                        Grid.Row="2"
+                        Grid.Column="3"
                         ItemsSource="{Binding PROVINCIASNOMBRE}"
                         SelectedItem="{Binding Path=FORMULARIO.NOMBREPROVINCIA, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock

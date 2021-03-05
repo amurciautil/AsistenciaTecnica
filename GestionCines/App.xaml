@@ -45,6 +45,10 @@
                 <Setter Property="Margin" Value="0,0,0,5" />
                 <Setter Property="FontSize" Value="{Binding Source={x:Static properties:Settings.Default}, Path=fuenteTextBlock}" />
             </Style>
+            <!--  ToolBarTray  -->
+            <Style TargetType="ToolBarTray">
+                <Setter Property="Height" Value="40" />
+            </Style>
             <!--  StackPanel de edicion  -->
             <Style x:Key="StackPanelEdicion" TargetType="StackPanel">
                 <Setter Property="Margin" Value="10" />
