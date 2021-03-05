@@ -11,6 +11,7 @@
     Height="600"
     MinWidth="1100"
     MinHeight="600"
+    Icon="Imagenes/pedido.ico"
     Top="10"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -79,7 +80,7 @@
                     Margin="0,0,10,0"
                     Command="local:CustomCommands.GuardarCambios"
                     IsDefault="True"
-                        Style="{StaticResource MaterialDesignToolForegroundButton}"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}"
                     ToolTip="Guardar cambios">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -90,7 +91,7 @@
                     Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                     Command="local:CustomCommands.Ayuda"
-                        Style="{StaticResource MaterialDesignToolForegroundButton}">
+                    Style="{StaticResource MaterialDesignToolForegroundButton}">
                     <Image
                         Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
                         Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -180,7 +181,7 @@
                             Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
                             Margin="0,0,10,0"
                             Command="local:CustomCommands.Buscar"
-                                Style="{StaticResource MaterialDesignToolForegroundButton}"
+                            Style="{StaticResource MaterialDesignToolForegroundButton}"
                             ToolTip="Buscar y trasladar los datos del cliente">
                             <Image
                                 Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
@@ -203,7 +204,6 @@
                             Text="eMail" />
                         <TextBox Grid.Column="8" Text="{Binding Path=FORMULARIO.MAIL, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
-
                     <!--  Direccion fila 1 1  -->
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>

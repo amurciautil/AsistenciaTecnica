@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
     Title="Cambio de Password"
-    Width="400"
-    Height="210"
+    Width="500"
+    Height="220"
+    MinWidth="500"
+    MinHeight="210"
     Icon="Imagenes/login.ico"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
@@ -21,8 +23,9 @@
             x:Key="password"
             BasedOn="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
             TargetType="PasswordBox">
-            <Setter Property="Margin" Value="0,10,0,0" />
+            <Setter Property="Margin" Value="0,5,0,5" />
             <Setter Property="Background" Value="#C1E7EB" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
     </Window.Resources>
     <DockPanel>
@@ -78,7 +81,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="130" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock

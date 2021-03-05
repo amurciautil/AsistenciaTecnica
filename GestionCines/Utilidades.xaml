@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:AsistenciaTecnica"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="Utilidades"
+    Title="Propiedades del sistema"
     Width="800"
     Height="700"
     Icon="Imagenes/config.ico"

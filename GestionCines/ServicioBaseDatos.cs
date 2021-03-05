@@ -61,8 +61,6 @@ namespace AsistenciaTecnica
                                 "and password = HASHBYTES('SHA2_512', '" + password + "')";
                 comando.Parameters.Add("@login", SqlDbType.NVarChar);
                 comando.Parameters["@login"].Value = login;
-                comando.Parameters.Add("@password", SqlDbType.VarChar);
-                comando.Parameters["@password"].Value = password;
                 if ((int)comando.ExecuteScalar() > 0)
                     retorno = 1;
                 conexion.Close();
@@ -862,8 +860,8 @@ namespace AsistenciaTecnica
                 " WHERE login = @login";
             comando.Parameters.Add("@login", SqlDbType.NVarChar);
             comando.Parameters["@login"].Value = login;
-            comando.Parameters.Add("@password", SqlDbType.NVarChar);
-            comando.Parameters["@password"].Value = password;
+        //    comando.Parameters.Add("@password", SqlDbType.NVarChar);
+        //    comando.Parameters["@password"].Value = password;
             comando.ExecuteNonQuery();
             conexion.Close();
         }

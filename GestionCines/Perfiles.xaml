@@ -13,8 +13,8 @@
     MinWidth="1000"
     MinHeight="500"
     Background="#74DDF8"
-    ShowInTaskbar="False"
     Icon="Imagenes/perfil.ico"
+    ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding

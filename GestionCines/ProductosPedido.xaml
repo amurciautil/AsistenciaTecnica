@@ -12,8 +12,8 @@
     MinWidth="1000"
     MinHeight="600"
     Background="#74DDF8"
-    ShowInTaskbar="False"
     Icon="Imagenes/producto.ico"
+    ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding

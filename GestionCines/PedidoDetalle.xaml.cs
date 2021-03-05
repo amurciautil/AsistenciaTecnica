@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AsistenciaTecnica
 {
@@ -73,8 +70,10 @@ namespace AsistenciaTecnica
         {
             int longitud = descripcionTextBox.Text.Length;
             contadorTextBlock.Text = longitud + "/(" + MAXIMA_LONGITUD_TEXTO + " max.caracteres)";
-            if (longitud >= MAXIMA_LONGITUD_TEXTO)
-                descripcionTextBox.IsReadOnly = true;
+            if (longitud > MAXIMA_LONGITUD_TEXTO)
+                contadorTextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#F00");
+            else
+                contadorTextBlock.Foreground = (Brush)new BrushConverter().ConvertFromString("#000");
         }
     }
 }
