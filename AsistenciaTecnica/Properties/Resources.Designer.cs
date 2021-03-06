@@ -59,14 +59,5 @@ namespace AsistenciaTecnica.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a .
-        /// </summary>
-        internal static string formaDePago {
-            get {
-                return ResourceManager.GetString("formaDePago", resourceCulture);
-            }
-        }
     }
 }

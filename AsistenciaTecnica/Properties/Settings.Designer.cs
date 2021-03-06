@@ -184,5 +184,41 @@ namespace AsistenciaTecnica.Properties {
                 this["fechaPrevista"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dataserverincidencias.database.windows.net")]
+        public string servidorBBDD {
+            get {
+                return ((string)(this["servidorBBDD"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("adminserver")]
+        public string usuarioBBDD {
+            get {
+                return ((string)(this["usuarioBBDD"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Damfp2019")]
+        public string claveBBDD {
+            get {
+                return ((string)(this["claveBBDD"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("bdproyecto")]
+        public string databaseBBDD {
+            get {
+                return ((string)(this["databaseBBDD"]));
+            }
+        }
     }
 }

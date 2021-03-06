@@ -15,14 +15,24 @@ namespace AsistenciaTecnica
         {
             try
             {
-                string server = "dataserverincidencias.database.windows.net";
-                string user = "adminserver";
-                string password = "Damfp2019";
-                string database = "bdproyecto";
-                string connString = $"server={server};user id={user};password={password};database={database};";
-                // Conexion local
-                //     conexion = new SqlConnection(@"Server=(local);Database=dbasistencia;Trusted_Connection=Yes;MultipleActiveResultSets=True");
-                conexion = new SqlConnection(connString);
+                string server = Properties.Settings.Default.servidorBBDD;
+                string user = Properties.Settings.Default.usuarioBBDD;
+                string password = Properties.Settings.Default.claveBBDD;
+                string database = Properties.Settings.Default.databaseBBDD;
+                string connString;
+                //server    dataserverincidencias.database.windows.net
+                //user      adminserver
+                //password  Damfp2019
+                //database  bdproyecto
+                if (server == "local")
+                {
+                    conexion = new SqlConnection(@"Server=(local);Database=dbasistencia;Trusted_Connection=Yes;MultipleActiveResultSets=True");
+                }
+                else
+                {
+                    connString = $"server={server};user id={user};password={password};database={database};";
+                    conexion = new SqlConnection(connString);
+                }
             }
             catch (Exception ex)
             {

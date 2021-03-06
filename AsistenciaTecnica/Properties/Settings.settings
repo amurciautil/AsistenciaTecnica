@@ -47,5 +47,17 @@
     <Setting Name="fechaPrevista" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
+    <Setting Name="servidorBBDD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dataserverincidencias.database.windows.net</Value>
+    </Setting>
+    <Setting Name="usuarioBBDD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">adminserver</Value>
+    </Setting>
+    <Setting Name="claveBBDD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Damfp2019</Value>
+    </Setting>
+    <Setting Name="databaseBBDD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">bdproyecto</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
