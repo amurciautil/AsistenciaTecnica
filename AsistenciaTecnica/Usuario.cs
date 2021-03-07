@@ -12,7 +12,6 @@ namespace AsistenciaTecnica
         public string NOMBREEMPLEADO { get; set; }
         public string NOMBREPERFIL { get; set; }
         public bool ACTIVO { get; set; }
-
         public Usuario()
         {
             ACTIVO = true;
