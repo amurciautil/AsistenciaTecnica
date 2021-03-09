@@ -759,6 +759,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BB622DBFA244410799E0FFD510629357"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BBA92D6471467B6DAD353305F95AA5AF"
         "OwnerKey" = "8:_D4D7021C53BD407D84737F1F8123BDE0"
         "MsmSig" = "8:_UNDEFINED"
@@ -1018,19 +1024,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9C9EC51D520A149E764C90A918757C1A"
+        "OwnerKey" = "8:_D4D66920E3979BE362ACE5123A1E3829"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D4D7021C53BD407D84737F1F8123BDE0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D4D66920E3979BE362ACE5123A1E3829"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1783,6 +1783,12 @@
         "OwnerKey" = "8:_FEE6AA1E788042ADC0424DB4D9F95363"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9C9EC51D520A149E764C90A918757C1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1801,6 +1807,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -1817,6 +1839,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -4935,6 +4965,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB622DBFA244410799E0FFD510629357"
+            {
+            "SourcePath" = "8:..\\AsistenciaTecnica\\obj\\Debug\\AsistenciaTecnica.chm"
+            "TargetName" = "8:AsistenciaTecnica.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_0AF6E099637C4A1494CF04BC4F9D5107"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BBA92D6471467B6DAD353305F95AA5AF"
             {
             "AssemblyRegister" = "3:1"
@@ -6128,7 +6178,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ServiGest"
         "ProductCode" = "8:{0DEA18CD-4543-4659-9BC6-809AAE00E4B6}"
-        "PackageCode" = "8:{33103836-150D-465E-B1A8-B3EA3F8567FA}"
+        "PackageCode" = "8:{F1C1C2E6-AA93-4E1D-8BD2-9745E4F98133}"
         "UpgradeCode" = "8:{2FF7366A-9DE6-4DEE-B841-F3104898E197}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

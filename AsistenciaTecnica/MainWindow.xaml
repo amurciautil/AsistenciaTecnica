@@ -7,7 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:properties="clr-namespace:AsistenciaTecnica.Properties"
-    Title="Asistencia Técnia"
+    Title="ServiGest"
     Width="1000"
     Height="700"
     MinWidth="1000"
@@ -193,9 +193,15 @@
                     <Run Style="{StaticResource runVariableStatusBar}" Text="{Binding Source={x:Static properties:Settings.Default}, Path=nombreUsuario}" /></TextBlock>
             </StatusBarItem>
         </StatusBar>
+        <Border   BorderThickness="1"
+                  BorderBrush="Black"
+                  CornerRadius="5"
+                  Margin="5,0,5,0"
+                  Background="#02B9F2">
         <Image
-            Margin="5,0,5,0"
-            Source="Imagenes/soporte.jpg"
+            Margin="2"
+            Source="Imagenes/portada.jpg"
             Stretch="UniformToFill" />
+        </Border>
     </DockPanel>
 </Window>
