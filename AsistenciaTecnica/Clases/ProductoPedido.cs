@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace AsistenciaTecnica
 {
-    class ProductoPedido
+    class ProductoPedido : INotifyPropertyChanged
     {
         public int ID { get; set; }
         public int IDPEDIDO { get; set; }
@@ -44,5 +40,7 @@ namespace AsistenciaTecnica
             PRECIOVENTA = productoPedido.PRECIOVENTA;
             NOMBREPRODUCTO = productoPedido.NOMBREPRODUCTO;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

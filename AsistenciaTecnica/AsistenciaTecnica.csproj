@@ -149,12 +149,12 @@
     <Compile Include="Ayuda.xaml.cs">
       <DependentUpon>Ayuda.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AyudaEnLinea.cs" />
-    <Compile Include="AyudaVM.cs" />
+    <Compile Include="Clases\AyudaEnLinea.cs" />
+    <Compile Include="ViewModel\AyudaVM.cs" />
     <Compile Include="CambioPasswd.xaml.cs">
       <DependentUpon>CambioPasswd.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CambioPasswdVM.cs" />
+    <Compile Include="ViewModel\CambioPasswdVM.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Informes\CrystalReport1.cs">
       <AutoGen>True</AutoGen>
@@ -177,80 +177,80 @@
     <Compile Include="MantenimientoAyuda.xaml.cs">
       <DependentUpon>MantenimientoAyuda.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MantenimientoAyudaVM.cs" />
-    <Compile Include="Parte.cs" />
+    <Compile Include="ViewModel\MantenimientoAyudaVM.cs" />
+    <Compile Include="Clases\Parte.cs" />
     <Compile Include="ParteDetalle.xaml.cs">
       <DependentUpon>ParteDetalle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ParteDetalleVM.cs" />
+    <Compile Include="ViewModel\ParteDetalleVM.cs" />
     <Compile Include="Partes.xaml.cs">
       <DependentUpon>Partes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartesVM.cs" />
-    <Compile Include="Pedido.cs" />
+    <Compile Include="ViewModel\PartesVM.cs" />
+    <Compile Include="Clases\Pedido.cs" />
     <Compile Include="PedidoDetalle.xaml.cs">
       <DependentUpon>PedidoDetalle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PedidoDetalleVM.cs" />
+    <Compile Include="ViewModel\PedidoDetalleVM.cs" />
     <Compile Include="Pedidos.xaml.cs">
       <DependentUpon>Pedidos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PedidosVM.cs" />
+    <Compile Include="ViewModel\PedidosVM.cs" />
     <Compile Include="ProductoDetalle.xaml.cs">
       <DependentUpon>ProductoDetalle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProductoDetalleVM.cs" />
-    <Compile Include="ProductoPedido.cs" />
+    <Compile Include="ViewModel\ProductoDetalleVM.cs" />
+    <Compile Include="Clases\ProductoPedido.cs" />
     <Compile Include="Productos.xaml.cs">
       <DependentUpon>Productos.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProductosPedido.xaml.cs">
       <DependentUpon>ProductosPedido.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProductosPedidoVM.cs" />
-    <Compile Include="ProductosVM.cs" />
-    <Compile Include="SituacionPedido.cs" />
-    <Compile Include="TablaAyuda.cs" />
-    <Compile Include="Telefono.cs" />
-    <Compile Include="TipoPedido.cs" />
-    <Compile Include="TipoProducto.cs" />
-    <Compile Include="Producto.cs" />
+    <Compile Include="ViewModel\ProductosPedidoVM.cs" />
+    <Compile Include="ViewModel\ProductosVM.cs" />
+    <Compile Include="Clases\SituacionPedido.cs" />
+    <Compile Include="Clases\TablaAyuda.cs" />
+    <Compile Include="Clases\Telefono.cs" />
+    <Compile Include="Clases\TipoPedido.cs" />
+    <Compile Include="Clases\TipoProducto.cs" />
+    <Compile Include="Clases\Producto.cs" />
     <Compile Include="EmpleadoDetalle.xaml.cs">
       <DependentUpon>EmpleadoDetalle.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmpleadoDetalleVM.cs" />
+    <Compile Include="ViewModel\EmpleadoDetalleVM.cs" />
     <Compile Include="Empleados.xaml.cs">
       <DependentUpon>Empleados.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmpleadosVM.cs" />
+    <Compile Include="ViewModel\EmpleadosVM.cs" />
     <Compile Include="Provincias.xaml.cs">
       <DependentUpon>Provincias.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProvinciasVM.cs" />
-    <Compile Include="Provincia.cs" />
-    <Compile Include="PerfilesVM.cs" />
-    <Compile Include="Perfil.cs" />
-    <Compile Include="Cargo.cs" />
+    <Compile Include="ViewModel\ProvinciasVM.cs" />
+    <Compile Include="Clases\Provincia.cs" />
+    <Compile Include="ViewModel\PerfilesVM.cs" />
+    <Compile Include="Clases\Perfil.cs" />
+    <Compile Include="Clases\Cargo.cs" />
     <Compile Include="Cargos.xaml.cs" />
-    <Compile Include="CargosVM.cs" />
-    <Compile Include="Departamento.cs" />
+    <Compile Include="ViewModel\CargosVM.cs" />
+    <Compile Include="Clases\Departamento.cs" />
     <Compile Include="Departamentos.xaml.cs" />
-    <Compile Include="DepartamentoVM.cs" />
-    <Compile Include="Empleado.cs" />
+    <Compile Include="ViewModel\DepartamentoVM.cs" />
+    <Compile Include="Clases\Empleado.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginVM.cs" />
-    <Compile Include="MisExcepciones.cs" />
+    <Compile Include="ViewModel\LoginVM.cs" />
+    <Compile Include="Excepciones\MisExcepciones.cs" />
     <Compile Include="Perfiles.xaml.cs">
       <DependentUpon>Perfiles.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServicioBaseDatos.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UsuariosVM.cs" />
+    <Compile Include="ViewModel\UsuariosVM.cs" />
     <Compile Include="Utilidades.xaml.cs">
       <DependentUpon>Utilidades.xaml</DependentUpon>
     </Compile>
@@ -353,7 +353,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainWindowVM.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

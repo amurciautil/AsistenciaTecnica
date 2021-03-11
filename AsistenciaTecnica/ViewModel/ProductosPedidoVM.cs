@@ -120,8 +120,6 @@ namespace AsistenciaTecnica
             }
             return FORMULARIO.PRECIOVENTA;
         }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
