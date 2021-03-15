@@ -187,10 +187,23 @@
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
                 <TextBlock Style="{StaticResource statusBar}">
-                    <Run Style="{StaticResource runFijosStatusBar}" Text="Login " />
-                    <Run Style="{StaticResource runVariableStatusBar}" Text="{Binding Source={x:Static properties:Settings.Default}, Path=login}" />
-                    <Run Style="{StaticResource runFijosStatusBar}" Text=" Nombre" />
-                    <Run Style="{StaticResource runVariableStatusBar}" Text="{Binding Source={x:Static properties:Settings.Default}, Path=nombreUsuario}" /></TextBlock>
+                    <Run Style="{StaticResource runFijosStatusBar}"
+                         Text="Login " />
+                    <Run Style="{StaticResource runVariableStatusBar}"
+                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=login}" />
+                    <Run Style="{StaticResource runFijosStatusBar}"
+                         Text=" Nombre" />
+                    <Run Style="{StaticResource runVariableStatusBar}"
+                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=nombreUsuario}" />
+                    <Run Style="{StaticResource runFijosStatusBar}"
+                         Text="                     Servidor" />
+                    <Run Style="{StaticResource runVariableStatusBar}"
+                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=servidorBBDD, Mode=OneTime}" />
+                    <Run Style="{StaticResource runFijosStatusBar}"
+                         Text=" BBDD" />
+                    <Run Style="{StaticResource runVariableStatusBar}"
+                         Text="{Binding Source={x:Static properties:Settings.Default}, Path=databaseBBDD, Mode=OneTime}"/>
+                </TextBlock>
             </StatusBarItem>
         </StatusBar>
         <Border   BorderThickness="1"

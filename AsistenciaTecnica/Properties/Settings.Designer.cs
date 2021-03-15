@@ -115,7 +115,7 @@ namespace AsistenciaTecnica.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("S")]
+        [global::System.Configuration.DefaultSettingValueAttribute("N")]
         public string modoDesarrollo {
             get {
                 return ((string)(this["modoDesarrollo"]));
@@ -214,7 +214,7 @@ namespace AsistenciaTecnica.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("bdproyecto")]
+        [global::System.Configuration.DefaultSettingValueAttribute("prueba")]
         public string databaseBBDD {
             get {
                 return ((string)(this["databaseBBDD"]));
