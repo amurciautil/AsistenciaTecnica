@@ -214,7 +214,7 @@ namespace AsistenciaTecnica.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("prueba")]
+        [global::System.Configuration.DefaultSettingValueAttribute("bdproyecto")]
         public string databaseBBDD {
             get {
                 return ((string)(this["databaseBBDD"]));

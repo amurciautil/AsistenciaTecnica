@@ -1212,13 +1212,13 @@ namespace AsistenciaTecnica
             try
             {
                 int situacionAnterior = formulario.IDSITUACION;
-                DateTime fechaCierre;
+                string fechaCierre;
                 conexion.Open();
                 comando = conexion.CreateCommand();
                 if (formulario.IDSITUACION == situacionCierre)
-                    fechaCierre = DateTime.Today;
+                    fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
                 else
-                    fechaCierre = DateTime.Parse("01/01/0001");
+                    fechaCierre = "01/01/0001";
                 comando.CommandText = "INSERT INTO pedidos " +
                         "(descripcion,telefono," +
                         "nombre," +
@@ -1283,14 +1283,17 @@ namespace AsistenciaTecnica
             try
             {
                 int situacionAnterior = BuscarSituacionPedido(formulario.IDPEDIDO);
-                DateTime fechaCierre = new DateTime();
+                //DateTime fechaCierre = new DateTime();
+                string fechaCierre = "";
                 if (situacionAnterior != situacionCierre && formulario.IDSITUACION == situacionCierre)
                 {
-                    fechaCierre = DateTime.Today;
+                    //fechaCierre = DateTime.Today;
+                    fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
                 }
                 if (situacionAnterior == situacionCierre && formulario.IDSITUACION != situacionCierre)
                 {
-                    fechaCierre = DateTime.Parse("01/01/0001");
+                    //fechaCierre = DateTime.Parse("01/01/0001");
+                    fechaCierre = "01/01/0001";
                 }
                 conexion.Open();
                 // Si nueva situacion es cancelada o cerrada cerraremos todos los partes que esten abiertos
@@ -1328,7 +1331,7 @@ namespace AsistenciaTecnica
         public void CerrarPartesDelPedido(int idPedido)
         {
             SqlCommand cmd = conexion.CreateCommand();
-            DateTime fechaCierre = DateTime.Today;
+            string fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
             cmd = conexion.CreateCommand();
             cmd.CommandText = "UPDATE partes SET " +
                 "cerrado = 1," +
@@ -1790,13 +1793,13 @@ namespace AsistenciaTecnica
             try
             {
                 bool situacionAnterior = formulario.CERRADO;
-                DateTime fechaCierre;
+                string fechaCierre;
                 conexion.Open();
                 comando = conexion.CreateCommand();
                 if (formulario.CERRADO)
-                    fechaCierre = DateTime.Today;
+                    fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
                 else
-                    fechaCierre = DateTime.Parse("01/01/0001");
+                    fechaCierre = "01/01/0001";
                 comando.CommandText = "INSERT INTO partes " +
                         "(pedido," +
                         "fechaIntroduccion," +
@@ -1829,14 +1832,14 @@ namespace AsistenciaTecnica
             try
             {
                 bool situacionAnterior = BuscarSituacionParte(formulario.IDPARTE);
-                DateTime fechaCierre = new DateTime();
+                string fechaCierre = "";
                 if (!situacionAnterior && formulario.CERRADO)
                 {
-                    fechaCierre = DateTime.Today;
+                    fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
                 }
                 if (situacionAnterior && !formulario.CERRADO)
                 {
-                    fechaCierre = DateTime.Parse("01/01/0001");
+                    fechaCierre = "01/01/0001";
                 }
 
                 conexion.Open();
@@ -1916,7 +1919,7 @@ namespace AsistenciaTecnica
         }
         public void ActualizarSituacionPedido(bool cerradoAntes, bool cerradoDespues, int idPedido)
         {
-            DateTime fechaCierre = new DateTime();
+            string fechaCierre = "";
             bool actualizar = false;
             // Obtener situaciones de cerrado y en reparacion
             int situacionCerrado = Properties.Settings.Default.situacionCierre;
@@ -1927,11 +1930,11 @@ namespace AsistenciaTecnica
             if (!cerradoAntes == !cerradoDespues ||
                (cerradoAntes && !cerradoDespues))
             {
-                fechaCierre = DateTime.Parse("01/01/0001");
+                fechaCierre = "01/01/0001";
             }
             if (!cerradoAntes && cerradoDespues && ContarPartes(idPedido, "AND cerrado = 0") == 0)
             {
-                fechaCierre = DateTime.Today;
+                fechaCierre = DateTime.Now.ToString("yyyy/MM/dd");
             }
             SqlCommand cmd = conexion.CreateCommand();
             cmd.CommandText = "Update pedidos SET " +

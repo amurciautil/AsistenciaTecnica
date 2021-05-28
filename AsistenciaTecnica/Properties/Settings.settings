@@ -57,7 +57,7 @@
       <Value Profile="(Default)">Damfp2019</Value>
     </Setting>
     <Setting Name="databaseBBDD" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">prueba</Value>
+      <Value Profile="(Default)">bdproyecto</Value>
     </Setting>
   </Settings>
 </SettingsFile>
